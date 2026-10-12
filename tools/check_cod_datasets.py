@@ -58,7 +58,8 @@ def main() -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(payload, ensure_ascii=False, indent=2))
-    return 0 if all(report["status"] == "ok" for report in reports) else 1
+    accepted = {"ok", "ok_with_alignment"}
+    return 0 if all(report["status"] in accepted for report in reports) else 1
 
 
 if __name__ == "__main__":

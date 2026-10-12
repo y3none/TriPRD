@@ -52,6 +52,9 @@ DATASET_CONFIG: Mapping[str, Mapping[str, Any]] = {
         "archives": {"test": "TestDataset.zip"},
         "prefixes": {"test": ("TestDataset/CHAMELEON", "CHAMELEON")},
         "expected_counts": {"test": 76},
+        # The official CODToolbox keeps GT as the reference and resizes each
+        # prediction to GT size before computing metrics.
+        "evaluation_size_policy": "resize_prediction_to_gt",
     },
     "NC4K": {
         "splits": {"test"},
@@ -317,6 +320,8 @@ class CODDatasetIndex:
             "split_assertion": self.split_assertion,
             "expected_samples": DATASET_CONFIG[self.dataset].get("expected_counts", {}).get(self.split),
             "sample_count_mismatch": False,
+            "evaluation_size_policy": DATASET_CONFIG[self.dataset].get("evaluation_size_policy", "require_equal"),
+            "evaluation_ready": False,
             "status": "ok",
             "num_samples": len(self.assets),
             "checked_samples": 0,
@@ -380,7 +385,21 @@ class CODDatasetIndex:
                 if len(report["errors"]) < 100:
                     report["errors"].append({"sample_id": sample.sample_id, "read_error": str(exc)})
 
-        if report["errors"] or report["split_assertion"] != "passed":
+        hard_errors = (
+            report["missing_image"]
+            or report["missing_mask"]
+            or report["empty_masks"]
+            or report["read_errors"]
+            or report["sample_count_mismatch"]
+            or report["split_assertion"] != "passed"
+        )
+        report["evaluation_ready"] = not hard_errors and (
+            report["size_mismatches"] == 0
+            or report["evaluation_size_policy"] == "resize_prediction_to_gt"
+        )
+        if report["evaluation_ready"]:
+            report["status"] = "ok_with_alignment" if report["size_mismatches"] else "ok"
+        else:
             report["status"] = "failed"
         return report
 
