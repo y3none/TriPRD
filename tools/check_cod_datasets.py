@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate COD10K, CAMO, NC4K, and CHAMELEON RGB/mask splits."""
+"""Validate the standard COD train/test splits and RGB/mask alignment."""
 
 from __future__ import annotations
 
@@ -33,6 +33,7 @@ def main() -> int:
     limit = None if args.max_samples == 0 else args.max_samples
     indexes = [
         COD10KIndex(root, "train"),
+        CAMOIndex(root, "train"),
         COD10KIndex(root, "test"),
         CAMOIndex(root),
         NC4KIndex(root),

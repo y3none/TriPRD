@@ -46,10 +46,16 @@ COD 数据可以直接读取压缩包，不需要先解压到仓库。当前计�
 
 ```text
 COD_benchmark/
-├── TrainDataset.zip   # COD10K train
+├── TrainDataset.zip   # combined train pool: COD10K-train (3040) + CAMO-train (1000)
 ├── TestDataset.zip    # COD10K/CAMO/CHAMELEON test
 └── NC4K.zip           # NC4K test
 ```
+
+`TrainDataset.zip` follows the common COD release layout and contains 4040
+training pairs. The loader exposes the official subsets separately: filenames
+starting with `COD10K-` are COD10K-train (3040), and filenames starting with
+`camourflage_` are CAMO-train (1000). Combining those two indexes reproduces
+the standard 4040-image training pool.
 
 运行统一检查：
 
@@ -60,4 +66,4 @@ python tools/check_cod_datasets.py `
   --output results/cod_dataset_report.json
 ```
 
-检查器会验证 RGB 与 GT 是否一一对应、图片和 mask 尺寸是否一致、mask 是否为空，并断言 COD10K train/test、CAMO test、NC4K test、CHAMELEON test 的官方目录划分。设置 `--max-samples 0` 可读取每个数据集的全部样本。`read_pair(..., strict_size=True)` 默认拒绝尺寸不一致的样本，避免静默拉伸标注。
+检查器会验证 RGB 与 GT 是否一一对应、图片和 mask 尺寸是否一致、mask 是否为空、样本数是否符合官方划分，并断言 COD10K train/test、CAMO train/test、NC4K test、CHAMELEON test 的目录身份。设置 `--max-samples 0` 可读取每个数据集的全部样本。`read_pair(..., strict_size=True)` 默认拒绝尺寸不一致的样本，避免静默拉伸标注。

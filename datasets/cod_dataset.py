@@ -1,10 +1,10 @@
 """Unified RGB/mask readers and split checks for the COD benchmarks.
 
-The public COD benchmark release uses a small number of different layouts:
-COD10K train is stored in ``TrainDataset.zip`` while COD10K/CAMO/CHAMELEON
-test data share ``TestDataset.zip`` and NC4K is a separate archive.  This
-module keeps those details in one place and exposes the same API for all four
-datasets.  Both archives and extracted directories are supported.
+The public SINet-style release stores the standard 4040-image training pool
+(3040 COD10K-train + 1000 CAMO-train) in ``TrainDataset.zip``.  The two
+datasets are separated below by their official sample-name prefixes.  The
+COD10K/CAMO/CHAMELEON test data share ``TestDataset.zip`` and NC4K is a
+separate archive.  Both archives and extracted directories are supported.
 """
 
 from __future__ import annotations
@@ -34,21 +34,30 @@ DATASET_CONFIG: Mapping[str, Mapping[str, Any]] = {
             "train": ("TrainDataset",),
             "test": ("TestDataset/COD10K", "COD10K"),
         },
+        "sample_prefixes": {"train": ("COD10K-",)},
+        "expected_counts": {"train": 3040, "test": 2026},
     },
     "CAMO": {
-        "splits": {"test"},
-        "archives": {"test": "TestDataset.zip"},
-        "prefixes": {"test": ("TestDataset/CAMO", "CAMO")},
+        "splits": {"train", "test"},
+        "archives": {"train": "TrainDataset.zip", "test": "TestDataset.zip"},
+        "prefixes": {
+            "train": ("TrainDataset",),
+            "test": ("TestDataset/CAMO", "CAMO"),
+        },
+        "sample_prefixes": {"train": ("camourflage_",)},
+        "expected_counts": {"train": 1000, "test": 250},
     },
     "CHAMELEON": {
         "splits": {"test"},
         "archives": {"test": "TestDataset.zip"},
         "prefixes": {"test": ("TestDataset/CHAMELEON", "CHAMELEON")},
+        "expected_counts": {"test": 76},
     },
     "NC4K": {
         "splits": {"test"},
         "archives": {"test": "NC4K.zip"},
         "prefixes": {"test": ("", "NC4K")},
+        "expected_counts": {"test": 4121},
     },
 }
 
@@ -242,6 +251,12 @@ class CODDatasetIndex:
         for modality, locations in modalities.items():
             by_id: dict[str, str] = {}
             for location in sorted(locations):
+                sample_id = PurePosixPath(location).stem
+                allowed_prefixes = DATASET_CONFIG[self.dataset].get("sample_prefixes", {}).get(self.split, ())
+                if allowed_prefixes and not any(
+                    sample_id.casefold().startswith(prefix.casefold()) for prefix in allowed_prefixes
+                ):
+                    continue
                 by_id.setdefault(_stem_key(location), location)
             for key, location in by_id.items():
                 self.assets.setdefault(key, {})[modality] = CODAsset(
@@ -300,6 +315,8 @@ class CODDatasetIndex:
             "source": str(self.source_root),
             "resolved_prefix": self.prefix,
             "split_assertion": self.split_assertion,
+            "expected_samples": DATASET_CONFIG[self.dataset].get("expected_counts", {}).get(self.split),
+            "sample_count_mismatch": False,
             "status": "ok",
             "num_samples": len(self.assets),
             "checked_samples": 0,
@@ -325,6 +342,14 @@ class CODDatasetIndex:
             report.update(status="not_ready")
             report["errors"].append("No RGB/mask image files were indexed")
             return report
+
+        expected_samples = report["expected_samples"]
+        if expected_samples is not None and len(self.assets) != expected_samples:
+            report["sample_count_mismatch"] = True
+            report["errors"].append(
+                f"Expected {expected_samples} samples for the official {self.dataset} {self.split} split, "
+                f"indexed {len(self.assets)}"
+            )
 
         for sample in self.samples(max_samples):
             report["checked_samples"] += 1
