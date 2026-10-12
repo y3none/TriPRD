@@ -20,5 +20,12 @@ This folder contains the complete experiment workspace for the RGB-only camoufla
 
 ## Current status
 
-The initial workspace, configurations, result schema, and data boundaries are frozen. The next task is VDT2048 loading, RGB/T/D/mask alignment validation, and four-panel visualization.
+The initial workspace, configurations, result schema, and data boundaries are frozen. The VDT2048 loader, alignment checker, and four-panel visualization code are ready; real-sample validation is pending completion of the VDT2048 download.
+
+## Frozen dataset splits
+
+- Multimodal knowledge source: VDT2048 official `train` split only.
+- COD training: COD10K `train` and CAMO `train`.
+- COD testing: COD10K `test`, CAMO `test`, **NC4K**, and CHAMELEON.
+- Test sets are reserved for evaluation and are not used for tuning.
 

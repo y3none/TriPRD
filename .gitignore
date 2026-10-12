@@ -7,6 +7,12 @@ __pycache__/
 venv/
 .env
 
+# Local datasets (downloaded or extracted). Keep the loader and its README.
+datasets/*
+!datasets/*.py
+!datasets/*.md
+!datasets/__init__.py
+
 # Large generated artifacts
 *.pt
 *.pth
