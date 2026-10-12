@@ -60,7 +60,7 @@ const plan=[
  {week:1,title:'数据与基线',range:'2026-10-12 — 2026-10-18',tasks:[
   ['10/12','创建实验目录、配置文件和结果记录表','experiment_id、YAML 配置、CSV 结果表','所有实验可追踪','必须'],
   ['10/13','完成 VDT2048 代码管线（真实验收待下载）','dataloader、对齐检查、四联图脚本','下载后验证 RGB/T/D/mask 一一对应','必须'],
-  ['10/14','完成 COD10K、CAMO、NC4K、CHAMELEON 数据读取','COD dataset loaders、官方 split 检查','不混用测试集','必须'],
+  ['10/14','完成 COD10K、CAMO、NC4K、CHAMELEON 读取（2 个尺寸异常待处理）','COD dataset loaders、官方 split 检查','不混用测试集，异常样本有记录','必须'],
   ['10/15','完成统一 COD 评价脚本','Sα、Fβw、Eφ、MAE、Boundary F','与公开实现量级一致','必须'],
   ['10/16','训练 E00 RGB-only baseline','baseline checkpoint 和日志','COD10K 可完成训练/测试','必须'],
   ['10/17','重训 E01/E02 强 COD baseline','SINet-v2 或 ZoomNet 结果','作为主表强基线','必须'],

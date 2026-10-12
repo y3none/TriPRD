@@ -22,6 +22,7 @@ datasets/*
 # Runtime outputs
 logs/*.log
 results/*.tmp
+results/*_report.json
 
 # IDE and OS files
 .vscode/

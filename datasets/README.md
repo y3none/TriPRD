@@ -39,3 +39,25 @@ python tools/visualize_vdt2048.py `
 ```
 
 如果数据还没有下载，检查脚本会输出 `not_ready`，不会生成伪造的对齐结果；加上 `--require-data` 才会在数据缺失时返回失败码。
+
+## 10 月 14 日 COD 数据检查
+
+COD 数据可以直接读取压缩包，不需要先解压到仓库。当前计划使用：
+
+```text
+COD_benchmark/
+├── TrainDataset.zip   # COD10K train
+├── TestDataset.zip    # COD10K/CAMO/CHAMELEON test
+└── NC4K.zip           # NC4K test
+```
+
+运行统一检查：
+
+```powershell
+python tools/check_cod_datasets.py `
+  --root datasets/COD_benchmark `
+  --max-samples 200 `
+  --output results/cod_dataset_report.json
+```
+
+检查器会验证 RGB 与 GT 是否一一对应、图片和 mask 尺寸是否一致、mask 是否为空，并断言 COD10K train/test、CAMO test、NC4K test、CHAMELEON test 的官方目录划分。设置 `--max-samples 0` 可读取每个数据集的全部样本。`read_pair(..., strict_size=True)` 默认拒绝尺寸不一致的样本，避免静默拉伸标注。
