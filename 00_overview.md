@@ -4,7 +4,8 @@ This folder contains the complete experiment workspace for the RGB-only camoufla
 
 ## Research assets
 
-- `method_name.md`: official method name and filename convention`n- `paper_scope.md`: paper title, claim, method scope, and decisive experiments
+- `method_name.md`: official method name and filename convention
+- `paper_scope.md`: paper title, claim, method scope, and decisive experiments
 - `cvpr2027_submission_plan.md`: schedule, milestones, and submission gates
 - `research_plan.md`: full method and experiment design
 - `experiment_protocol_2026-10-12.md`: frozen data and experiment protocol
