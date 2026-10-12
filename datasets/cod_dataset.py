@@ -52,8 +52,8 @@ DATASET_CONFIG: Mapping[str, Mapping[str, Any]] = {
         "archives": {"test": "TestDataset.zip"},
         "prefixes": {"test": ("TestDataset/CHAMELEON", "CHAMELEON")},
         "expected_counts": {"test": 76},
-        # The official CODToolbox keeps GT as the reference and resizes each
-        # prediction to GT size before computing metrics.
+        # Match CamoFormer: keep GT as the spatial reference and resize each
+        # prediction to GT size before metric computation.
         "evaluation_size_policy": "resize_prediction_to_gt",
     },
     "NC4K": {

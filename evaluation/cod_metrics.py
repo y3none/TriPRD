@@ -1,4 +1,9 @@
-"""COD evaluation helpers following the CamoFormer evaluation convention."""
+"""COD evaluation helpers using the official CamoFormer implementation.
+
+``camoformer_metrics`` vendors the upstream ``evaltools/metrics.py`` classes.
+This module keeps the project-level resize helper and re-exports those classes
+so callers have one stable import path.
+"""
 
 from __future__ import annotations
 
@@ -6,6 +11,15 @@ from typing import Any
 
 import numpy as np
 from PIL import Image
+
+from .camoformer_metrics import (
+    Emeasure,
+    FNR,
+    Fmeasure_and_FNR,
+    MAE,
+    Smeasure,
+    WeightedFmeasure,
+)
 
 try:
     import cv2
@@ -52,4 +66,12 @@ def resize_prediction_to_gt(prediction: Any, ground_truth: Any) -> np.ndarray:
     return np.asarray(resized, dtype=np.uint8)
 
 
-__all__ = ["resize_prediction_to_gt"]
+__all__ = [
+    "Emeasure",
+    "FNR",
+    "Fmeasure_and_FNR",
+    "MAE",
+    "Smeasure",
+    "WeightedFmeasure",
+    "resize_prediction_to_gt",
+]
