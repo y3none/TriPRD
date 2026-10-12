@@ -1,0 +1,2 @@
+experiment_id,dataset,split,backbone,input_size,seed,teacher_type,student_type,distillation_type,lambda_logit,lambda_relation,lambda_boundary,lambda_uncertainty,lambda_prior,best_epoch,S_alpha,F_beta_w,E_phi,MAE,Boundary_F,params,FLOPs,FPS,checkpoint,notes
+

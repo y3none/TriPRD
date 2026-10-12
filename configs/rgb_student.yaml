@@ -1,0 +1,12 @@
+defaults:
+  - base
+  - data_protocol
+
+experiment:
+  id: E26_full_rgb_student_v0
+  stage: vdt2048_distillation
+  input_modalities: [rgb]
+  teacher_modalities: [rgb, thermal, depth]
+  distillation: [logit, relation, boundary, uncertainty]
+  pairing: correct
+

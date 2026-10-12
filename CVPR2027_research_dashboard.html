@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CVPR 2027 三模态 COD 研究计划</title>
+  <style>
+    :root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#6b7280;--line:#e5e7eb;--blue:#2563eb;--green:#0f9d58;--orange:#d97706;--red:#dc2626;--purple:#7c3aed;--shadow:0 8px 24px rgba(23,32,51,.07)}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+    .wrap{max-width:1500px;margin:auto;padding:24px}.hero{background:linear-gradient(135deg,#172554,#2563eb);color:#fff;border-radius:18px;padding:26px 30px;box-shadow:var(--shadow)}
+    h1{margin:0 0 6px;font-size:28px}.hero p{margin:4px 0;color:#dbeafe}.deadline{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.pill{padding:7px 11px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);border-radius:999px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0}.toolbar input,.toolbar select,.toolbar button,.note{border:1px solid var(--line);border-radius:9px;background:#fff;padding:9px 11px;color:var(--ink)}.toolbar input{min-width:240px}.toolbar button{cursor:pointer}.toolbar button:hover{border-color:var(--blue);color:var(--blue)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.stat,.week,.gate,.legend{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}.stat{padding:14px}.stat b{display:block;font-size:25px;margin-top:2px}.stat span{color:var(--muted)}
+    .progress{height:9px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin-top:8px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#60a5fa,#22c55e);width:0%;transition:.25s}
+    .week{margin:16px 0;overflow:hidden}.week-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;background:#fafafa;border-bottom:1px solid var(--line)}.week-head h2{margin:0;font-size:18px}.week-head small{color:var(--muted)}
+    .week-body{padding:14px 18px}.task{display:grid;grid-template-columns:28px 64px minmax(180px,1.2fr) minmax(170px,1fr) minmax(150px,1fr) 70px minmax(160px,1fr);gap:10px;align-items:start;padding:12px 0;border-bottom:1px solid #eef0f4}.task:last-child{border-bottom:0}.task.done{opacity:.62}.task.done .task-title{text-decoration:line-through}.task input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:var(--green)}.date{color:var(--muted);font-variant-numeric:tabular-nums}.task-title{font-weight:650}.deliverable{color:#334155}.gate-text{color:var(--muted);font-size:13px}.status{font-size:12px;font-weight:650;padding:4px 8px;border-radius:999px;text-align:center;background:#eef2ff;color:#4338ca}.status.must{background:#fee2e2;color:#b91c1c}.status.done{background:#dcfce7;color:#166534}.status.optional{background:#fef3c7;color:#92400e}.owner{color:var(--muted);font-size:13px}.note{width:100%;min-height:36px;resize:vertical;font:inherit}.note::placeholder{color:#9ca3af}
+    .section-title{margin:26px 0 10px;font-size:20px}.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gate{padding:14px}.gate h3{margin:0 0 5px;font-size:15px}.gate p{margin:0;color:var(--muted)}.gate strong{color:var(--ink)}.legend{padding:14px;display:flex;gap:12px;flex-wrap:wrap;color:var(--muted)}
+    footer{color:var(--muted);font-size:12px;margin:22px 0 4px}.hidden{display:none!important}@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.task{grid-template-columns:28px 82px 1fr 1fr}.task .status,.task .owner{grid-column:3}.task .note{grid-column:4}.gates{grid-template-columns:1fr}}@media(max-width:650px){.wrap{padding:12px}.stats{grid-template-columns:1fr 1fr}.task{grid-template-columns:28px 1fr}.task .date,.task .deliverable,.task .gate-text,.task .status,.task .owner,.task .note{grid-column:2}.toolbar input{min-width:0;width:100%}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <h1>CVPR 2027 三模态 COD 研究计划看板</h1>
+    <p>最终路线：VDT2048 真实 RGB-T-D → 多模态关系教师 → RGB 学生 → 真实 COD；不使用 PST900，不使用合成 COD。</p>
+    <div class="deadline">
+      <span class="pill">论文注册：2026-11-10 AoE</span><span class="pill">论文提交：2026-11-16 AoE</span><span class="pill">补充材料：2026-11-23 AoE</span>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <input id="search" placeholder="搜索任务、产出或备注…" />
+    <select id="filter"><option value="all">显示全部</option><option value="todo">未完成</option><option value="done">已完成</option><option value="must">必须项</option></select>
+    <select id="weekFilter"><option value="all">全部周次</option><option value="1">第 1 周</option><option value="2">第 2 周</option><option value="3">第 3 周</option><option value="4">第 4 周</option><option value="5">第 5 周</option></select>
+    <button id="reset">清空本地进度</button><button id="export">导出进度 JSON</button>
+  </div>
+
+  <section class="stats">
+    <div class="stat"><span>总任务</span><b id="total">0</b></div>
+    <div class="stat"><span>已完成</span><b id="completed">0</b></div>
+    <div class="stat"><span>完成率</span><b id="rate">0%</b><div class="progress"><i id="bar"></i></div></div>
+    <div class="stat"><span>当前阶段</span><b id="phase">数据与基线</b></div>
+  </section>
+
+  <div id="weeks"></div>
+
+  <h2 class="section-title">投稿前必须通过的三道门槛</h2>
+  <section class="gates">
+    <article class="gate"><h3>门槛 1：教师有效</h3><p><strong>RGB-T-D teacher &gt; RGB teacher</strong><br/>正确配对效果高于随机 T/D 配对。</p></article>
+    <article class="gate"><h3>门槛 2：关系有效</h3><p><strong>Relation KD &gt; Logit KD</strong><br/>关系蒸馏在低对比度和复杂边界子集上有收益。</p></article>
+    <article class="gate"><h3>门槛 3：真实 COD 泛化</h3><p><strong>Full &gt; No KD</strong><br/>COD10K、CAMO、NC4K、CHAMELEON 至少三个数据集提升。</p></article>
+  </section>
+
+  <h2 class="section-title">状态说明</h2>
+  <div class="legend"><span>🔴 必须项</span><span>🟡 可选/增强项</span><span>✅ 已完成</span><span>备注会自动保存在当前浏览器</span></div>
+  <footer>提示：本页面使用浏览器 localStorage 保存勾选和备注。导出 JSON 后可作为周报或实验记录备份。</footer>
+</main>
+<script>
+const plan=[
+ {week:1,title:'数据与基线',range:'2026-10-12 — 2026-10-18',tasks:[
+  ['10/12','创建实验目录、配置文件和结果记录表','experiment_id、YAML 配置、CSV 结果表','所有实验可追踪','必须'],
+  ['10/13','完成 VDT2048 数据读取和 RGB/T/D/mask 四联图','dataloader、对齐检查、可视化 100 组样本','RGB/T/D/mask 一一对应','必须'],
+  ['10/14','完成 COD10K、CAMO、NC4K、CHAMELEON 数据读取','COD dataset loaders、官方 split 检查','不混用测试集','必须'],
+  ['10/15','完成统一 COD 评价脚本','Sα、Fβw、Eφ、MAE、Boundary F','与公开实现量级一致','必须'],
+  ['10/16','训练 E00 RGB-only baseline','baseline checkpoint 和日志','COD10K 可完成训练/测试','必须'],
+  ['10/17','重训 E01/E02 强 COD baseline','SINet-v2 或 ZoomNet 结果','作为主表强基线','必须'],
+  ['10/18','冻结数据协议和第一版 baseline 表','数据报告、baseline.csv','后续不再修改 split','必须'] ]},
+ {week:2,title:'多模态教师',range:'2026-10-19 — 2026-10-25',tasks:[
+  ['10/19','训练 E10 RGB teacher','RGB teacher checkpoint','验证集收敛','必须'],
+  ['10/20','训练 E11 early-fusion teacher','五通道拼接结果','优于 RGB teacher 或解释原因','必须'],
+  ['10/21','训练 E12 late-fusion teacher','三分支融合结果','参数量和 FLOPs 对齐','必须'],
+  ['10/22','实现 cross-modal relation module','目标内部、目标-背景、边界两侧关系图','关系张量可视化','必须'],
+  ['10/23','训练 E13 relation teacher','最终教师 checkpoint','E13 优于 E10','必须'],
+  ['10/24','正确配对/随机 T-D 配对实验','E30/E31 结果','正确配对明显优于随机配对','必须'],
+  ['10/25','教师诊断和阶段结论','mask、relation、boundary、uncertainty 图','通过门槛 1','必须'] ]},
+ {week:3,title:'跨模态蒸馏',range:'2026-10-26 — 2026-11-01',tasks:[
+  ['10/26','实现 E20 No KD student','RGB student checkpoint','作为学生下限','必须'],
+  ['10/27','实现 E21 Logit KD','soft mask distillation','训练稳定','必须'],
+  ['10/28','实现 E22 Feature KD','projection head 和特征蒸馏','公平对照','必须'],
+  ['10/29','实现 E23 RKD','distance/angle relation distillation','传统关系基线','必须'],
+  ['10/30','实现 E24 Relation KD','目标-背景和目标内部关系蒸馏','优于 Logit KD','必须'],
+  ['10/31','加入 boundary distillation','E25 checkpoint','Boundary F 提升','必须'],
+  ['11/01','加入 uncertainty gate，完成 E26 Full','完整学生预训练结果','通过门槛 2','必须'] ]},
+ {week:4,title:'真实 COD 迁移与验证',range:'2026-11-02 — 2026-11-08',tasks:[
+  ['11/02','COD10K 微调 E20/E21/E24/E26','COD10K test 结果','主表第一版','必须'],
+  ['11/03','CAMO 微调/测试','CAMO 结果','跨数据集验证','必须'],
+  ['11/04','NC4K、CHAMELEON 测试','四数据集结果表','至少三个数据集有提升','必须'],
+  ['11/05','去 relation/boundary/uncertainty 消融','ablation.csv','各模块独立贡献','必须'],
+  ['11/06','same-data RGB-only pretraining','E32 结果','排除数据量因素','必须'],
+  ['11/07','T-only、D-only、RGB-T、RGB-D 消融','E35-E38 结果','分析各模态贡献','必须'],
+  ['11/08','困难子集与定性可视化','小目标、低对比度、复杂边界结果','Full 在困难集提升','必须'] ]},
+ {week:5,title:'论文与提交',range:'2026-11-09 — 2026-11-16',tasks:[
+  ['11/09','锁定全部实验数字和主结论','主表、消融表、图表清单','禁止新增方法方向','必须'],
+  ['11/10','完成 CVPR registration 和作者 OpenReview 信息','注册完成','作者信息完整','必须'],
+  ['11/11','完成方法与实验章节','论文初稿 v1','数字均来自 CSV','必须'],
+  ['11/12','完成引言、相关工作、局限性','论文初稿 v2','明确与 PMKL/C²KD 差异','必须'],
+  ['11/13','完成框架图、关系图、可视化和表格','正文图表','主线清晰','必须'],
+  ['11/14','内部审稿和数字审计','问题清单、修订版','所有实验可追溯','必须'],
+  ['11/15','匿名化、格式检查、生成 PDF 和 supplementary','提交包','无作者/格式问题','必须'],
+  ['11/16','提交 CVPR 2027','OpenReview submission ID','完成投稿','必须'] ]}
+];
+const key='cvpr27_cod_plan_v1'; let saved=JSON.parse(localStorage.getItem(key)||'{}');
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function id(w,i){return `w${w}t${i}`}
+function render(){const q=document.querySelector('#search').value.toLowerCase(), f=document.querySelector('#filter').value, wf=document.querySelector('#weekFilter').value;let total=0,done=0,html='';
+ plan.forEach((p,wi)=>{if(wf!=='all'&&wf!==String(p.week))return;let rows='';p.tasks.forEach((t,ti)=>{const k=id(p.week,ti), isDone=!!saved[k]?.done, note=saved[k]?.note||'';const text=t.join(' ').toLowerCase();if(q&&!text.includes(q)&&!note.toLowerCase().includes(q))return;if(f==='done'&&!isDone||f==='todo'&&isDone||f==='must'&&t[4]!=='必须')return;total++;if(isDone)done++;rows+=`<div class="task ${isDone?'done':''}"><input type="checkbox" data-k="${k}" ${isDone?'checked':''} aria-label="完成任务"/><div class="date">${t[0]}</div><div class="task-title">${t[1]}</div><div class="deliverable">${t[2]}</div><div class="gate-text">${t[3]}</div><span class="status ${t[4]==='必须'?'must':'optional'}">${t[4]}</span><textarea class="note" data-note="${k}" placeholder="记录结果、问题或下一步…">${escapeHtml(note)}</textarea></div>`});if(rows)html+=`<section class="week"><div class="week-head"><div><h2>第 ${p.week} 周 · ${p.title}</h2><small>${p.range}</small></div><span class="status">${p.tasks.filter((_,i)=>saved[id(p.week,i)]?.done).length}/${p.tasks.length}</span></div><div class="week-body">${rows}</div></section>`});document.querySelector('#weeks').innerHTML=html;const all=plan.reduce((s,p)=>s+p.tasks.length,0),allDone=plan.reduce((s,p)=>s+p.tasks.filter((_,i)=>saved[id(p.week,i)]?.done).length,0);document.querySelector('#total').textContent=all;document.querySelector('#completed').textContent=allDone;document.querySelector('#rate').textContent=Math.round(allDone/all*100)+'%';document.querySelector('#bar').style.width=(allDone/all*100)+'%';const phase=allDone<7?'数据与基线':allDone<14?'多模态教师':allDone<21?'跨模态蒸馏':allDone<28?'真实 COD 迁移':'论文与提交';document.querySelector('#phase').textContent=phase;document.querySelectorAll('[data-k]').forEach(x=>x.onchange=()=>{saved[x.dataset.k]={...(saved[x.dataset.k]||{}),done:x.checked};localStorage.setItem(key,JSON.stringify(saved));render()});document.querySelectorAll('[data-note]').forEach(x=>x.oninput=()=>{saved[x.dataset.note]={...(saved[x.dataset.note]||{}),note:x.value};localStorage.setItem(key,JSON.stringify(saved))})}
+document.querySelector('#search').oninput=render;document.querySelector('#filter').onchange=render;document.querySelector('#weekFilter').onchange=render;document.querySelector('#reset').onclick=()=>{if(confirm('确定清空本浏览器中的所有进度和备注吗？')){saved={};localStorage.removeItem(key);render()}};document.querySelector('#export').onclick=()=>{const blob=new Blob([JSON.stringify(saved,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='CVPR2027_COD_进度备份.json';a.click();URL.revokeObjectURL(a.href)};render();
+</script>
+</body>
+</html>

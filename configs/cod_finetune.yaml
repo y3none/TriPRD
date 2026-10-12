@@ -1,0 +1,13 @@
+defaults:
+  - base
+  - data_protocol
+
+experiment:
+  id: E26_full_cod_finetune_v0
+  stage: real_cod_finetune
+  train_datasets: [COD10K_train, CAMO_train]
+  test_datasets: [COD10K_test, CAMO_test, NC4K, CHAMELEON]
+  input_modalities: [rgb]
+  relation_prior: true
+  teacher_inputs_at_inference: false
+

@@ -1,0 +1,13 @@
+defaults:
+  - base
+  - data_protocol
+
+experiment:
+  id: E13_relation_teacher_v0
+  stage: vdt2048_teacher
+  input_modalities: [rgb, thermal, depth]
+  target: mask
+  relation_module: cross_modal_relation
+  heads: [mask, relation, boundary, uncertainty]
+  pairing: correct
+

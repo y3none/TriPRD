@@ -1,0 +1,32 @@
+# 数据协议：2026-10-12 冻结
+version: "2026-10-12"
+
+paths:
+  vdt2048_root: "PATH/TO/VDT2048"
+  cod10k_root: "PATH/TO/COD10K"
+  camo_root: "PATH/TO/CAMO"
+  nc4k_root: "PATH/TO/NC4K"
+  chameleon_root: "PATH/TO/CHAMELEON"
+
+multimodal_source:
+  dataset: VDT2048
+  split: train
+  modalities: [rgb, thermal, depth, mask]
+  use_test_split: false
+  require_same_scene_split: true
+  alignment_check_samples: 200
+  visualization_samples: 20
+
+cod:
+  train: [COD10K_train, CAMO_train]
+  test: [COD10K_test, CAMO_test, NC4K, CHAMELEON]
+  inputs: [rgb, mask]
+
+forbidden:
+  - PST900
+  - synthetic_COD
+  - pseudo_thermal
+  - pseudo_depth
+  - VDT2048_test
+  - test_set_tuning
+

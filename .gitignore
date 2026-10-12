@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Local environments
+.venv/
+venv/
+.env
+
+# Large generated artifacts
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Runtime outputs
+logs/*.log
+results/*.tmp
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
