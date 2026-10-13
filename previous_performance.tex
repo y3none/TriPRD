@@ -1,0 +1,106 @@
+%% 
+%% Copyright 2019-2024 Elsevier Ltd
+%% 
+%% This file is part of the 'CAS Bundle'.
+%% --------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.3c of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.3c or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'CAS Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+%% Template article for cas-dc documentclass for 
+%% double column output.
+
+\documentclass[a4paper,fleqn]{cas-dc}
+
+% If the frontmatter runs over more than one page
+% use the longmktitle option.
+
+%\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
+
+\usepackage[numbers]{natbib}
+%\usepackage[authoryear]{natbib}
+% \usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage{subcaption}   % subfigures (LFSM/CFZM)
+\usepackage{multirow}     % table headers
+\usepackage{booktabs}     % \toprule etc.
+\usepackage{pifont}       % \ding{51}/\ding{55} check/cross marks
+
+\usepackage{xcolor}
+%%%Author macros
+\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+\tsc{WGM}
+\tsc{QE}
+
+\begin{document}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
+
+% ── Performance table ────────────────────────────────────────────────
+\begin{table*}[t]
+	\centering
+	\caption{Quantitative comparison between E2Net and existing methods. The best results are marked in \textbf{\textcolor{red}{bold red}} and the second best in \textbf{bold}.}
+	\label{tab:performance}
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{l|cccc|cccc|cccc|cccc}
+			\toprule
+			\multirow{2}{*}{Method}
+			& \multicolumn{4}{c|}{NC4K (4{,}121)}
+			& \multicolumn{4}{c|}{COD10K-Test (2{,}026)}
+			& \multicolumn{4}{c|}{CAMO-Test (250)}
+			& \multicolumn{4}{c}{CHAMELEON (76)} \\
+			\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-13}\cmidrule(lr){14-17}
+			& $S_m\!\uparrow$ & $\alpha{E}\!\uparrow$ & $F_m^w\!\uparrow$ & $M\!\downarrow$
+			& $S_m\!\uparrow$ & $\alpha{E}\!\uparrow$ & $F_m^w\!\uparrow$ & $M\!\downarrow$
+			& $S_m\!\uparrow$ & $\alpha{E}\!\uparrow$ & $F_m^w\!\uparrow$ & $M\!\downarrow$
+			& $S_m\!\uparrow$ & $\alpha{E}\!\uparrow$ & $F_m^w\!\uparrow$ & $M\!\downarrow$ \\
+			\midrule
+			\multicolumn{17}{l}{\textit{CNN-Based Methods}} \\
+			\midrule
+			PraNet$_{2020}$~\citep{Fan2020pranet} & .822 & .871 & .724 & .059 & .789 & .839 & .629 & .045 & .769 & .833 & .663 & .094 & .860 & .898 & .763 & .044 \\
+			SINet$_{2020}$~\citep{fan2020SINet} & .808 & .883 & .723 & .058 & .776 & .867 & .631 & .043 & .745 & .825 & .644 & .092 & .872 & .938 & .806 & .034 \\
+			SLSR$_{2021}$~\citep{lv2021simultaneously} & .840 & .902 & .766 & .048 & .804 & .882 & .673 & .037 & .787 & .855 & .696 & .080 & .890 & .936 & .822 & .030 \\
+			MGL-R$_{2021}$~\citep{zhai2021mutual} & .833 & .893 & .739 & .053 & .814 & .865 & .666 & .035 & .782 & .847 & .695 & .085 & .893 & .923 & .812 & .031 \\
+			PFNet$_{2021}$~\citep{mei2021camouflaged} & .829 & .892 & .745 & .053 & .800 & .868 & .660 & .040 & .782 & .852 & .695 & .085 & .882 & .942 & .810 & .033 \\
+			UJSC$_{2021}$~\citep{li2021uncertainty} & .842 & .907 & .771 & .047 & .809 & .891 & .684 & .035 & .800 & .853 & .728 & .073 & .891 & .943 & .833 & .030 \\
+			C$^2$FNet$_{2021}$~\citep{sun2021context} & .838 & .898 & .762 & .049 & .813 & .886 & .686 & .036 & .796 & .864 & .719 & .080 & .888 & .932 & .828 & .032 \\
+			SINetV2$_{2022}$~\citep{fan2021sinetv2} & .847 & .898 & .770 & .048 & .815 & .863 & .680 & .037 & .820 & .875 & .743 & .070 & .888 & .930 & .816 & .030 \\
+			SegMaR$_{2022}$~\citep{jia2022segment} & .841 & .905 & .781 & .046 & .833 & .895 & .724 & .033 & .815 & .872 & .742 & .071 & .897 & .950 & .835 & .027 \\
+			ZoomNet$_{2022}$~\citep{pang2022zoomnet} & .853 & .907 & .784 & .043 & .838 & .893 & .729 & .029 & .820 & .883 & .752 & .066 & .902 & .952 & .845 & .023 \\
+			FDNet$_{2022}$~\citep{zhong2022detecting} & .834 & .895 & .750 & .052 & .837 & .897 & .731 & .030 & .844 & .903 & .778 & .062 & .894 & .948 & .819 & .030 \\
+            DGNet$_{2023}$~\citep{ji2023deep} & .857 & .907 & .784 & .042 & .822 & .877 & .693 & .033 & .839 & .901 & .769 & .057 & .890 & .934 & .816 & .029 \\
+			CamoFormer-R$_{2024}$~\citep{yin2024camoformer} & .857 & .915 & .793 & .041 & .838 & .898 & .730 & .029 & .817 & .884 & .756 & .066 & .900 & .949 & .843 & .024 \\
+			CamoFormer-C$_{2024}$~\citep{yin2024camoformer} & .884 & .936 & .833 & .033 & .860 & .923 & .767 & .024 & .860 & .920 & .811 & .051 & .901 & .955 & .846 & .025 \\
+			\midrule
+			\multicolumn{17}{l}{\textit{Transformer-Based Methods}} \\
+			\midrule
+			COS-T$_{2021}$~\citep{wang2022camouflaged} & .825 & .881 & .730 & .055 & .790 & .901 & .693 & .035 & .813 & .896 & .776 & .060 & .885 & .948 & .854 & .025 \\
+			VST$_{2021}$~\citep{liu2021visual} & .830 & .887 & .740 & .053 & .810 & .866 & .680 & .035 & .805 & .863 & .780 & .069 & .888 & .936 & .820 & .033 \\
+			UGTR$_{2021}$~\citep{yang2021uncertainty} & .839 & .886 & .746 & .052 & .817 & .850 & .666 & .036 & .784 & .859 & .794 & .086 & .888 & .921 & .794 & .031 \\
+			ICON$_{2022}$~\citep{zhu2022ICON} & .858 & .914 & .782 & .041 & .818 & .882 & .688 & .033 & .840 & .902 & .769 & .058 & .854 & .920 & .763 & .037 \\
+			TPRNet$_{2022}$~\citep{zhang2023Tprnet} & .854 & .903 & .790 & .047 & .829 & .892 & .725 & .034 & .814 & .870 & .781 & .076 & .891 & .930 & .816 & .031 \\
+			DTINet$_{2022}$~\citep{liu2022boosting} & .863 & .915 & .792 & .041 & .824 & .893 & .695 & .034 & .857 & .912 & .796 & .050 & .883 & .928 & .813 & .033 \\
+			CamoFormer-S$_{2024}$~\citep{yin2024camoformer} & .888 & .941 & .840 & .031 & .862 & .932 & .772 & .024 & .876 & .935 & .832 & .043 & .891 & .953 & .829 & .026 \\
+			CamoFormer-P$_{2024}$~\citep{yin2024camoformer} & .892 & .941 & .847 & .030 & .869 & .931 & .786 & .023 & .872 & .931 & .831 & .046 & \textbf{.910} & \textbf{\textcolor{red}{.970}} & \textbf{.865} & \textbf{.022} \\
+			CamoDiffusion$_{2025}$~\citep{Sun2025camodiffusion} & \textbf{.893} & \textbf{.945} & \textbf{.859} & \textbf{.029} & \textbf{.881} & \textbf{.946} & \textbf{.814} & \textbf{.020} & \textbf{.878} & \textbf{.943} & \textbf{.853} & \textbf{.042} & $-$ & $-$ & $-$ & $-$ \\
+			\midrule
+			\multicolumn{17}{l}{\textit{E2Net (Ours)}} \\
+			\midrule
+			E2Net
+			& \textbf{\textcolor{red}{.919}} & \textbf{\textcolor{red}{.954}} & \textbf{\textcolor{red}{.892}} & \textbf{\textcolor{red}{.022}}
+			& \textbf{\textcolor{red}{.910}} & \textbf{\textcolor{red}{.959}} & \textbf{\textcolor{red}{.857}} & \textbf{\textcolor{red}{.016}}
+			& \textbf{\textcolor{red}{.907}} & \textbf{\textcolor{red}{.950}}  & \textbf{\textcolor{red}{.884}} & \textbf{\textcolor{red}{.031}}
+			& \textbf{\textcolor{red}{.927}} & \textbf{.969} & \textbf{\textcolor{red}{.898}} & \textbf{\textcolor{red}{.018}} \\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table*}
+\end{document}
+

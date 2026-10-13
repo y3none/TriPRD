@@ -37,7 +37,8 @@ SPLIT_NAMES = {"train", "test", "val", "valid", "validation"}
 # names.  Matching complete path tokens keeps ``depth`` from being confused
 # with an arbitrary substring in a scene name.
 MODALITY_ALIASES: Mapping[str, set[str]] = {
-    "rgb": {"rgb", "visible", "color", "colour", "vis"},
+    # VDT-2048's extracted archive uses ``V`` for the visible/RGB folder.
+    "rgb": {"rgb", "visible", "visibleimage", "color", "colour", "vis", "v"},
     "thermal": {"thermal", "therm", "infrared", "infraredimage", "ir", "t"},
     "depth": {"depth", "depthmap", "disparity", "disp", "d"},
     "mask": {"mask", "masks", "label", "labels", "gt", "groundtruth", "sal", "saliency"},
@@ -195,6 +196,13 @@ class VDT2048Index:
         if not self.source.exists:
             return
         for location in self.source.locations():
+            # macOS archives sometimes contain AppleDouble sidecars such as
+            # ``._1.png``.  They are metadata, not image pixels; keeping them
+            # would collide with the real sample ID and can select a 4 KiB
+            # sidecar instead of the actual image.
+            basename = str(location).replace("\\", "/").rsplit("/", 1)[-1]
+            if basename.startswith("."):
+                continue
             suffix = Path(str(location)).suffix.lower()
             if suffix not in IMAGE_EXTENSIONS:
                 continue

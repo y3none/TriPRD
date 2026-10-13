@@ -187,7 +187,7 @@ def evaluate_dataset(
     sm_result = sm.get_results()["sm"]
     em_result = em.get_results()["em"]
     mae_result = mae.get_results()["mae"]
-    return {
+    result = {
         "model": model,
         "dataset": dataset,
         "split": "test",
@@ -202,6 +202,11 @@ def evaluate_dataset(
         "FNR": float(fnr),
         "F_beta_adaptive": float(fm_result["adp"]),
     }
+    # Aliases used by the prior-performance table.  Keep the explicit names
+    # above for the project registry while making copy/paste comparison safe.
+    result.update({"S_m": result["S_alpha"], "alpha_E": result["E_phi"],
+                   "F_m_w": result["F_beta_w"], "M": result["MAE"]})
+    return result
 
 
 def _append_records(path: Path, results: Iterable[dict[str, Any]], args: argparse.Namespace) -> None:

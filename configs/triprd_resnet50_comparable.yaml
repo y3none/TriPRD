@@ -1,0 +1,31 @@
+# Paper-comparable TriPRD protocol aligned to previous_performance.tex.
+model:
+  variant: resnet50
+  backbone: resnet50
+  input_size: [352, 352]
+  decoder_channels: 256
+  imagenet_pretrained: true
+
+data:
+  vdt_root: datasets/VDT-2048
+  cod_root: datasets/COD_benchmark
+  vdt_split: train
+  cod_train: [COD10K, CAMO]
+  cod_test: [NC4K, COD10K, CAMO, CHAMELEON]
+  val_fraction: 0.2
+
+optimization:
+  vdt_epochs: 100
+  cod_epochs: 100
+  batch_size: 8
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  optimizer: adamw
+  seed: 20261012
+
+evaluation:
+  metrics: [S_alpha, E_phi, F_beta_w, MAE]
+  boundary_metric: Boundary_F
+  boundary_rate: 15
+  prediction_resize: bilinear_to_gt
+  checkpoint_selection: validation_dice

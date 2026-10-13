@@ -1,0 +1,8 @@
+# Install a platform-appropriate PyTorch build first if CUDA is required.
+torch>=2.1
+torchvision>=0.16
+numpy>=1.24
+Pillow>=9.5
+scipy>=1.10
+opencv-python>=4.8
+tqdm>=4.65
