@@ -23,6 +23,8 @@ datasets/*
 logs/*.log
 results/*.tmp
 results/*_report.json
+results/*/model_output.txt
+results/*/comparison.json
 
 # IDE and OS files
 .vscode/

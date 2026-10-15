@@ -327,8 +327,13 @@ def _fit_stage(name: str, model: nn.Module, train_loader: DataLoader, val_loader
     stage_dir.mkdir(parents=True, exist_ok=True)
     log_path = stage_dir / "metrics.jsonl"
     best_score = -float("inf")
+    best_epoch = 0
+    stage_started = time.time()
     best_path = stage_dir / "best.pt"
     history: list[dict[str, Any]] = []
+    print(f"\n=== {name}: {epochs} epochs ===", flush=True)
+    print(f"Samples: train={len(train_loader.dataset)}, val={len(val_loader.dataset)} | log: {log_path}", flush=True)
+    print("Epoch       Loss T/V       SoftDice T/V      Best(epoch)    Time / stage ETA", flush=True)
     for epoch in range(1, epochs + 1):
         started = time.time()
         train = _run_epoch(model, train_loader, device, criterion, optimizer=optimizer, teacher=teacher, use_modalities=use_modalities)
@@ -340,11 +345,22 @@ def _fit_stage(name: str, model: nn.Module, train_loader: DataLoader, val_loader
         score = float(val["dice"])
         state = {"model": model.state_dict(), "optimizer": optimizer.state_dict(), "epoch": epoch, "val_dice": score, "stage": name, "seed": seed}
         torch.save(state, stage_dir / "last.pt")
-        if score > best_score:
+        improved = score > best_score
+        if improved:
             best_score = score
+            best_epoch = epoch
             torch.save(state, best_path)
-        print(json.dumps(row, ensure_ascii=False))
+        elapsed = time.time() - stage_started
+        eta = elapsed / epoch * (epochs - epoch)
+        print(
+            f"{epoch:03d}/{epochs:03d}  {train['total']:.4f}/{val['total']:.4f}  "
+            f"{train['dice']:.4f}/{val['dice']:.4f}  "
+            f"{best_score:.4f}({best_epoch:03d})  "
+            f"{time.time() - started:.0f}s / {eta / 60:.1f}m{' *' if improved else ''}",
+            flush=True,
+        )
     _save_json(stage_dir / "history.json", history)
+    print(f"[{name}] complete | best validation Dice {best_score:.4f} | checkpoint {best_path}", flush=True)
     return best_path, {"best_val_dice": best_score, "epochs": epochs, "history": history}
 
 
@@ -480,6 +496,8 @@ def main() -> None:
     vdt_train, vdt_val = _split(_vdt_items(args.vdt_root, args.max_samples), args.val_fraction, args.seed)
     cod_train, cod_val = _split(_cod_items(args.cod_root, args.max_samples), args.val_fraction, args.seed)
     manifest = {"seed": args.seed, "val_fraction": args.val_fraction, "vdt_train": [x.key for x in vdt_train], "vdt_val": [x.key for x in vdt_val], "cod_train": [x.key for x in cod_train], "cod_val": [x.key for x in cod_val]}
+    print(f"TriPRD | {args.model_variant} | device={device} | seed={args.seed} | groups={','.join(groups)}", flush=True)
+    print(f"Output: {out_dir.resolve()} | SoftDice selects checkpoints; * = new best", flush=True)
     _save_json(out_dir / "split_manifest.json", manifest)
     loaders = {
         "vdt_train": DataLoader(PairDataset(vdt_train, args.image_size, augment=True), args.batch_size, shuffle=True, num_workers=0),
@@ -536,15 +554,22 @@ def main() -> None:
         comparison["groups"][group] = summary
         _load(model, cod_ckpt, device)
         for dataset_name in test_datasets:
+            print(f"\n[{group}/test] {dataset_name}: RGB prediction + evaluation/ metrics", flush=True)
             try:
                 prediction_summary = _predict_test(model, args.cod_root, dataset_name, out_dir / group, args.image_size, device, args.max_test_samples)
                 official = _official_metrics(args.cod_root, out_dir / group / "predictions", dataset_name, args.max_test_samples)
                 comparison["test"].setdefault(group, {})[dataset_name] = {**prediction_summary, "official": official}
             except Exception as exc:
                 comparison["test"].setdefault(group, {})[dataset_name] = {"status": "unavailable", "error": str(exc)}
+            result = comparison["test"][group][dataset_name]
+            official = result.get("official", result)
+            if "S_alpha" in official:
+                print(" | ".join(f"{key}={official[key]:.4f}" for key in ("S_alpha", "F_beta_w", "E_phi", "MAE", "Boundary_F")), flush=True)
+            else:
+                print(f"WARNING: evaluation unavailable: {official.get('error', 'unknown error')}", flush=True)
         _save_json(out_dir / "comparison.json", comparison)
     _save_json(out_dir / "comparison.json", comparison)
-    print(json.dumps(comparison, ensure_ascii=False, indent=2))
+    print(f"\nRun finished. Full histories and results: {out_dir / 'comparison.json'}", flush=True)
 
 
 if __name__ == "__main__":

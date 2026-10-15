@@ -26,7 +26,17 @@ PowerShell wrapper 也会执行同一套 A/B/C/D 训练、RGB-only 测试和评�
 .\tools\run_triprd_smoke.ps1
 ```
 
-脚本默认是 64×64、8 通道、VDT/COD 各 2 个 epoch、每个训练源最多 64 张图；这只能检查链路和损失是否正常，不能作为正式效果结论。完整对照运行示例：
+正式 ResNet-50 全量实验请使用专用脚本：
+
+```powershell
+.\tools\run_triprd_full.ps1
+```
+
+该脚本默认使用 ResNet-50、ImageNet 初始化、352×352 输入、256 解码器通道、VDT/COD 各 100 个 epoch、全部训练样本和四个测试集；checkpoint 只按验证 Dice 选择。可用 `-VdtRoot`、`-CodRoot`、`-OutputRoot`、`-VdtEpochs` 和 `-CodEpochs` 覆盖默认值。
+
+Linux 上使用 `CUDA_VISIBLE_DEVICES=3 bash tools/run_triprd_full.sh`；该 Bash 脚本将终端输出追加到输出目录的 `run.log` 并传递退出状态。PowerShell 脚本将输出显示在终端，需另行保留完整日志。
+
+上面的 smoke 脚本默认是 64×64、8 通道、VDT/COD 各 2 个 epoch、每个训练源最多 64 张图；这只能检查链路和损失是否正常，不能作为正式效果结论。完整对照运行示例：
 
 ```powershell
 .\tools\run_triprd_smoke.ps1 `

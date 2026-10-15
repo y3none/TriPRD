@@ -34,12 +34,13 @@ except ImportError:  # pragma: no cover - optional progress display
 
 try:
     from datasets.cod_dataset import CAMOIndex, COD10KIndex, CHAMELEONIndex, NC4KIndex
-    from evaluation.camoformer_metrics import (
+    from evaluation.cod_metrics import (
         Emeasure,
         Fmeasure_and_FNR,
         MAE,
         Smeasure,
         WeightedFmeasure,
+        resize_prediction_to_gt,
     )
 except ImportError as exc:  # pragma: no cover - depends on the experiment environment
     raise SystemExit("COD evaluation requires the project dependencies; install numpy scipy opencv-python") from exc
@@ -165,9 +166,9 @@ def evaluate_dataset(
             raise ValueError(f"Unable to read prediction: {prediction_path}")
         ground_truth = np.asarray(index.read_image(sample.mask).convert("L"), dtype=np.uint8)
         if prediction.shape != ground_truth.shape:
-            # Match CamoFormer eval.py: cv2.resize without an interpolation
-            # argument uses INTER_LINEAR. Keep the resized image in RAM.
-            prediction = cv2.resize(prediction, ground_truth.shape[::-1])
+            # Delegate resizing to the project evaluation module, which
+            # preserves CamoFormer's default linear interpolation.
+            prediction = resize_prediction_to_gt(prediction, ground_truth)
 
         fm.step(pred=prediction, gt=ground_truth)
         wfm.step(pred=prediction, gt=ground_truth)
@@ -200,7 +201,7 @@ def evaluate_dataset(
         "Boundary_F": None if boundary_f is None else float(boundary_f.get_results()["wfm"]),
         "Boundary_MAE": None if boundary_mae is None else float(boundary_mae.get_results()["mae"]),
         "FNR": float(fnr),
-        "F_beta_adaptive": float(fm_result["adp"]),
+        "F_beta_adaptive": float(fm_result["fm"]["adp"]),
     }
     # Aliases used by the prior-performance table.  Keep the explicit names
     # above for the project registry while making copy/paste comparison safe.

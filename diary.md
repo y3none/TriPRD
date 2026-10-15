@@ -56,19 +56,3 @@ CUDA_VISIBLE_DEVICES=1 python tools/run_triprd_ab.py \
 这次检查仍使用实际 ResNet-50 和 352 输入，只缩短数据量与轮数。第一次启用 `--pretrained` 时，torchvision 会尝试下载 ImageNet 权重。
 
 **当前脚本是单 GPU 训练，不会自动利用两张卡。** 先验证单卡流程，再考虑两张卡分别跑不同种子；每次运行必须使用不同输出目录。
-
-
-python - <<'PY'
-from datasets.vdt2048 import VDT2048Index
-from datasets.cod_dataset import COD10KIndex
-
-v = VDT2048Index("/data2/yyy/TriPRD/datasets/VDT-2048", "train")
-print("VDT assets:", len(v.assets))
-print(v.validate(max_samples=2))
-
-c = COD10KIndex("/绝对路径/COD_benchmark", "train")
-print("COD10K train:", len(c))
-
-v.close()
-c.close()
-PY
