@@ -2,6 +2,14 @@
 
 TriPRD is a tri-modal teacher and RGB student framework for camouflaged object detection. The teacher uses RGB, thermal, and depth inputs during training; the student uses RGB only for deployment.
 
+**Current release scope (2026-10-16):** the implemented version contains a
+mean-fusion tri-modal teacher, fused-feature relation/boundary KD, and the
+training/evaluation controls used in the completed optimization experiments.
+The next explicit cross-modal relation teacher, RGB relation-driven decoder,
+and relation-branch-only transfer are research plans, **not implemented features**.
+See [the optimization experiment summary](experiments/optimization_summary.md)
+for verified results and [Paper Scope](paper_scope.md) for the next method.
+
 ## Implementation baseline
 
 The initial A/B/C/D pipeline was introduced in commit `75adf91` (`Add TriPRD A/B/C/D experiment pipeline and results`). It includes the ResNet-50 comparable model, the controlled A/B/C/D runner, training and evaluation utilities, tests, configuration files, and the environment-check report in [`results/resnet50_env_check_analysis.md`](results/resnet50_env_check_analysis.md).
@@ -22,7 +30,7 @@ The observed order was B > D > A > C. These numbers are an environment and pipel
 - **A — COD RGB supervised baseline:** train the RGB student directly on COD data.
 - **B — RGB supervised pretraining:** pretrain the RGB student on VDT RGB masks, then fine-tune it on COD.
 - **C — Logit distillation:** train a tri-modal RGB/thermal/depth teacher, distill its output logits into the RGB student on VDT, then fine-tune on COD.
-- **D — Full distillation:** use logit, feature-relation, and boundary distillation with an uncertainty gate derived from teacher modality disagreement, then fine-tune on COD.
+- **D — Full distillation:** use logit, feature-relation, and boundary distillation with a detached gate derived from teacher modality-prediction disagreement, then fine-tune on COD. This is not a learned student uncertainty module.
 
 ## Quick start
 
@@ -36,7 +44,7 @@ python tools/run_triprd_ab.py --model-variant resnet50 --pretrained \
 
 Use the dataset-root options when the datasets are stored outside the default `datasets/` directory. See [`tools/TRIPRD_QUICKSTART.md`](tools/TRIPRD_QUICKSTART.md) for the full protocol and evaluation commands.
 
-For the full paper-comparable Windows run, use:
+For the full ResNet-50 Windows run, use:
 
 ```powershell
 .\tools\run_triprd_full.ps1
@@ -54,6 +62,56 @@ record with `python tools/record_experiment.py`; the command writes a Markdown
 record and updates `experiments/index.md` without changing the raw run output.
 
 ## Training and evaluation tools
+
+The post-E001 optimization workflow is documented in
+[`tools/TRIPRD_OPTIMIZATION.md`](tools/TRIPRD_OPTIMIZATION.md). It provides
+four-GPU queues for COD training, encoder-only transfer with a paired
+second-seed baseline repeat, and KD ablations, original-size
+source-balanced validation metrics with Sm checkpoint selection, separate
+training/split seeds, checkpoint provenance checks, differential learning
+rates and cosine warmup, and independent KD controls. Screening uses
+`--skip-test`; frozen checkpoints are tested separately with `--eval-only`.
+Legacy loss and runner defaults remain available for comparison.
+
+The GPU smoke check and both COD/transfer screens are complete. The table
+below reports all four metrics at each run's **Sm-selected epoch**, using the
+equal-weight mean of COD10K-val (608 images) and CAMO-val (200 images).
+Each full screen trained on 3,232 images for 100 COD epochs, with formal
+validation every five epochs. These are internal validation results;
+all nine optimization runs used `--skip-test`.
+
+| Run | Train seed | Transfer | Selected epoch | Sm ↑ | Fw ↑ | mean E ↑ | MAE ↓ |
+|---|---:|---|---:|---:|---:|---:|---:|
+| A_control | 20261012 | No VDT | 10 | 0.798263 | 0.677055 | 0.848436 | 0.054341 |
+| A_schedule | 20261012 | No VDT | 95 | 0.807636 | 0.704436 | 0.868485 | 0.047933 |
+| B_schedule | 20261012 | Full | 40 | 0.781063 | 0.648989 | 0.836460 | 0.055411 |
+| C_schedule | 20261012 | Full | 60 | 0.776925 | 0.649248 | 0.837467 | 0.056724 |
+| A_control_repeat | 20261013 | No VDT | 10 | 0.807635 | 0.687991 | 0.861264 | 0.051713 |
+| A_schedule_repeat | 20261013 | No VDT | 35 | 0.810328 | 0.694426 | 0.873200 | 0.050660 |
+| B_encoder | 20261012 | Encoder only | 95 | 0.780768 | 0.656656 | 0.836831 | 0.053569 |
+| C_encoder | 20261012 | Encoder only | 85 | 0.776117 | 0.652425 | 0.839120 | 0.055049 |
+
+- A_schedule improves macro Sm by 0.009373 and 0.002693 in the two paired
+  seeds (mean difference 0.006033). This is preliminary replication, not
+  statistical significance or whole-pipeline multi-seed confirmation.
+- In seed13, CAMO Sm decreases by 0.002951 and MAE increases by 0.001992;
+  the new recipe does not improve every source in both seeds.
+- Encoder-only transfer changes B/C Sm by -0.000296/-0.000808 relative
+  to their same-seed full-transfer controls. Their gaps to seed12 A_schedule
+  remain -0.026868/-0.031518. Resetting the decoder/head did not recover Sm.
+- B/C reuse the same old VDT checkpoint hashes across the two screens.
+  These runs evaluate COD adaptation, not newly trained relation/boundary KD.
+- Only comparison files are synced locally. Recorded source hashes match
+  the current core implementation; split members and checkpoint contents
+  have not been independently rechecked from the server files. Whole manifest
+  hashes can differ because their metadata includes train seed/source path.
+
+Individual records, per-source metrics, evidence SHA256 values, and the
+version summary are in [experiments](experiments/optimization_summary.md).
+The COD, transfer, and distill CLI queues are implemented; the distill queue
+has not been run as a full optimization experiment. The new research mechanism
+in the [CVPR 2027 plan](cvpr2027_submission_plan.md) requires separate implementation
+and is not activated by the existing `--phase distill` option.
 
 The experiment tooling includes the following improvements:
 
@@ -199,14 +257,13 @@ Keep this run as the full-run baseline. The results do not establish a stable
 advantage for full distillation over A or B. Preserve A as the regional baseline,
 B as the VDT data/budget control, and C as the logit-distillation control.
 
-Next, add original-size validation metrics and a fixed checkpoint-selection
-rule, then reuse VDT weights to compare A′/B′/C′ under a common improved COD
-fine-tuning recipe. Test encoder-only transfer if full transfer remains harmful.
-After that, isolate D's boundary, relation and gating contributions, starting
-with boundary KD removal and weight reduction given the observed loss scale.
-Record gradient scales and gate distributions, then verify the winning
-configuration with at least three training seeds while keeping the data split
-fixed. These changes are planned, not yet implemented.
+The validation/selection controls, optimizer controls, configurable KD losses,
+and diagnostics proposed after E001 are now implemented. The COD recipe and
+encoder-only screens have also completed; their results are summarized above.
+Full retraining with the revised KD losses, three-seed confirmation, and new
+four-test-set results remain pending. The next TriPRD relation mechanism is
+specified separately in [Paper Scope](paper_scope.md), with explicit controls
+and falsification conditions rather than an assumed performance gain.
 
 The [experiment record](experiments/E001_triprd_full.md) contains the complete group
 deltas, training summary, evidence inventory and decision criteria. A single

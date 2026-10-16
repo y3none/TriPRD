@@ -25,6 +25,8 @@ results/*.tmp
 results/*_report.json
 results/*/model_output.txt
 results/*/comparison.json
+results/optimization/
+.pytest_cache/
 
 # IDE and OS files
 .vscode/

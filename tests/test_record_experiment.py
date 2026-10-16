@@ -84,6 +84,60 @@ class RecordExperimentTests(unittest.TestCase):
         self.assertFalse(self.log_dir.exists())
         self.assertFalse((self.work / "escape.md").exists())
 
+    def test_validation_only_record_contains_selected_macro_and_sources(self):
+        macro = {"S_alpha": 0.8, "F_beta_w": 0.7, "E_phi": 0.9, "MAE": 0.04}
+        sources = {
+            "COD10K": {"num_samples": 60, "S_alpha": 0.9, "F_beta_w": 0.8, "E_phi": 0.95, "MAE": 0.02},
+            "CAMO": {"num_samples": 20, "S_alpha": 0.7, "F_beta_w": 0.6, "E_phi": 0.85, "MAE": 0.06},
+        }
+        summary = {"protocol": {}, "test_status": "skipped", "test": {}, "groups": {
+            "A": {"cod_finetune": {"best_epoch": 2, "selection_metric": "S_alpha", "best_selection_score": 0.8,
+                "history": [
+                    {"epoch": 1, "val_official": {"macro": {**macro, "S_alpha": 0.123}}},
+                    {"epoch": 2, "val_official": {"macro": macro, "sources": sources}},
+                ]}},
+        }}
+        (self.run_dir / "comparison.json").write_text(json.dumps(summary), encoding="utf-8")
+        result = self.run_recorder()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        record = (self.log_dir / "E001.md").read_text(encoding="utf-8")
+        self.assertIn("Test status: skipped", record)
+        self.assertIn("未进行测试", record)
+        self.assertIn("| A | 2 | S_alpha | 0.800000 | 0.800000 | 0.700000 | 0.900000 | 0.040000 | ok |", record)
+        self.assertIn("| A | COD10K | 2 | 60 | 0.900000 | 0.800000 | 0.950000 | 0.020000 |", record)
+        self.assertIn("| A | CAMO | 2 | 20 | 0.700000 | 0.600000 | 0.850000 | 0.060000 |", record)
+        self.assertNotIn("0.123000", record)
+
+    def test_legacy_summary_does_not_invent_selected_epoch_or_official_metrics(self):
+        summary = {"protocol": {"seed": 7}, "test": {}, "groups": {
+            "A": {"cod_finetune": {"best_val_dice": 0.98, "epochs": 2,
+                "history": [{"epoch": 1, "val": {"dice": 0.98}}, {"epoch": 2, "val": {"dice": 0.7}}]}},
+        }}
+        (self.run_dir / "comparison.json").write_text(json.dumps(summary), encoding="utf-8")
+        result = self.run_recorder()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        record = (self.log_dir / "E001.md").read_text(encoding="utf-8")
+        self.assertIn("| A |  |  |  |  |  |  |  | unavailable: selection metadata not recorded |", record)
+        self.assertIn("Test status: not recorded", record)
+        self.assertNotIn("0.980000", record)
+
+    def test_reused_checkpoint_and_unmeasured_selected_epoch_are_unavailable(self):
+        summary = {"protocol": {}, "test": {}, "groups": {
+            "B": {"cod_finetune": {"reused": True, "source_epoch": 8, "checkpoint": "B/cod/best.pt"}},
+            "C": {"cod_finetune": {"best_epoch": 3, "selection_metric": "dice", "best_selection_score": 0.9,
+                "history": [
+                    {"epoch": 2, "val_official": {"macro": {"S_alpha": 0.99, "F_beta_w": 0.98, "E_phi": 0.97, "MAE": 0.01}}},
+                    {"epoch": 3, "val": {"dice": 0.9}},
+                ]}},
+        }}
+        (self.run_dir / "comparison.json").write_text(json.dumps(summary), encoding="utf-8")
+        result = self.run_recorder()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        record = (self.log_dir / "E001.md").read_text(encoding="utf-8")
+        self.assertIn("| B |  |  |  |  |  |  |  | unavailable: selection metadata not recorded |", record)
+        self.assertIn("| C | 3 | dice | 0.900000 |  |  |  |  | unavailable: official validation not recorded at selected epoch |", record)
+        self.assertNotIn("0.990000", record)
+
 
 if __name__ == "__main__":
     unittest.main()

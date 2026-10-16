@@ -23,6 +23,8 @@ python tools/record_experiment.py \
 
 每个 `run-dir` 应至少保留 `run.log`、`comparison.json`、`split_manifest.json`、训练阶段的 `metrics.jsonl`、`history.json`、`best.pt` 和预测图。正式指标以 `comparison.json` 的 `test.<group>.<dataset>.official`（由 `evaluation/` 计算）为准，MAE 使用 `official.MAE`。外层 `dice`、`mae` 是快速预测统计，须与正式指标分列；训练 soft Dice 只用于收敛监控。
 
+筛选阶段使用 `--skip-test` 时不生成预测图，也没有 test 指标，这是正常状态。记录器会从 `groups.<group>.cod_finetune` 提取选模指标、best epoch，以及该 epoch 的 `history[].val_official`，分别报告来源等权验证指标和各来源指标；不会用其他 epoch 的结果补齐空值。旧记录缺少这些字段时显示 `unavailable`。冻结后的 `--eval-only` 单独登记，并关联来源训练记录；不能把验证分数写入正式 test 表。新流程见 [优化实验说明](../tools/TRIPRD_OPTIMIZATION.md)。
+
 原始文件可保存在本地或服务器，不要求全部提交 Git。未随仓库提交的证据须在记录中注明存放位置、核验范围和 SHA256，避免将仅本地存在的文件写成仓库链接。
 
 `experiments/index.md` 是所有实验的索引，单个 Markdown 记录保存变更、假设、协议、自动汇总结果、分析和下一步决定。

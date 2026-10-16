@@ -1,13 +1,17 @@
 # TriPRD 可行性运行
 
-这套脚本提供两种模式：`tiny` 使用 `models/triprd.py` 中的轻量 U-Net 风格网络，用于快速检查；`resnet50` 使用 ImageNet-compatible ResNet-50 和 352×352 输入，用于和 `previous_performance.tex` 的前人结果按同一指标口径比较。
+**更新：2026-10-16。** E001 后的 COD 配方筛选和 encoder-only 迁移/第二种子 A 复验均已完成。入口、历史命令及执行状态见 [四卡优化实验说明](TRIPRD_OPTIMIZATION.md)，结果见 [优化实验汇总](../experiments/optimization_summary.md)。A 新配方在两个种子上提高来源等权 Sm，但仍有 CAMO 退步；encoder-only 未消除 B/C 负迁移。本轮没有新四测试集结果，也没有完整三种子确认结论。
+
+本文保留上一版默认配方用于复现和排错。优化 runner 已支持正式验证 Sm 选模、固定数据划分、种子分离和权重复用；旧 wrapper 不会自动启用这些选项。当前 `--phase distill` 的 uniform Gram/概率边界 KD 消融已实现但未执行；[Paper Scope](../paper_scope.md) 中的显式跨模态关系教师、学生关系分支及仅迁移关系分支的下一版机制仍待实现，与该旧队列不同。研究计划见 [CVPR 2027 计划](../cvpr2027_submission_plan.md)。
+
+这套脚本提供两种模式：`tiny` 使用 `models/triprd.py` 中的轻量 U-Net 风格网络，用于快速检查；`resnet50` 使用 ImageNet-compatible ResNet-50 和 352×352 输入。项目支持 `previous_performance.tex` 中的指标，但同一指标名称不代表训练协议、预训练资源和测试设置已与前人对齐；内部验证均值不能直接与论文测试集分数比较。
 若只做最快的端到端 smoke，可在下面每条训练/测试命令中加上 `--image-size 64 --base-channels 8`；三阶段必须使用相同的这两个值。
 
 运行环境至少需要 PyTorch、NumPy、Pillow；评测还需要项目已有的 `opencv-python`、`scipy` 和 `tqdm`。请先把 VDT-2048 和 COD benchmark 按 `configs/data_protocol.yaml` 的目录或 ZIP 形式准备好。
 
-## 一键运行
+## 旧默认配方的一键运行（历史复现）
 
-要验证方法本身是否有效，优先运行严格对照脚本。它固定 VDT/COD 的 train/validation 划分，使用相同学生网络、初始化和 COD 预算，并按 validation Dice 选择 checkpoint：
+下面的历史对照脚本固定 VDT/COD 的 train/validation 划分，使用相同学生网络、初始化和 COD 预算，并按 validation Dice 选择 checkpoint。新实验使用优化说明中的验证筛选协议，不应把本段默认执行当作尚未完成的下一波：
 
 ```powershell
 python tools/run_triprd_ab.py `
@@ -18,7 +22,7 @@ python tools/run_triprd_ab.py `
   --out results/triprd_ab
 ```
 
-输出包括 `split_manifest.json`、各组的 `metrics.jsonl` 和 `best.pt`、所请求测试集的 RGB-only 预测，以及 `comparison.json`。四组含义是：A 直接 COD RGB 训练；B VDT RGB 监督预训练后 COD 微调；C VDT logit KD 后 COD 微调；D VDT 完整关系/边界/不确定性门控 KD 后 COD 微调。只有最后统一测试，不能用测试集选模型。
+输出包括 `split_manifest.json`、各组的 `metrics.jsonl` 和 `best.pt`、所请求测试集的 RGB-only 预测，以及 `comparison.json`。四组含义是：A 直接 COD RGB 训练；B VDT RGB 监督预训练后 COD 微调；C VDT logit KD 后 COD 微调；D 上一版融合特征关系/边界/disagreement 门控 KD 后 COD 微调。此处 D 不包含下一版显式关系教师或 learned uncertainty 模块。只有最后统一测试，不能用测试集选模型；方法筛选使用 `--skip-test`，冻结后才执行评估。
 
 PowerShell wrapper 也会执行同一套 A/B/C/D 训练、RGB-only 测试和评测：
 
@@ -26,7 +30,7 @@ PowerShell wrapper 也会执行同一套 A/B/C/D 训练、RGB-only 测试和评�
 .\tools\run_triprd_smoke.ps1
 ```
 
-正式 ResNet-50 全量实验请使用专用脚本：
+复现旧版 ResNet-50 配方可使用专用脚本：
 
 ```powershell
 .\tools\run_triprd_full.ps1
@@ -45,7 +49,7 @@ Linux 上使用 `CUDA_VISIBLE_DEVICES=3 bash tools/run_triprd_full.sh`；该 Bas
   -Datasets COD10K,CAMO,NC4K,CHAMELEON
 ```
 
-和前人表格直接对齐的完整 ResNet-50 版本：
+使用四个官方测试集和完整训练样本上限的旧版 ResNet-50 示例：
 
 ```powershell
 .\tools\run_triprd_smoke.ps1 `
@@ -56,7 +60,9 @@ Linux 上使用 `CUDA_VISIBLE_DEVICES=3 bash tools/run_triprd_full.sh`；该 Bas
   -OutputRoot results/triprd_resnet50
 ```
 
-`--pretrained` 需要本机已有 torchvision 的 ResNet-50 权重；启用后 RGB 自动使用 ImageNet mean/std 归一化。若实验服务器不能联网，先手工放置权重或去掉该开关，并在结果中注明未使用 ImageNet 初始化。这个版本的指标口径与 `previous_performance.tex` 一致：NC4K、COD10K-Test、CAMO-Test、CHAMELEON，以及 $S_m$、$alpha E$、$F_m^w$、$M$。
+`--pretrained` 需要本机缓存或可下载 torchvision 的 ResNet-50 权重；启用后 RGB 自动使用 ImageNet mean/std 归一化。若实验服务器不能联网，先手工放置权重；去掉该开关会改变实验条件，必须注明且不能与 ImageNet 初始化组混作同配方对照。这里使用 NC4K、COD10K-Test、CAMO-Test、CHAMELEON，以及 Sm、weighted F、mean E、MAE。比较前人 E 指标时仍须核对其使用 mean/max/adaptive 哪一版本。
+
+`--max-samples 0` 仅取消样本截断，仍保留内部 train/validation 划分，不表示最终使用全部 4040 张 COD 训练图。全训练集固定预算模式仍待实现。官方已训练 COD checkpoint 可能见过内部验证图片，只适合独立复现其官方测试结果，不能直接作为该内部验证集上的公平基线。
 
 跑完后可以把前人表格和 TriPRD-D 合并成 CSV：
 
@@ -91,7 +97,7 @@ python tools/train_triprd.py --stage student `
   --epochs 2 --max-samples 64 --out checkpoints/TriPRD_student.pt
 ```
 
-教师在此阶段冻结，学生的主输入是 RGB；部署/测试时不需要教师或 T/D。正式的关系、边界和不确定性门控对照请使用 `run_triprd_ab.py` 的 D 组。
+教师在此阶段冻结，学生的主输入是 RGB；部署/测试时不需要教师或 T/D。上一版融合特征关系、边界和 disagreement 门控对照使用 `run_triprd_ab.py` 的 D 组；新的显式关系机制仍待实现。
 
 ### 在真实 COD 训练集上微调学生
 

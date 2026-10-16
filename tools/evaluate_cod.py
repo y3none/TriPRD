@@ -132,6 +132,12 @@ def _sample_map(index) -> dict[str, Any]:
     return mapping
 
 
+def _read_prediction(path: Path) -> np.ndarray | None:
+    # Decode image bytes so Windows paths containing non-ASCII characters work.
+    encoded = np.fromfile(path, dtype=np.uint8)
+    return cv2.imdecode(encoded, cv2.IMREAD_GRAYSCALE) if encoded.size else None
+
+
 def evaluate_dataset(
     *,
     index,
@@ -161,7 +167,7 @@ def evaluate_dataset(
         sample = samples.get(prediction_path.stem.casefold())
         if sample is None or sample.mask is None:
             raise FileNotFoundError(f"No GT mask indexed for prediction: {prediction_path.name}")
-        prediction = cv2.imread(str(prediction_path), cv2.IMREAD_GRAYSCALE)
+        prediction = _read_prediction(prediction_path)
         if prediction is None:
             raise ValueError(f"Unable to read prediction: {prediction_path}")
         ground_truth = np.asarray(index.read_image(sample.mask).convert("L"), dtype=np.uint8)

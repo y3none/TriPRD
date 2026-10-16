@@ -62,6 +62,62 @@ def metric_row(group: str, dataset: str, result: object) -> str:
     return "| " + " | ".join(cell(value) for value in values) + " |"
 
 
+def validation_lines(summary: dict) -> list[str]:
+    """Report the explicitly selected epoch, never infer it from legacy Dice."""
+    metric_names = ("S_alpha", "F_beta_w", "E_phi", "MAE")
+    lines = [
+        "## Validation selection", "",
+        "Official validation metrics below belong to the selected epoch; macro averages weight each source equally.", "",
+        "| Group | Best epoch | Selection metric | Selection score | S_alpha | F_beta_w | E_phi mean | MAE | Status / error |",
+        "|---|---:|---|---:|---:|---:|---:|---:|---|",
+    ]
+    groups = summary.get("groups")
+    source_rows = []
+    if not isinstance(groups, dict) or not groups:
+        lines.append("|  |  |  |  |  |  |  |  | unavailable: group validation summaries not recorded |")
+        return lines
+    for group, group_summary in groups.items():
+        fit = group_summary.get("cod_finetune") if isinstance(group_summary, dict) else None
+        fit = fit if isinstance(fit, dict) else {}
+        epoch, selection, score = fit.get("best_epoch"), fit.get("selection_metric"), fit.get("best_selection_score")
+        valid_epoch = isinstance(epoch, int) and not isinstance(epoch, bool) and epoch > 0
+        valid_score = isinstance(score, (int, float)) and not isinstance(score, bool) and math.isfinite(score)
+        history = fit.get("history")
+        selected = next((row for row in history if isinstance(row, dict) and row.get("epoch") == epoch), None) \
+            if valid_epoch and isinstance(history, list) else None
+        official = selected.get("val_official") if isinstance(selected, dict) else None
+        official = official if isinstance(official, dict) else {}
+        macro = official.get("macro")
+        macro = macro if isinstance(macro, dict) else {}
+        invalid = [name for name in metric_names if not isinstance(macro.get(name), (int, float))
+                   or isinstance(macro.get(name), bool) or not math.isfinite(macro[name])]
+        if not valid_epoch or not isinstance(selection, str) or not selection or not valid_score:
+            status = "unavailable: selection metadata not recorded"
+        elif selected is None:
+            status = "unavailable: selected epoch history not recorded"
+        elif not official:
+            status = "unavailable: official validation not recorded at selected epoch"
+        elif invalid:
+            status = "unavailable: missing/invalid official validation " + ", ".join(invalid)
+        else:
+            status = "ok"
+        values = [group, epoch if valid_epoch else None, selection, score if valid_score else None,
+                  *(None if name in invalid else macro[name] for name in metric_names), status]
+        lines.append("| " + " | ".join(cell(value) for value in values) + " |")
+        sources = official.get("sources")
+        if isinstance(sources, dict):
+            for source, metrics in sources.items():
+                if not isinstance(metrics, dict):
+                    continue
+                values = [group, source, epoch, metrics.get("num_samples"), *(metrics.get(name) for name in metric_names)]
+                source_rows.append("| " + " | ".join(cell(value) for value in values) + " |")
+    if source_rows:
+        lines += ["", "### Selected-epoch validation by source", "",
+                  "| Group | Source | Epoch | Samples | S_alpha | F_beta_w | E_phi mean | MAE |",
+                  "|---|---|---:|---:|---:|---:|---:|---:|", *source_rows]
+    return lines
+
+
 def main() -> None:
     args = parse_args()
     run_dir = Path(args.run_dir)
@@ -82,7 +138,11 @@ def main() -> None:
         f"- Run directory: `{run_dir}`", f"- Tags: {args.tags or 'none'}", "",
         "## Change", "", args.change, "", "## Hypothesis", "", args.hypothesis or "待填写", "",
         "## Protocol", "", "```json", json.dumps(protocol, ensure_ascii=False, indent=2), "```", "",
-        "## Results", "", "Quick Dice/MAE are prediction statistics; official metrics use evaluation/. E_phi is the threshold mean.", "",
+        *validation_lines(summary), "",
+        "## Results", "",
+        "Test status: skipped — 未进行测试（validation-only run）." if summary.get("test_status") == "skipped"
+        else f"Test status: {summary.get('test_status', 'not recorded')}.", "",
+        "Quick Dice/MAE are prediction statistics; official metrics use evaluation/. E_phi is the threshold mean.", "",
         "| Group | Dataset | Quick Dice | Quick MAE | MAE (official) | S_alpha | F_beta_w | E_phi mean | Boundary_F | Status / error |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|---|",
     ]
