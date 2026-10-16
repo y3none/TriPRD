@@ -14,5 +14,11 @@
 | E008_transfer_C_encoder | 2026-10-16 | C 保持 seed=20261012 和新配方，仅将旧 VDT 权重复用范围从 full 改为 encoder。 | [E008_transfer_C_encoder.md](E008_transfer_C_encoder.md) | 保留负结果；后续方法研究必须验证知识本身的价值，不能只依赖更换权重加载范围。 |
 | E009_transfer_A_control_repeat | 2026-10-16 | A 旧配方复跑：train seed 改为 20261013，固定 split seed=20261012 并指定上一轮 manifest。 | [E009_transfer_A_control_repeat.md](E009_transfer_A_control_repeat.md) | 保留为第二个种子的旧配方对照；有效配方对照为 E010−E009。 |
 | E010_transfer_A_schedule_repeat | 2026-10-16 | A 新配方复跑：train seed=20261013，与 E009 使用同一划分和随机种子。 | [E010_transfer_A_schedule_repeat.md](E010_transfer_A_schedule_repeat.md) | 暂保留新配方为 RGB 基线；明确两种子证据有限及 CAMO 退步，冻结配置后再做正式测试。 |
+| E011_relation_A_scratch | 2026-10-16 | 同结构 RGB 关系学生直接 COD 训练，无 VDT 预训练，建立 relation_v1 匹配基线。 | [E011_relation_A_scratch.md](E011_relation_A_scratch.md) | 保留为 relation_v1 的主对照；本轮 B/C/D 未超过 A 的宏 Sm。 |
+| E012_relation_B_rgb_source | 2026-10-16 | 冻结 ImageNet 主干及 BN，以 VDT RGB 监督学习源域学生，仅迁移关系分支到新建 COD 学生。 | [E012_relation_B_rgb_source.md](E012_relation_B_rgb_source.md) | 保留源数据对照及负结果；本轮 VDT 监督未提高宏 Sm，不直接扩大配方。 |
+| E013_relation_C_rgb_relation | 2026-10-16 | 三编码器 RGB/RGB/RGB 教师监督训练，再向冻结主干的 RGB 学生蒸馏局部关系分布，仅迁移关系分支。 | [E013_relation_C_rgb_relation.md](E013_relation_C_rgb_relation.md) | 保留容量匹配的蒸馏对照；先检查教师是否依赖所蒸馏关系，暂不扩大训练。 |
+| E014_relation_D_multimodal_relation | 2026-10-16 | 三编码器 RGB/thermal/depth 教师监督训练，再向冻结主干的 RGB 学生蒸馏局部关系分布，仅迁移关系分支。 | [E014_relation_D_multimodal_relation.md](E014_relation_D_multimodal_relation.md) | 本轮未支持多模态关系的主指标净增益；优先做已有教师的关系干预诊断，保留完整负结果。 |
 
 GPU smoke 与两轮优化的联合分析见 [optimization_summary.md](optimization_summary.md)；该文件为汇总，不是新的训练运行 ID。
+
+显式关系首轮四组实验及机制诊断计划见 [relation_summary.md](relation_summary.md)；该文件为汇总，不是新的训练运行 ID。

@@ -2,7 +2,7 @@
 
 更新：2026-10-16。设备：4 张 RTX 4090。真实 GPU smoke、第一波 COD 配方筛选和第二波 encoder-only 迁移/第二种子 A 复验均已完成。A 的组合配方在两个训练种子上提高了来源等权 Sm，但第二种子 CAMO 的 Sm/MAE 退步；encoder-only 未消除 B/C 相对 A 的负迁移。尚无本轮新四测试集成绩，也未完成全流程三种子确认。
 
-本文归档已实现的上一版优化入口、已完成结果和历史复现命令。结果及证据边界见 [优化实验汇总](../experiments/optimization_summary.md)；下一版显式跨模态关系机制仍待实现，边界见 [Paper Scope](../paper_scope.md) 和 [CVPR 2027 计划](../cvpr2027_submission_plan.md)。当前 `--phase distill` 是上一版 KD 消融队列，已实现但未执行，不代表新的关系机制。
+本文归档已实现的上一版优化入口、已完成结果和历史复现命令。结果及证据边界见 [优化实验汇总](../experiments/optimization_summary.md)；独立显式关系入口已完成首 seed 的四组 100 epoch GPU 内部验证筛选，D 的 Sm 未胜 A/C，详见 [关系实验汇总](../experiments/relation_summary.md) 和 [关系实验说明](TRIPRD_RELATION.md)。研究边界见 [Paper Scope](../paper_scope.md) 和 [CVPR 2027 计划](../cvpr2027_submission_plan.md)。当前 `--phase distill` 是上一版 KD 消融队列，已实现但未执行，不代表新的关系机制。
 
 ## 1. 本轮改动与依据
 
@@ -169,15 +169,15 @@ python tools/run_triprd_optimization.py --phase distill --gpus 0,1,2,3 --execute
 | 2 | D_boundary | 上一行 + 概率边界 MSE，权重 0.1；无门控 |
 | 3 | D_gate | 与上一行相同，仅打开 disagreement gate |
 
-四组共用旧教师来源，各自重训 100 epoch VDT 学生，再跑 100 epoch COD；只有新学生重训才能检验本轮 KD 改动。门控无稳定收益则删除，不为保留模块硬调参。增加 legacy relation 对照，区分新增关系目标与旧实现；RGB 教师、容量匹配教师、随机配对重训、常规 feature KD 等决定性控制仍待实现，不能用这四组替代。
+四组共用旧教师来源，各自重训 100 epoch VDT 学生，再跑 100 epoch COD；只有新学生重训才能检验本轮 KD 改动。门控无稳定收益则删除，不为保留模块硬调参。增加 legacy relation 对照，区分新增关系目标与旧实现；本旧入口没有容量匹配 RGB 教师、随机配对重训、常规 feature KD 等完整控制，不能用这四组替代。新关系入口的 RGB 教师对照见下节。
 
 **队列不会自动读取上一波并选择配方。** 如果第一波保留 A_control、encoder-only 或其他设置，使用 dry-run 输出的四条 `command`，一致替换 COD 优化器和 `--transfer-scope` 参数后分别执行 `run_triprd_ab.py`，不要执行默认 distill 队列。保留替换后的完整命令。
 
-### 下一版计划：显式关系机制（pending，尚未实现）
+### 新独立入口：显式关系机制（首 seed GPU 筛选已完成）
 
-当前研究计划转向显式跨模态空间关系教师、单尺度 RGB 关系预测及残差聚合、VDT 阶段冻结学生主干和 BN 状态、仅保存/迁移关系分支，并分离源任务与 COD 分割头。新边界可靠性、uncertainty 和 COD prior 不与第一个实现包同时加入。详细方法与否证条件以 [Paper Scope](../paper_scope.md) 为准。
+独立的 `run_triprd_relation.py` 已实现显式跨模态空间关系教师、单尺度 RGB 关系预测及残差聚合、VDT 阶段冻结学生主干和 BN 状态、仅保存/迁移关系分支，并分离源任务与 COD 分割头。新边界可靠性、uncertainty 和 COD prior 未加入。E011–E014 已完成 `seed=split_seed=20261012`、100 COD epoch 的内部验证筛选：A/B/C/D 的来源等权 Sm 为 0.808668/0.807764/0.807881/0.807632，均选中第 70 epoch。COD 使用 3,232 张训练、808 张验证，测试跳过；这不是全 4,040 张训练池的最终结果。详细指标和证据边界见 [关系实验汇总](../experiments/relation_summary.md)。
 
-计划中的首轮对照是同结构学生无 VDT、VDT RGB 监督、容量匹配 RGB 教师关系 KD、真实 RGB/T/D 教师关系 KD；该队列没有对应的现成 CLI，不能用 `--phase distill` 代替。强基线复现、全 4040 张 COD 训练的固定预算模式和最终完整测试覆盖校验也仍待实现/运行。旧实现的 LR 排查仅作为诊断保留，不预设它能解决跨任务负迁移。
+新 `run_triprd_relation_queue.py` 的四组为：同结构学生无 VDT、VDT RGB 监督、容量匹配 RGB 教师关系 KD、真实 RGB/T/D 教师关系 KD，历史复现命令见 [关系实验说明](TRIPRD_RELATION.md)。它与旧 `--phase distill` 分开，组名不能混用。多模态教师的源任务优势尚未转成学生 Sm 收益，当前优先级是关系干预诊断；干预脚本与 T/D 仅影响关系权重的新信息路径均未实现。全 4040 张 COD 的固定最后 epoch 模式和完整测试覆盖校验入口已实现，真实运行待完成；强基线复现仍待完成。旧实现的 LR 排查仅作为诊断保留，不预设它能解决跨任务负迁移。
 
 ## 6. 三 seed 确认、冻结评估与记录
 
@@ -215,7 +215,7 @@ CUDA_VISIBLE_DEVICES=0 python tools/run_triprd_ab.py \
 
 ```bash
 python tools/record_experiment.py \
-  --id E011_A_control_rerun \
+  --id E015_A_control_rerun \
   --run-dir results/optimization/cod_rerun/seed-20261012/A_control \
   --change "固定训练配方，启用原尺寸来源等权 Sm 选模" \
   --hypothesis "建立新验证协议的 COD 控制组" \

@@ -2,13 +2,19 @@
 
 TriPRD is a tri-modal teacher and RGB student framework for camouflaged object detection. The teacher uses RGB, thermal, and depth inputs during training; the student uses RGB only for deployment.
 
-**Current release scope (2026-10-16):** the implemented version contains a
-mean-fusion tri-modal teacher, fused-feature relation/boundary KD, and the
-training/evaluation controls used in the completed optimization experiments.
-The next explicit cross-modal relation teacher, RGB relation-driven decoder,
-and relation-branch-only transfer are research plans, **not implemented features**.
-See [the optimization experiment summary](experiments/optimization_summary.md)
-for verified results and [Paper Scope](paper_scope.md) for the next method.
+**Current implementation (2026-10-16):** a separate relation-transfer pipeline
+now adds an explicit local RGB-to-T/D relation teacher, an RGB student whose
+predicted relations participate in decoding, and relation-branch-only transfer
+with the source-stage backbone and BatchNorm statistics frozen. Its matched
+four-GPU queue and fixed-budget full-COD/evaluation paths are available in
+[the new experiment guide](tools/TRIPRD_RELATION.md). **The first single-seed,
+100-epoch matched validation screen is complete: D does not improve Sm over
+A, B, or C.** See [the relation experiment summary](experiments/relation_summary.md)
+for E011–E014, diagnostics, and the next decision. Full-pool retraining,
+independent test-set evaluation, and multi-seed confirmation remain pending.
+The legacy mean-fusion teacher and KD pipeline are retained for historical
+reproduction; their results are in [the optimization summary](experiments/optimization_summary.md).
+[Paper Scope](paper_scope.md) distinguishes implemented mechanisms from research claims.
 
 ## Implementation baseline
 
@@ -25,16 +31,98 @@ The smoke experiment used ImageNet-pretrained ResNet-50 with one epoch, at most 
 
 The observed order was B > D > A > C. These numbers are an environment and pipeline check, not a final benchmark: the sample count and training budget are intentionally small. The official-metric aggregation bug found in that run has been fixed in the current code.
 
-## A/B/C/D protocol
+## Legacy A/B/C/D protocol
 
 - **A — COD RGB supervised baseline:** train the RGB student directly on COD data.
 - **B — RGB supervised pretraining:** pretrain the RGB student on VDT RGB masks, then fine-tune it on COD.
 - **C — Logit distillation:** train a tri-modal RGB/thermal/depth teacher, distill its output logits into the RGB student on VDT, then fine-tune on COD.
 - **D — Full distillation:** use logit, feature-relation, and boundary distillation with a detached gate derived from teacher modality-prediction disagreement, then fine-tune on COD. This is not a learned student uncertainty module.
 
-## Quick start
+The new `run_triprd_relation.py` uses a different matched protocol: **A** is the
+same relation-aware student with no VDT training, **B** transfers a relation
+branch learned through VDT RGB supervision, **C** adds relation KD from a
+capacity-matched three-encoder RGB teacher, and **D** uses the same teacher
+architecture with real RGB/T/D. B/C/D transfer only the relation branch into
+identically initialized COD students. These groups must not be pooled with
+the legacy groups or historical E001–E010 results.
 
-Install the dependencies listed in [`requirements-triprd.txt`](requirements-triprd.txt), then run the controlled experiment with:
+For a fresh environment, the four-card smoke command is:
+
+```bash
+python tools/run_triprd_relation_queue.py --gpus 0,1,2,3 \
+  --seed 20261012 --split-seed 20261012 \
+  --epochs 2 --vdt-epochs 2 --max-samples 32 --val-metrics-every 1 \
+  --output-root results/optimization/relation_smoke --execute
+```
+
+Omit `--execute` for a read-only plan; adapt the GPU IDs to the host. To reproduce
+the completed screen in a new output directory, use:
+
+```bash
+python tools/run_triprd_relation_queue.py --gpus 0,1,2,3 \
+  --seed 20261012 --split-seed 20261012 \
+  --output-root results/optimization/relation_reproduction --execute
+```
+
+Existing output directories are protected against overwrite. The independent
+new-pipeline GPU smoke output has not been synced locally. The next research
+step is the mechanism diagnostic below; repeating this screen unchanged is
+not the current priority. Exact controls and the implemented full-pool and
+evaluation commands are in the [relation experiment guide](tools/TRIPRD_RELATION.md).
+
+## Relation-transfer validation results (E011–E014)
+
+Each group trained on 3,232 COD images for 100 epochs, using the same
+`20261012` training/split seed, ResNet-50 initialization, and COD recipe.
+Formal validation ran every five epochs. All four selected epoch 70 by
+source-balanced Sm: the equal-weight mean of COD10K-val (608 images) and
+CAMO-val (200 images). Every metric below comes from that same selected epoch.
+These are internal validation results; all four runs used `--skip-test`.
+
+| Record / group | Source-stage treatment | Sm ↑ | Fw ↑ | mean E ↑ | MAE ↓ |
+|---|---|---:|---:|---:|---:|
+| [E011 / A](experiments/E011_relation_A_scratch.md) | No VDT | **0.808668** | **0.703867** | 0.868845 | 0.048991 |
+| [E012 / B](experiments/E012_relation_B_rgb_source.md) | RGB supervision | 0.807764 | 0.701407 | 0.869505 | 0.049096 |
+| [E013 / C](experiments/E013_relation_C_rgb_relation.md) | Three-encoder RGB teacher, relation KD | 0.807881 | 0.701479 | **0.870593** | 0.048955 |
+| [E014 / D](experiments/E014_relation_D_multimodal_relation.md) | RGB/T/D teacher, relation KD | 0.807632 | 0.703131 | 0.869142 | **0.048766** |
+
+- D minus A is **−0.001036 Sm** and **−0.000736 Fw**; D minus C is
+  **−0.000249 Sm**. D has the lowest macro MAE, but the primary metric does
+  not support a net transfer benefit in this seed. This is not a significance
+  test or evidence of SOTA performance.
+- D's teacher reaches VDT validation Dice 0.904641 versus C's 0.855075.
+  Their distilled students reach 0.827633 and 0.829510 respectively at their
+  own source-stage selected epochs. The stronger teacher has not translated
+  into a stronger source student or COD Sm.
+- Source-stage relation KL is nonzero and decreases. Teacher/student mean
+  normalized relation entropy is near one; this suggests weakly selective
+  average relations, but does not prove collapse at every location or explain
+  the transfer result. Teacher direct modality-value and feature-fusion paths
+  are possible bypasses whose actual contribution remains unmeasured.
+- Only the four comparison files are synced. Their 13 recorded source-file
+  hashes match the local implementation. Server provenance is commit
+  `074cc55b81c45dd5b4105f789f19c662e63eedfc` with a dirty working tree.
+  Recorded initialization/freeze/transfer checks pass; split membership and
+  saved weights have not been independently rechecked locally.
+
+**Next decision:** preserve this result, then compare learned, uniform,
+shuffled, and zero-residual relation aggregation on the same frozen teacher
+and VDT validation images. Measure prediction sensitivity, relation residual
+strength, branch gradients, and foreground/boundary-conditioned entropy.
+These intervention tools are **not yet implemented**. If the teacher scarcely
+depends on its relations, test a teacher with RGB values/decoder and T/D
+access only through relation weights; that design is also **not implemented
+or validated**. Confirm the mechanism before expanding seeds or full-pool runs.
+The [summary](experiments/relation_summary.md) preserves per-source results,
+evidence hashes, training diagnostics, limitations, and follow-up criteria.
+
+Independent research notes provide [related-work context](literature/ccf_a_related_work_2026-10-16.md)
+and [SOD-to-COD design proposals](literature/sod_to_cod_method_design_2026-10-16.md).
+Their proposed mechanisms are research options, not validated improvements.
+
+## Legacy quick start
+
+Install the dependencies listed in [`requirements-triprd.txt`](requirements-triprd.txt). To reproduce the legacy controlled experiment, run:
 
 ```bash
 python tools/run_triprd_ab.py --model-variant resnet50 --pretrained \
@@ -110,8 +198,9 @@ Individual records, per-source metrics, evidence SHA256 values, and the
 version summary are in [experiments](experiments/optimization_summary.md).
 The COD, transfer, and distill CLI queues are implemented; the distill queue
 has not been run as a full optimization experiment. The new research mechanism
-in the [CVPR 2027 plan](cvpr2027_submission_plan.md) requires separate implementation
-and is not activated by the existing `--phase distill` option.
+in the [CVPR 2027 plan](cvpr2027_submission_plan.md) uses the separate
+`run_triprd_relation.py` implementation; the legacy `--phase distill` option
+does not activate it.
 
 The experiment tooling includes the following improvements:
 
@@ -261,9 +350,13 @@ The validation/selection controls, optimizer controls, configurable KD losses,
 and diagnostics proposed after E001 are now implemented. The COD recipe and
 encoder-only screens have also completed; their results are summarized above.
 Full retraining with the revised KD losses, three-seed confirmation, and new
-four-test-set results remain pending. The next TriPRD relation mechanism is
-specified separately in [Paper Scope](paper_scope.md), with explicit controls
-and falsification conditions rather than an assumed performance gain.
+four-test-set results remain pending. The separate TriPRD relation mechanism
+is implemented with its own [experiment entry points](tools/TRIPRD_RELATION.md).
+Its first matched 100-epoch split-validation screen is complete without a
+D-group Sm gain; see [E011–E014](experiments/relation_summary.md). The new
+mechanism interventions, full-pool runs, independent tests, and multi-seed
+confirmation remain pending. [Paper Scope](paper_scope.md) specifies the
+matched controls and falsification conditions.
 
 The [experiment record](experiments/E001_triprd_full.md) contains the complete group
 deltas, training summary, evidence inventory and decision criteria. A single

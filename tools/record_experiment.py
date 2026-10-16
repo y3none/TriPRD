@@ -79,6 +79,12 @@ def validation_lines(summary: dict) -> list[str]:
     for group, group_summary in groups.items():
         fit = group_summary.get("cod_finetune") if isinstance(group_summary, dict) else None
         fit = fit if isinstance(fit, dict) else {}
+        if fit.get("selection_metric") == "fixed_last_epoch":
+            values = [group, fit.get("selected_epoch"), "fixed_last_epoch", None,
+                      None, None, None, None,
+                      "not applicable: full COD training; fixed final epoch, no validation selection"]
+            lines.append("| " + " | ".join(cell(value) for value in values) + " |")
+            continue
         epoch, selection, score = fit.get("best_epoch"), fit.get("selection_metric"), fit.get("best_selection_score")
         valid_epoch = isinstance(epoch, int) and not isinstance(epoch, bool) and epoch > 0
         valid_score = isinstance(score, (int, float)) and not isinstance(score, bool) and math.isfinite(score)
@@ -140,7 +146,7 @@ def main() -> None:
         "## Protocol", "", "```json", json.dumps(protocol, ensure_ascii=False, indent=2), "```", "",
         *validation_lines(summary), "",
         "## Results", "",
-        "Test status: skipped — 未进行测试（validation-only run）." if summary.get("test_status") == "skipped"
+        "Test status: skipped — 未进行测试（验证筛选或全量固定预算训练；具体见 protocol）." if summary.get("test_status") == "skipped"
         else f"Test status: {summary.get('test_status', 'not recorded')}.", "",
         "Quick Dice/MAE are prediction statistics; official metrics use evaluation/. E_phi is the threshold mean.", "",
         "| Group | Dataset | Quick Dice | Quick MAE | MAE (official) | S_alpha | F_beta_w | E_phi mean | Boundary_F | Status / error |",

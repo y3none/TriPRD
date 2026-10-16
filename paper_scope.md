@@ -1,6 +1,6 @@
 # Paper Scope
 
-Updated: 2026-10-16. This is a research plan, not a claim that the proposed mechanisms are implemented or effective.
+Updated: 2026-10-16. The minimal relation-transfer pipeline has completed its first matched A/B/C/D GPU screen: 100 COD epochs on the internal train/validation split, one seed. Multimodal D did not beat A or C on the predefined Sm criterion. Full training-pool retraining, final tests, stable gains, novelty, and SOTA status remain unverified. Future controls below are research plans unless marked implemented.
 
 ## Method and objective
 
@@ -27,21 +27,23 @@ Can spatial relations learned from real RGB/T/D saliency observations improve an
 
 The hypothesis is that source-task segmentation specialization and transferable spatial structure should be separated during transfer. Existing negative-transfer results motivate this hypothesis; they do not establish its cause.
 
-## Current implementation versus design
+## Current implementation versus remaining design
 
 | Item | Current implementation | Not yet implemented |
 |---|---|---|
-| Teacher | Three ResNet-50 branches, feature averaging, segmentation/modality heads | Explicit RGB-to-T/D relations used by the teacher decoder |
-| Relation KD | Self-similarity Gram matrices of decoded features; uniform sampling includes cross-region pairs | Direct cross-modal relation targets and student relation prediction used in decoding |
-| Boundary | GT-derived morphological boundary supervision and boundary KD | Cross-modal boundary reliability |
-| Uncertainty | Detached modality-prediction disagreement gate with temperature calibration | Student uncertainty learning or feature/edge conflict modeling |
-| COD adaptation | Full/encoder initialization, then supervised COD training | Relation-branch-only transfer or explicit COD relation-prior loss |
+| Teacher | Local RGB-to-T/D relation aggregation using T/D values before decoding, with other scales still averaged; capacity-matched RGB-only control | Relation interventions; a proposed path where T/D affects only relation weights while values and decoder inputs remain RGB; additional scales or cross-modal reliability |
+| Relation KD | New detached local relation-distribution KL; student-predicted relations used in decoding. Legacy fused-feature Gram KD remains separate | GT-only, shuffled-target, ordinary Gram-KD and training-only relation controls in the new pipeline |
+| Boundary | Legacy GT morphological supervision and boundary KD; not part of the new relation objective | Cross-modal boundary reliability |
+| Uncertainty | Legacy detached prediction-disagreement gate; not part of the new relation objective | Student uncertainty learning or feature/edge conflict modeling |
+| COD adaptation | New relation-branch-only transfer with frozen source backbone/BN and independently initialized COD decoder; split selection and full-pool fixed-last-epoch modes | Explicit COD relation-prior loss, relation-preservation ablation |
 
-The existing relation loss affects segmentation through shared feature gradients. What is missing is an explicit predicted relation participating in the segmentation forward path. Existing experiments therefore do not test every component in the original design sketch.
+E001–E010 used the legacy pipeline, where relation losses affect segmentation through shared feature gradients. They do not test the newly implemented explicit relation forward path. The independent [new experiment guide](tools/TRIPRD_RELATION.md) documents its different A/B/C/D definitions and commands; results must remain separated.
 
-## Next minimal mechanism
+E011–E014 now archive the first screen of this explicit path; see the [relation experiment summary](experiments/relation_summary.md). With train/split seed 20261012, 3,232 COD training images and 808 validation images, source-equal Sm was A 0.808668, B 0.807764, C 0.807881, and D 0.807632. All selected epoch 70 from 100 epochs and skipped tests. The multimodal teacher improved VDT Dice over the RGB teacher (0.904641 versus 0.855075), but its source student and COD Sm did not improve over C. Small differences from one seed do not establish stable effects.
 
-Develop one relation-transfer mechanism before expanding boundary or uncertainty modules:
+## Implemented minimal mechanism; effectiveness pending
+
+The new pipeline isolates one relation-transfer mechanism before expanding boundary or uncertainty modules:
 
 1. **Cross-modal relation teacher.** On aligned low-resolution grids, learn RGB-to-T and RGB-to-D pair relations. Learn projections jointly with a teacher decoder that uses these relations under source-task supervision. Direct dot products between independently trained, unaligned feature spaces do not establish meaningful relations.
 2. **RGB relation predictor in the student.** Predict spatial relations from RGB features and use them in local residual aggregation before TriPRD's decoder. Distill detached teacher relation distributions on source images. Start with one scale and bounded local neighborhoods, not a full-resolution quadratic matrix.
@@ -55,13 +57,14 @@ Local attention, residual aggregation, and KL distillation are established build
 
 ## Experimental order
 
-1. Verify relation forward/backward behavior, source pairing, frozen backbone state, and exact transfer keys. Measure GPU memory/time before full runs.
-2. First matched-student screen: no VDT training; VDT RGB supervision; capacity-matched RGB-teacher relation KD; real RGB/T/D-teacher relation KD. Source-trained variants share images, source updates, source head supervision, target recipe, and initialization.
-3. If multimodal transfer has a net gain, add direct GT-derived relation supervision, ordinary fused-feature Gram KD, and spatially shuffled relation targets. These test mask re-encoding, generic KD, and relation-distribution regularization.
-4. Separately retrain a teacher/student control with fixed incorrect T/D pairing. This differs from shuffling relation targets after teacher training. Record corruption, label handling, and source budget.
-5. Compare relation use in decoding against training-only relation regularization and a matched-capacity ordinary module. Confirm the effective mechanism on another backbone and paired seeds.
+1. The first matched-student screen is completed: no VDT training; VDT RGB supervision; capacity-matched RGB-teacher relation KD; real RGB/T/D-teacher relation KD. Source-trained variants share images, source updates, source head supervision, target recipe, and initialization. Comparison metadata reports successful frozen-backbone/BN and branch-only transfer checks; actual checkpoint files and split membership still need independent verification.
+2. Before extending this recipe, use saved teachers on the same VDT validation samples to compare learned relations, uniform relations, shuffled relations, and disabled relation residuals. Mean relation entropy near one motivates this check but does not prove all relations are ineffective. The intervention tooling is not implemented yet.
+3. If interventions barely change segmentation, test a teacher in which T/D affects only relation weights while values and other decoder inputs remain RGB. Existing multimodal value features and mean-fused scales may bypass the distilled target; this is a hypothesis, not an established cause. This proposed information-path change is not implemented or evaluated.
+4. If multimodal transfer has a net gain, add direct GT-derived relation supervision, ordinary fused-feature Gram KD, and spatially shuffled relation targets. These test mask re-encoding, generic KD, and relation-distribution regularization.
+5. Separately retrain a teacher/student control with fixed incorrect T/D pairing. This differs from perturbing relations after teacher training. Record corruption, label handling, and source budget.
+6. Compare relation use in decoding against training-only relation regularization and a matched-capacity ordinary module. Confirm an effective mechanism on another backbone and paired seeds; do not automatically scale up the unsuccessful first recipe.
 
-Screen on the fixed internal split with equal validation opportunities. Freeze configuration, duration, learning-rate horizon, and checkpoint rule before full COD training-pool retraining and final evaluation. Full-train/fixed-budget support remains an implementation task. Official COD-trained checkpoints must not be treated as clean baselines on internal validation images they have already seen.
+Screen on the fixed internal split with equal validation opportunities. Freeze configuration, duration, learning-rate horizon, and checkpoint rule before full COD training-pool retraining and final evaluation. The new runner supports full 4,040-image COD training with fixed last-epoch weights and validates complete test prediction coverage; these paths still require real-data execution. Official COD-trained checkpoints must not be treated as clean baselines on internal validation images they have already seen.
 
 ## Falsification and reporting
 

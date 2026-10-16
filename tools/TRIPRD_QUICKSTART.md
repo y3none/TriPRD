@@ -2,7 +2,7 @@
 
 **更新：2026-10-16。** E001 后的 COD 配方筛选和 encoder-only 迁移/第二种子 A 复验均已完成。入口、历史命令及执行状态见 [四卡优化实验说明](TRIPRD_OPTIMIZATION.md)，结果见 [优化实验汇总](../experiments/optimization_summary.md)。A 新配方在两个种子上提高来源等权 Sm，但仍有 CAMO 退步；encoder-only 未消除 B/C 负迁移。本轮没有新四测试集结果，也没有完整三种子确认结论。
 
-本文保留上一版默认配方用于复现和排错。优化 runner 已支持正式验证 Sm 选模、固定数据划分、种子分离和权重复用；旧 wrapper 不会自动启用这些选项。当前 `--phase distill` 的 uniform Gram/概率边界 KD 消融已实现但未执行；[Paper Scope](../paper_scope.md) 中的显式跨模态关系教师、学生关系分支及仅迁移关系分支的下一版机制仍待实现，与该旧队列不同。研究计划见 [CVPR 2027 计划](../cvpr2027_submission_plan.md)。
+本文保留上一版默认配方用于复现和排错。优化 runner 已支持正式验证 Sm 选模、固定数据划分、种子分离和权重复用；旧 wrapper 不会自动启用这些选项。当前 `--phase distill` 的 uniform Gram/概率边界 KD 消融已实现但未执行。独立显式关系入口已完成 E011–E014 首 seed 的四组 100 epoch GPU 筛选：D 的 Sm 为 0.807632，低于 A 的 0.808668 和 C 的 0.807881，尚无方法净收益证据。该轮为 3,232 训练 / 808 验证的内部划分，未执行全 4,040 张训练池模式或最终测试。结果见 [关系实验汇总](../experiments/relation_summary.md)，历史复现命令与下一步诊断见 [关系实验说明](TRIPRD_RELATION.md)，不要复用本页旧 A/B/C/D 定义。研究计划见 [Paper Scope](../paper_scope.md) 与 [CVPR 2027 计划](../cvpr2027_submission_plan.md)。
 
 这套脚本提供两种模式：`tiny` 使用 `models/triprd.py` 中的轻量 U-Net 风格网络，用于快速检查；`resnet50` 使用 ImageNet-compatible ResNet-50 和 352×352 输入。项目支持 `previous_performance.tex` 中的指标，但同一指标名称不代表训练协议、预训练资源和测试设置已与前人对齐；内部验证均值不能直接与论文测试集分数比较。
 若只做最快的端到端 smoke，可在下面每条训练/测试命令中加上 `--image-size 64 --base-channels 8`；三阶段必须使用相同的这两个值。
@@ -62,7 +62,7 @@ Linux 上使用 `CUDA_VISIBLE_DEVICES=3 bash tools/run_triprd_full.sh`；该 Bas
 
 `--pretrained` 需要本机缓存或可下载 torchvision 的 ResNet-50 权重；启用后 RGB 自动使用 ImageNet mean/std 归一化。若实验服务器不能联网，先手工放置权重；去掉该开关会改变实验条件，必须注明且不能与 ImageNet 初始化组混作同配方对照。这里使用 NC4K、COD10K-Test、CAMO-Test、CHAMELEON，以及 Sm、weighted F、mean E、MAE。比较前人 E 指标时仍须核对其使用 mean/max/adaptive 哪一版本。
 
-`--max-samples 0` 仅取消样本截断，仍保留内部 train/validation 划分，不表示最终使用全部 4040 张 COD 训练图。全训练集固定预算模式仍待实现。官方已训练 COD checkpoint 可能见过内部验证图片，只适合独立复现其官方测试结果，不能直接作为该内部验证集上的公平基线。
+本页旧入口的 `--max-samples 0` 仅取消样本截断，仍保留内部 train/validation 划分，不表示最终使用全部 4040 张 COD 训练图。新的 `run_triprd_relation.py` 通过 `--cod-train-mode full` 提供全训练集固定最后 epoch 模式，详见 [新关系实验说明](TRIPRD_RELATION.md)；旧 wrapper 不包含它。官方已训练 COD checkpoint 可能见过内部验证图片，只适合独立复现其官方测试结果，不能直接作为该内部验证集上的公平基线。
 
 跑完后可以把前人表格和 TriPRD-D 合并成 CSV：
 
@@ -97,7 +97,7 @@ python tools/train_triprd.py --stage student `
   --epochs 2 --max-samples 64 --out checkpoints/TriPRD_student.pt
 ```
 
-教师在此阶段冻结，学生的主输入是 RGB；部署/测试时不需要教师或 T/D。上一版融合特征关系、边界和 disagreement 门控对照使用 `run_triprd_ab.py` 的 D 组；新的显式关系机制仍待实现。
+教师在此阶段冻结，学生的主输入是 RGB；部署/测试时不需要教师或 T/D。上一版融合特征关系、边界和 disagreement 门控对照使用 `run_triprd_ab.py` 的 D 组；新的显式关系机制使用独立的 `run_triprd_relation.py`，见 [新关系实验说明](TRIPRD_RELATION.md)，不包含在本节旧训练入口中。
 
 ### 在真实 COD 训练集上微调学生
 
