@@ -92,8 +92,14 @@ def gpu_list(value):
 def _protect_output(root):
     if root.name.casefold().startswith(("completion_v6", "triprd_completion_v6")):
         raise ValueError("Use a new completion_controls output root, not the old v6 output")
+    project = ROOT.resolve()
     for directory in (root, *root.parents):
-        if (directory / "completion_pipeline.json").exists() or (directory / "completion_v6_reports.tar.gz").exists():
+        # Project-level exports/configuration do not make every new results
+        # subdirectory part of an old run. A report archive alone is never
+        # evidence of a run directory, including above an external output root.
+        if directory == project:
+            break
+        if (directory / "completion_pipeline.json").exists():
             raise ValueError("Control output must not be inside an existing v6 run")
 
 

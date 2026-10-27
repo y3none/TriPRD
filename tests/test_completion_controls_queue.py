@@ -178,6 +178,43 @@ class CompletionControlsQueueTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'full4040'):
             self.plan('--phase', 'test', '--cod-train-mode', 'split')
 
+    def test_v6_project_exports_do_not_block_new_controls_or_write_during_dryrun(self):
+        project = self.work / 'TriPRD_completion_v6'
+        project.mkdir()
+        (project / 'completion_v6_reports.tar.gz').write_bytes(b'project-level exported report')
+        (project / 'completion_pipeline.json').write_text('{}')
+        (self.work / 'completion_v6_reports.tar.gz').write_bytes(b'parent-level exported report')
+        output = project / 'results' / 'completion_controls_v1_seed-20261012'
+        before = {p.relative_to(self.work): p.read_bytes() for p in self.work.rglob('*') if p.is_file()}
+        capture = io.StringIO()
+        with patch.object(queue, 'ROOT', project), contextlib.redirect_stdout(capture):
+            code = queue.main(['--output-root', str(output), '--split-manifest', 'missing.json'])
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(capture.getvalue())['output_root'], str(output.resolve()))
+        self.assertFalse(output.exists())
+        self.assertEqual(before, {p.relative_to(self.work): p.read_bytes() for p in self.work.rglob('*') if p.is_file()})
+        old = project / 'results' / 'archived_run'
+        old.mkdir(parents=True)
+        (old / 'completion_pipeline.json').write_text('{}')
+        with patch.object(queue, 'ROOT', project):
+            for candidate in (old, old / 'nested_controls', old / 'cod' / 'nested_controls'):
+                with self.subTest(candidate=candidate), self.assertRaisesRegex(ValueError, 'existing v6'):
+                    self.plan('--output-root', str(candidate))
+            with self.assertRaisesRegex(ValueError, 'old v6'):
+                self.plan('--output-root', str(project))
+
+    def test_report_archive_above_external_output_does_not_mark_a_run(self):
+        external = self.work / 'external'
+        external.mkdir()
+        (external / 'completion_v6_reports.tar.gz').write_bytes(b'exported report')
+        output = external / 'controls'
+        with patch.object(queue, 'ROOT', self.work / 'separate_project'):
+            _, plan = self.plan('--output-root', str(output))
+            self.assertEqual(plan['output_root'], str(output.resolve()))
+            (external / 'completion_pipeline.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'existing v6'):
+                self.plan('--output-root', str(output))
+
     def test_invalid_gpu_batches_and_old_v6_output_rejected(self):
         for ids in ('0,1', '0,1,2,02', '0,1,2,-1'):
             with self.assertRaises(ValueError):
