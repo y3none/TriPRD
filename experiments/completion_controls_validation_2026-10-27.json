@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-27",
+  "method": "triprd_completion_controls_v1",
+  "archived_v6_commit": "df185d6",
+  "scope": "Implementation and protocol checks; no real-data control accuracy results",
+  "tests": {
+    "regression_and_control_suite": {"passed": 97, "skipped": 1, "subtests_passed": 127, "seconds": 54.82},
+    "queue_subprocess_suite": {"passed": 10, "seconds": 5.99},
+    "total_passed": 107,
+    "environment": "Windows, local CPU PyTorch; sandbox system-temp/process restrictions required elevated test execution",
+    "skip_reason": "CUDA hardware test unavailable"
+  },
+  "verified": [
+    "All 25 archived v6 source byte hashes still match the original COD report",
+    "All nine A/B/C/D tiny CPU stages train and produce valid predecessor chains",
+    "All nine stage resumes match continuous training model tensors",
+    "Micro-batch accumulation matches effective-batch updates, including a short final batch",
+    "C and D teachers share initialized parameter capacity and each executes three encoder calls",
+    "D multimodal model outputs match the frozen v6 teacher",
+    "Real tiny A/B/C/D artifacts pass cross-group summary validation and export",
+    "Four real CPU subprocess groups run concurrently with separate CUDA_VISIBLE_DEVICES assignments",
+    "Queue verifies dependencies, failure isolation, resume contracts, locking and interruption cleanup",
+    "Bash syntax passes and the launcher contains no CRLF",
+    "Fresh extracted source package imports all four entrypoints with isolated Python",
+    "All 28 runner provenance source dependencies exist in the standalone package"
+  ],
+  "source_package": {
+    "path": "deliverables/triprd_completion_controls_2026-10-27.zip",
+    "entries": 164,
+    "bytes": 580610,
+    "sha256": "1f18b4ef6ded4813686c1282824ededa53f32fa612c484c37c8e9731c0133bd5",
+    "tracked_by_git": false
+  },
+  "matched_defaults": {
+    "effective_batch_size": 8,
+    "micro_batch_size": 2,
+    "locator_warmup_epochs": 0,
+    "lr_warmup_epochs": 5,
+    "teacher_source_cod_epochs": [100, 20, 100],
+    "cod_mode": "full4040_fixed_last_epoch",
+    "gpus_A_B_C_D": [0, 1, 2, 3]
+  },
+  "limitations": [
+    "No CUDA AMP, RTX4090 memory or throughput measurements",
+    "Linux process-group cleanup uses its platform path; subprocess tests ran on Windows",
+    "No new formal training or official-test scores have been generated",
+    "A is the same complete student without source training, not a bare DINOv3 linear probe",
+    "D-C estimates the extra-modal effect within this fixed route; one seed cannot establish significance",
+    "The old v6 run used three locator-only warmup epochs and cannot replace the new D run"
+  ]
+}

@@ -46,6 +46,7 @@ results/optimization/
 /results/completion_v6_seed-*/
 /results/completion_v6_dev*/
 /results/completion_controls*/
+/.completion-controls-*/
 **/predictions/
 *.log
 

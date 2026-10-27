@@ -39,6 +39,14 @@ boundaries. `TriPRD` remains the project name; its historical expansion
 “Tri-modal Privileged Relation Distillation” does not describe v6's output KD.
 A replacement paper title has not been selected; see [Method Name](method_name.md).
 
+**Matched v6 controls:** [four-GPU A/B/C/D guide](README_COMPLETION_CONTROLS.md)
+provides new, independent runs for COD-only, RGB source supervision, RGB-teacher
+KD, and RGB/thermal/depth-teacher KD. All four use the same student, fresh COD
+locator, zero locator-only warmup, effective batch 8 and micro batch 2. These
+controls require new training; the archived v6 score above cannot substitute for
+group D. Launch with `bash tools/run_triprd_completion_controls.sh all` on the
+training server after checking the guide's dataset, split and weight paths.
+
 ## Historical implementations
 
 The sections below retain earlier methods, commands and results for
