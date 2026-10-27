@@ -1,0 +1,126 @@
+{
+  "COD10K": {
+    "official": {
+      "model": "TriPRD-Completion-v6",
+      "dataset": "COD10K",
+      "split": "test",
+      "num_samples": 2026,
+      "S_alpha": 0.8950182050075424,
+      "F_beta_w": 0.8310944962330532,
+      "E_phi": 0.9525304755341012,
+      "E_phi_mean": 0.9525304755341012,
+      "E_phi_adaptive": 0.949824774604831,
+      "E_phi_max": 0.9599753772471478,
+      "MAE": 0.016973824272789838,
+      "Boundary_F": null,
+      "Boundary_MAE": null,
+      "FNR": 0.12474741314532155,
+      "F_beta_adaptive": 0.8267051868033047,
+      "S_m": 0.8950182050075424,
+      "alpha_E": 0.949824774604831,
+      "F_m_w": 0.8310944962330532,
+      "M": 0.016973824272789838,
+      "prediction_protocol": "triprd_task_v4_fp32_logits_bilinear_align_false_sigmoid_round_uint8_png_v1"
+    },
+    "coverage": {
+      "verified_samples": 2026,
+      "expected_full_samples": 2026,
+      "limited": false,
+      "exact_id_match": true
+    },
+    "count": 2026
+  },
+  "CAMO": {
+    "official": {
+      "model": "TriPRD-Completion-v6",
+      "dataset": "CAMO",
+      "split": "test",
+      "num_samples": 250,
+      "S_alpha": 0.8997026473051956,
+      "F_beta_w": 0.8719649490324277,
+      "E_phi": 0.9505306144200454,
+      "E_phi_mean": 0.9505306144200454,
+      "E_phi_adaptive": 0.954324544167162,
+      "E_phi_max": 0.9559123447229229,
+      "MAE": 0.032771224814149603,
+      "Boundary_F": null,
+      "Boundary_MAE": null,
+      "FNR": 0.08620076316216907,
+      "F_beta_adaptive": 0.8846342922352552,
+      "S_m": 0.8997026473051956,
+      "alpha_E": 0.954324544167162,
+      "F_m_w": 0.8719649490324277,
+      "M": 0.032771224814149603,
+      "prediction_protocol": "triprd_task_v4_fp32_logits_bilinear_align_false_sigmoid_round_uint8_png_v1"
+    },
+    "coverage": {
+      "verified_samples": 250,
+      "expected_full_samples": 250,
+      "limited": false,
+      "exact_id_match": true
+    },
+    "count": 250
+  },
+  "CHAMELEON": {
+    "official": {
+      "model": "TriPRD-Completion-v6",
+      "dataset": "CHAMELEON",
+      "split": "test",
+      "num_samples": 76,
+      "S_alpha": 0.9225654001534307,
+      "F_beta_w": 0.8829439412284089,
+      "E_phi": 0.9597768451376627,
+      "E_phi_mean": 0.9597768451376627,
+      "E_phi_adaptive": 0.9680868950122181,
+      "E_phi_max": 0.9686328493905517,
+      "MAE": 0.01820645943071339,
+      "Boundary_F": null,
+      "Boundary_MAE": null,
+      "FNR": 0.08873220788017375,
+      "F_beta_adaptive": 0.8847644572551107,
+      "S_m": 0.9225654001534307,
+      "alpha_E": 0.9680868950122181,
+      "F_m_w": 0.8829439412284089,
+      "M": 0.01820645943071339,
+      "prediction_protocol": "triprd_task_v4_fp32_logits_bilinear_align_false_sigmoid_round_uint8_png_v1"
+    },
+    "coverage": {
+      "verified_samples": 76,
+      "expected_full_samples": 76,
+      "limited": false,
+      "exact_id_match": true
+    },
+    "count": 76
+  },
+  "NC4K": {
+    "official": {
+      "model": "TriPRD-Completion-v6",
+      "dataset": "NC4K",
+      "split": "test",
+      "num_samples": 4121,
+      "S_alpha": 0.9134451250054171,
+      "F_beta_w": 0.8824766375663801,
+      "E_phi": 0.9581087370399999,
+      "E_phi_mean": 0.9581087370399999,
+      "E_phi_adaptive": 0.9599000878008589,
+      "E_phi_max": 0.9634123530739976,
+      "MAE": 0.022694683914127177,
+      "Boundary_F": null,
+      "Boundary_MAE": null,
+      "FNR": 0.09624295380090694,
+      "F_beta_adaptive": 0.8890583566214006,
+      "S_m": 0.9134451250054171,
+      "alpha_E": 0.9599000878008589,
+      "F_m_w": 0.8824766375663801,
+      "M": 0.022694683914127177,
+      "prediction_protocol": "triprd_task_v4_fp32_logits_bilinear_align_false_sigmoid_round_uint8_png_v1"
+    },
+    "coverage": {
+      "verified_samples": 4121,
+      "expected_full_samples": 4121,
+      "limited": false,
+      "exact_id_match": true
+    },
+    "count": 4121
+  }
+}

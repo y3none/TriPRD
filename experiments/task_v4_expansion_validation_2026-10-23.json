@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-23",
+  "new_tests_passed": 23,
+  "existing_queue_and_runner_tests_passed": 27,
+  "new_subtests_passed": 16,
+  "existing_subtests_passed": 17,
+  "original_bundle_files_unchanged": 40,
+  "patch_sha256": "ee56237c56c2f7eb9db52f001bd28a7ab6987589b93768ec70ed296719fd3429",
+  "limitations": [
+    "Linux signals are mocked in Windows unit tests; no remote server migration executed.",
+    "Five lightweight real child processes validate dispatch and resume/log semantics without CUDA."
+  ]
+}

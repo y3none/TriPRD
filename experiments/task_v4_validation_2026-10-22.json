@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-22",
+  "method": "triprd_task_v4",
+  "archive": "triprd_task_v4_2026-10-22.zip",
+  "archive_sha256": "3c2a0102de852781536ea9e0db5737ba25cad3c9e2b8b38ad74d0c43adf8da92",
+  "isolated_package_tests": {
+    "scope": "final source archive extracted into independent empty directory",
+    "returncode": 0,
+    "stdout": ".............................................................. [ 87%]\n.........                                                      [100%]\n71 passed, 92 subtests passed in 21.23s\n",
+    "stderr": "",
+    "torch_device": "cpu"
+  },
+  "official_dino_random_weight_gradients": {
+    "status": "passed",
+    "scope": "official local random-weight model gradient audit; not accuracy or training-memory evidence",
+    "model": "dinov3_vitb16",
+    "pretrained": false,
+    "torch_version": "2.8.0+cpu",
+    "device": "cpu",
+    "seed": 21,
+    "dino_repo": "D:\\yyy\\硕士\\codex-work\\teacher-student\\TriPRD\\dinov3",
+    "input_shape": [
+      1,
+      3,
+      35,
+      51
+    ],
+    "output_shape": [
+      1,
+      1,
+      35,
+      51
+    ],
+    "task_feature_shapes": [
+      [
+        1,
+        8,
+        5,
+        7
+      ],
+      [
+        1,
+        8,
+        3,
+        4
+      ]
+    ],
+    "train_backbone_blocks": 4,
+    "frozen_block_count": 8,
+    "frozen_blocks_eval": true,
+    "early_frozen_and_no_gradients": true,
+    "tail_blocks_trainable": true,
+    "tail_nonzero_gradients": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "norm_nonzero_gradient": true,
+    "detail_nonzero_gradient": true,
+    "cod_decoder_nonzero_gradient": true,
+    "sod_decoder_no_gradients": true,
+    "all_gradients_finite": true,
+    "finite_loss": true,
+    "encoder_fully_frozen": false,
+    "cuda_peak_allocated_bytes": null
+  },
+  "real_dataset_cpu_smoke": [
+    {
+      "phase": "teachers",
+      "group": "rgb",
+      "completed_epochs": 1,
+      "initial_state_sha256": "6f06f48d16b6d51ed4858ae3e2126b57c741bce6fcff37061d18218456f4212c",
+      "sample_counts": {
+        "vdt_train": 3,
+        "vdt_val": 1,
+        "cod_train": 0,
+        "cod_val": 0
+      },
+      "num_workers": 2,
+      "optimizer_steps": 2,
+      "source_images": 0,
+      "formal": false,
+      "test_status": "skipped"
+    },
+    {
+      "phase": "teachers",
+      "group": "multimodal",
+      "completed_epochs": 1,
+      "initial_state_sha256": "6f06f48d16b6d51ed4858ae3e2126b57c741bce6fcff37061d18218456f4212c",
+      "sample_counts": {
+        "vdt_train": 3,
+        "vdt_val": 1,
+        "cod_train": 0,
+        "cod_val": 0
+      },
+      "num_workers": 2,
+      "optimizer_steps": 2,
+      "source_images": 0,
+      "formal": false,
+      "test_status": "skipped"
+    },
+    {
+      "phase": "screen",
+      "group": "T0",
+      "completed_epochs": 1,
+      "initial_state_sha256": "3b98691b51ad76e5473e2320bc3b86d7c82902731cdedc66ec468e12e464187d",
+      "sample_counts": {
+        "vdt_train": 0,
+        "vdt_val": 0,
+        "cod_train": 6,
+        "cod_val": 2
+      },
+      "num_workers": 2,
+      "optimizer_steps": 3,
+      "source_images": 0,
+      "formal": false,
+      "test_status": "skipped"
+    },
+    {
+      "phase": "screen",
+      "group": "T1",
+      "completed_epochs": 1,
+      "initial_state_sha256": "3b98691b51ad76e5473e2320bc3b86d7c82902731cdedc66ec468e12e464187d",
+      "sample_counts": {
+        "vdt_train": 3,
+        "vdt_val": 1,
+        "cod_train": 6,
+        "cod_val": 2
+      },
+      "num_workers": 2,
+      "optimizer_steps": 3,
+      "source_images": 5,
+      "formal": false,
+      "test_status": "skipped"
+    },
+    {
+      "phase": "screen",
+      "group": "T2",
+      "completed_epochs": 1,
+      "initial_state_sha256": "3b98691b51ad76e5473e2320bc3b86d7c82902731cdedc66ec468e12e464187d",
+      "sample_counts": {
+        "vdt_train": 3,
+        "vdt_val": 1,
+        "cod_train": 6,
+        "cod_val": 2
+      },
+      "num_workers": 2,
+      "optimizer_steps": 3,
+      "source_images": 5,
+      "formal": false,
+      "test_status": "skipped"
+    },
+    {
+      "phase": "screen",
+      "group": "T3",
+      "completed_epochs": 1,
+      "initial_state_sha256": "3b98691b51ad76e5473e2320bc3b86d7c82902731cdedc66ec468e12e464187d",
+      "sample_counts": {
+        "vdt_train": 3,
+        "vdt_val": 1,
+        "cod_train": 6,
+        "cod_val": 2
+      },
+      "num_workers": 2,
+      "optimizer_steps": 3,
+      "source_images": 5,
+      "formal": false,
+      "test_status": "skipped"
+    },
+    {
+      "phase": "screen",
+      "group": "T4",
+      "completed_epochs": 1,
+      "initial_state_sha256": "3b98691b51ad76e5473e2320bc3b86d7c82902731cdedc66ec468e12e464187d",
+      "sample_counts": {
+        "vdt_train": 3,
+        "vdt_val": 1,
+        "cod_train": 6,
+        "cod_val": 2
+      },
+      "num_workers": 2,
+      "optimizer_steps": 3,
+      "source_images": 5,
+      "formal": false,
+      "test_status": "skipped"
+    }
+  ],
+  "limitations": [
+    "No full pretrained DINOv3 CUDA training or final accuracy result",
+    "No SOTA claim",
+    "Real data smoke uses tiny model, limited training samples, one epoch"
+  ],
+  "resolved_issue": "Initial Windows status-file sharing conflict: bounded PermissionError retries and state-change-only queue writes; full rerun in new output root passed."
+}

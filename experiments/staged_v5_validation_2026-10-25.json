@@ -1,0 +1,24 @@
+{
+  "method": "triprd_staged_v5",
+  "date": "2026-10-25",
+  "tests": {
+    "passed": 109,
+    "subtests_passed": 128,
+    "seconds": 35.57,
+    "command": "python -m pytest tests/test_staged_runner.py tests/test_staged_queue.py tests/test_staged_protocol.py tests/test_staged_summary.py tests/test_task_model.py tests/test_task_loss.py tests/test_task_runner.py tests/test_task_queue.py tests/test_task_protocol.py -q"
+  },
+  "runtime_validation": "Actual tiny CPU forwards/losses/optimization/checkpoint selection/resume with synthetic image I/O. Two v4 teachers, three source stages and four COD stages.",
+  "resume": "Source and COD interrupted/resumed model tensors exactly equal uninterrupted runs",
+  "original_v4_files_unchanged": 40,
+  "extracted_package_cli": {
+    "run_triprd_staged.py": "passed",
+    "run_triprd_staged_queue.py": "passed",
+    "evaluate_triprd_staged.py": "passed",
+    "summarize_triprd_staged.py": "passed"
+  },
+  "bash_syntax": "Both startup scripts passed bash -n; LF line endings verified",
+  "archive": "deliverables/triprd_staged_v5_2026-10-25.zip",
+  "archive_sha256": "1ed1c20e7e4adb096d46419a69722d32eb3a5de2b04928997ffa5d77380dccb9",
+  "archive_bytes": 201728,
+  "accuracy_evidence": "No new real-dataset or CUDA run. No v5 COD score improvement or SOTA claim is supported yet."
+}

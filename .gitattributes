@@ -1,0 +1,6 @@
+# Training contracts hash source bytes. Preserve the archived v6 byte stream
+# across Windows/Linux checkouts instead of applying core.autocrlf conversion.
+* -text
+* whitespace=cr-at-eol
+# Shell entry points must be executable by Bash after a Linux checkout.
+*.sh text eol=lf

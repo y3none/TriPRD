@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-23",
+  "revision": "expansion-fix1",
+  "tests_passed": 62,
+  "subtests_passed": 33,
+  "permission_and_retry_regression_tests": 12,
+  "original_bundle_files_unchanged": 40,
+  "patch": "triprd_task_v4_expand_5gpu_fix1_2026-10-23.zip",
+  "patch_sha256": "8518b24a22f43aea48d7dcc3a07605ccef9e58bd9eb342ce4711874868649fba",
+  "limitations": [
+    "Linux proc permission behavior is simulated in controlled filesystem fixtures on Windows; no remote migration or GPU training executed.",
+    "Five lightweight real child processes validate dispatch and resume/log semantics without CUDA."
+  ]
+}

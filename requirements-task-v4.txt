@@ -1,0 +1,4 @@
+# Install a CUDA-compatible PyTorch build first; reuse the existing v3 environment.
+-r requirements-correction.txt
+# Required only for the included verification suite.
+pytest>=8

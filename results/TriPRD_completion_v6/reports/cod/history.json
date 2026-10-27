@@ -1,0 +1,2702 @@
+[
+  {
+    "epoch": 1,
+    "phase": "locator_warmup",
+    "lr": [
+      2.0000000000000003e-06,
+      2e-05
+    ],
+    "train": {
+      "supervised_mask": 1.3147049386902612,
+      "supervised_aux": 1.278506099823678,
+      "supervised_coarse": 0.8959077999143317,
+      "supervised_boundary": 1.122582475973828,
+      "supervised_segmentation": 1.3147049386902612,
+      "supervised_auxiliary": 1.278506099823678,
+      "total": 2.6264283869526173,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 1024.0,
+      "grad_norm": 1.8924962244411507,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 180.81221664696932,
+      "peak_cuda_allocated_bytes": 1150891008
+    }
+  },
+  {
+    "epoch": 2,
+    "phase": "locator_warmup",
+    "lr": [
+      4.000000000000001e-06,
+      4e-05
+    ],
+    "train": {
+      "supervised_mask": 1.2846845151174187,
+      "supervised_aux": 1.2433058261871337,
+      "supervised_coarse": 0.7372469186782837,
+      "supervised_boundary": 1.098115345275048,
+      "supervised_segmentation": 1.2846845151174187,
+      "supervised_auxiliary": 1.2433058261871337,
+      "total": 2.4945839541973456,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 1024.0,
+      "grad_norm": 2.184016013263476,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 179.63156770169735,
+      "peak_cuda_allocated_bytes": 1150891008
+    }
+  },
+  {
+    "epoch": 3,
+    "phase": "locator_warmup",
+    "lr": [
+      6e-06,
+      6e-05
+    ],
+    "train": {
+      "supervised_mask": 1.2898669979359845,
+      "supervised_aux": 1.244426683742221,
+      "supervised_coarse": 0.6957010001829355,
+      "supervised_boundary": 1.0992356749454346,
+      "supervised_segmentation": 1.2898669979359845,
+      "supervised_auxiliary": 1.244426683742221,
+      "total": 2.479777978906537,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 1024.0,
+      "grad_norm": 2.129700997560331,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 178.12755214143544,
+      "peak_cuda_allocated_bytes": 1150891008
+    }
+  },
+  {
+    "epoch": 4,
+    "phase": "joint",
+    "lr": [
+      8.000000000000001e-06,
+      8e-05
+    ],
+    "train": {
+      "supervised_mask": 0.5118565767708392,
+      "supervised_aux": 0.5448349390289571,
+      "supervised_coarse": 0.553199159213812,
+      "supervised_boundary": 0.2586602335666666,
+      "supervised_segmentation": 0.5118565767708392,
+      "supervised_auxiliary": 0.5448349390289571,
+      "total": 1.1126056731337368,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 2048.0,
+      "grad_norm": 4.319357496913117,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.20227741915733,
+      "peak_cuda_allocated_bytes": 1485812224
+    }
+  },
+  {
+    "epoch": 5,
+    "phase": "joint",
+    "lr": [
+      1e-05,
+      0.0001
+    ],
+    "train": {
+      "supervised_mask": 0.44174750417766007,
+      "supervised_aux": 0.48491524918244616,
+      "supervised_coarse": 0.5037636298944455,
+      "supervised_boundary": 0.21887981564101605,
+      "supervised_segmentation": 0.44174750417766007,
+      "supervised_auxiliary": 0.48491524918244616,
+      "total": 0.979862906673167,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 2048.0,
+      "grad_norm": 2.981101624800427,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.50887753255665,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 6,
+    "phase": "joint",
+    "lr": [
+      1e-05,
+      0.0001
+    ],
+    "train": {
+      "supervised_mask": 0.40519849138684794,
+      "supervised_aux": 0.4564298290427368,
+      "supervised_coarse": 0.47750387941256606,
+      "supervised_boundary": 0.20360487519514442,
+      "supervised_segmentation": 0.40519849138684794,
+      "supervised_auxiliary": 0.4564298290427368,
+      "total": 0.9128863205414007,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 2048.0,
+      "grad_norm": 2.5496274466561797,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.6299862312153,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 7,
+    "phase": "joint",
+    "lr": [
+      9.99734742771871e-06,
+      9.997347427718709e-05
+    ],
+    "train": {
+      "supervised_mask": 0.38157957122467534,
+      "supervised_aux": 0.4377825421271938,
+      "supervised_coarse": 0.4609369048977842,
+      "supervised_boundary": 0.19199856099220786,
+      "supervised_segmentation": 0.38157957122467534,
+      "supervised_auxiliary": 0.4377825421271938,
+      "total": 0.8693390086145685,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 2048.0,
+      "grad_norm": 2.5682281902520963,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.83837095461786,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 8,
+    "phase": "joint",
+    "lr": [
+      9.989392673459978e-06,
+      9.989392673459979e-05
+    ],
+    "train": {
+      "supervised_mask": 0.36447867698008474,
+      "supervised_aux": 0.4240027667862354,
+      "supervised_coarse": 0.44868218686320993,
+      "supervised_boundary": 0.18469330568124753,
+      "supervised_segmentation": 0.36447867698008474,
+      "supervised_auxiliary": 0.4240027667862354,
+      "total": 0.837759816292489,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 4096.0,
+      "grad_norm": 2.322494951097092,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.9976014830172,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 9,
+    "phase": "joint",
+    "lr": [
+      9.976144621670395e-06,
+      9.976144621670395e-05
+    ],
+    "train": {
+      "supervised_mask": 0.3512250333729357,
+      "supervised_aux": 0.4140142237786019,
+      "supervised_coarse": 0.44092864317469077,
+      "supervised_boundary": 0.18028448762574997,
+      "supervised_segmentation": 0.3512250333729357,
+      "supervised_auxiliary": 0.4140142237786019,
+      "total": 0.8147533629200246,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 4096.0,
+      "grad_norm": 2.203540343223232,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.75999433826655,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 10,
+    "phase": "joint",
+    "lr": [
+      9.957618068735206e-06,
+      9.957618068735207e-05
+    ],
+    "train": {
+      "supervised_mask": 0.34001830013671724,
+      "supervised_aux": 0.4051805882760794,
+      "supervised_coarse": 0.4333412749932544,
+      "supervised_boundary": 0.17369008385899043,
+      "supervised_segmentation": 0.34001830013671724,
+      "supervised_auxiliary": 0.4051805882760794,
+      "total": 0.7940172510571999,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 4096.0,
+      "grad_norm": 2.3846916677928207,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.5645203506574,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 11,
+    "phase": "joint",
+    "lr": [
+      9.933833706452637e-06,
+      9.933833706452637e-05
+    ],
+    "train": {
+      "supervised_mask": 0.3293247720982769,
+      "supervised_aux": 0.3956825811969172,
+      "supervised_coarse": 0.4250843336086462,
+      "supervised_boundary": 0.16800858086288564,
+      "supervised_segmentation": 0.3293247720982769,
+      "supervised_auxiliary": 0.3956825811969172,
+      "total": 0.7733099465913111,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 4096.0,
+      "grad_norm": 2.153637121455504,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.1175174480304,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 12,
+    "phase": "joint",
+    "lr": [
+      9.904818098923787e-06,
+      9.904818098923787e-05
+    ],
+    "train": {
+      "supervised_mask": 0.31968123833141704,
+      "supervised_aux": 0.38822187285612125,
+      "supervised_coarse": 0.4190337568816572,
+      "supervised_boundary": 0.16421013108574517,
+      "supervised_segmentation": 0.31968123833141704,
+      "supervised_auxiliary": 0.38822187285612125,
+      "total": 0.7561510792463133,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 2.2295908630484402,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.42371273878962,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 13,
+    "phase": "joint",
+    "lr": [
+      9.870603652883927e-06,
+      9.870603652883928e-05
+    ],
+    "train": {
+      "supervised_mask": 0.3123653994928492,
+      "supervised_aux": 0.381536659893423,
+      "supervised_coarse": 0.41260640007434507,
+      "supervised_boundary": 0.16142655981354195,
+      "supervised_segmentation": 0.3123653994928492,
+      "supervised_auxiliary": 0.381536659893423,
+      "total": 0.7417222427849722,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 2.113175964827585,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.8591631045565,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 14,
+    "phase": "joint",
+    "lr": [
+      9.83122858150829e-06,
+      9.83122858150829e-05
+    ],
+    "train": {
+      "supervised_mask": 0.3034641656545129,
+      "supervised_aux": 0.37411564181346707,
+      "supervised_coarse": 0.40604051392857393,
+      "supervised_boundary": 0.1565170578142204,
+      "supervised_segmentation": 0.3034641656545129,
+      "supervised_auxiliary": 0.37411564181346707,
+      "total": 0.7248456538313687,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 2.0230189203035716,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.7734841760248,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 15,
+    "phase": "joint",
+    "lr": [
+      9.786736861732836e-06,
+      9.786736861732834e-05
+    ],
+    "train": {
+      "supervised_mask": 0.2958789190738508,
+      "supervised_aux": 0.3683191822011872,
+      "supervised_coarse": 0.4012941805442961,
+      "supervised_boundary": 0.1528461887399749,
+      "supervised_segmentation": 0.2958789190738508,
+      "supervised_auxiliary": 0.3683191822011872,
+      "total": 0.7112548376664076,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 2.0540003500362434,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.10303010605276,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 16,
+    "phase": "joint",
+    "lr": [
+      9.737178185137615e-06,
+      9.737178185137615e-05
+    ],
+    "train": {
+      "supervised_mask": 0.2906149996979402,
+      "supervised_aux": 0.3641291081610292,
+      "supervised_coarse": 0.39737918884447304,
+      "supervised_boundary": 0.15103245488192776,
+      "supervised_segmentation": 0.2906149996979402,
+      "supervised_auxiliary": 0.3641291081610292,
+      "total": 0.701575639165274,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 2.2280435092378372,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.3862158730626,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 17,
+    "phase": "joint",
+    "lr": [
+      9.682607902447613e-06,
+      9.682607902447613e-05
+    ],
+    "train": {
+      "supervised_mask": 0.28582576159203404,
+      "supervised_aux": 0.35995506006892364,
+      "supervised_coarse": 0.39403828226103643,
+      "supervised_boundary": 0.14852042115560854,
+      "supervised_segmentation": 0.28582576159203404,
+      "supervised_auxiliary": 0.35995506006892364,
+      "total": 0.692526518177278,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 2.033298079094084,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.26739225070924,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 18,
+    "phase": "joint",
+    "lr": [
+      9.623086961713037e-06,
+      9.623086961713037e-05
+    ],
+    "train": {
+      "supervised_mask": 0.28039083418869737,
+      "supervised_aux": 0.35522098529456864,
+      "supervised_coarse": 0.3901045150390946,
+      "supervised_boundary": 0.14559423961851856,
+      "supervised_segmentation": 0.28039083418869737,
+      "supervised_auxiliary": 0.35522098529456864,
+      "total": 0.6821724320992385,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 2.0581162466861236,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.23147127777338,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 19,
+    "phase": "joint",
+    "lr": [
+      9.55868184023812e-06,
+      9.55868184023812e-05
+    ],
+    "train": {
+      "supervised_mask": 0.27397560996584375,
+      "supervised_aux": 0.350289322745682,
+      "supervised_coarse": 0.3857441111956493,
+      "supervised_boundary": 0.14344804438919123,
+      "supervised_segmentation": 0.27397560996584375,
+      "supervised_auxiliary": 0.350289322745682,
+      "total": 0.6706819351356809,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 2.0126118193758598,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.31105728726834,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 20,
+    "phase": "joint",
+    "lr": [
+      9.489464470334437e-06,
+      9.489464470334436e-05
+    ],
+    "train": {
+      "supervised_mask": 0.2680086594997066,
+      "supervised_aux": 0.3455930819310764,
+      "supervised_coarse": 0.3818653631918501,
+      "supervised_boundary": 0.14152079423760425,
+      "supervised_segmentation": 0.2680086594997066,
+      "supervised_auxiliary": 0.3455930819310764,
+      "total": 0.6600420399467544,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 2.030759343298355,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.83658071886748,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 21,
+    "phase": "joint",
+    "lr": [
+      9.41551215898169e-06,
+      9.415512158981689e-05
+    ],
+    "train": {
+      "supervised_mask": 0.2641143034000208,
+      "supervised_aux": 0.3423761643100493,
+      "supervised_coarse": 0.37902065840097937,
+      "supervised_boundary": 0.13891053046330368,
+      "supervised_segmentation": 0.2641143034000208,
+      "supervised_auxiliary": 0.3423761643100493,
+      "total": 0.6525948210517959,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 2.0512288798200022,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.72966650594026,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 22,
+    "phase": "joint",
+    "lr": [
+      9.336907501485663e-06,
+      9.336907501485662e-05
+    ],
+    "train": {
+      "supervised_mask": 0.25988652732702766,
+      "supervised_aux": 0.33866223197172185,
+      "supervised_coarse": 0.3758519679012865,
+      "supervised_boundary": 0.1378320794884521,
+      "supervised_segmentation": 0.25988652732702766,
+      "supervised_auxiliary": 0.33866223197172185,
+      "total": 0.6447100449316573,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.9498813142870912,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.79970195144415,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 23,
+    "phase": "joint",
+    "lr": [
+      9.253738289229786e-06,
+      9.253738289229786e-05
+    ],
+    "train": {
+      "supervised_mask": 0.25533312718466955,
+      "supervised_aux": 0.3350685024320489,
+      "supervised_coarse": 0.37266838904654626,
+      "supervised_boundary": 0.13520569065124682,
+      "supervised_segmentation": 0.25533312718466955,
+      "supervised_auxiliary": 0.3350685024320489,
+      "total": 0.6362427110719209,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.9557963139940016,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.39901719987392,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 24,
+    "phase": "joint",
+    "lr": [
+      9.166097411623362e-06,
+      9.166097411623363e-05
+    ],
+    "train": {
+      "supervised_mask": 0.2515009474341232,
+      "supervised_aux": 0.33175085417114863,
+      "supervised_coarse": 0.36951483166453863,
+      "supervised_boundary": 0.13309841645826206,
+      "supervised_segmentation": 0.2515009474341232,
+      "supervised_auxiliary": 0.33175085417114863,
+      "total": 0.6287534718466277,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 65536.0,
+      "grad_norm": 1.9787945838257819,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.49929438065737,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 25,
+    "phase": "joint",
+    "lr": [
+      9.074082752355925e-06,
+      9.074082752355924e-05
+    ],
+    "train": {
+      "supervised_mask": 0.24839023286753362,
+      "supervised_aux": 0.32950359361596626,
+      "supervised_coarse": 0.3676867521930449,
+      "supervised_boundary": 0.1330921394105005,
+      "supervised_segmentation": 0.24839023286753362,
+      "supervised_auxiliary": 0.32950359361596626,
+      "total": 0.6236038335479132,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 65536.0,
+      "grad_norm": 1.8898535343680052,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.65376087464392,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 26,
+    "phase": "joint",
+    "lr": [
+      8.97779708007364e-06,
+      8.97779708007364e-05
+    ],
+    "train": {
+      "supervised_mask": 0.24433837288086957,
+      "supervised_aux": 0.3260573850409819,
+      "supervised_coarse": 0.3647934918356414,
+      "supervised_boundary": 0.13078762456627174,
+      "supervised_segmentation": 0.24433837288086957,
+      "supervised_auxiliary": 0.3260573850409819,
+      "total": 0.6159213364714443,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 65536.0,
+      "grad_norm": 1.915370264147768,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.5987189207226,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 27,
+    "phase": "joint",
+    "lr": [
+      8.877347933599829e-06,
+      8.877347933599829e-05
+    ],
+    "train": {
+      "supervised_mask": 0.24160978873767475,
+      "supervised_aux": 0.32359485219020656,
+      "supervised_coarse": 0.3623813043726553,
+      "supervised_boundary": 0.12905702943554018,
+      "supervised_segmentation": 0.24160978873767475,
+      "supervised_auxiliary": 0.32359485219020656,
+      "total": 0.6104092730744051,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.9819156781785072,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.5191307226196,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 28,
+    "phase": "joint",
+    "lr": [
+      8.7728475018278e-06,
+      8.7728475018278e-05
+    ],
+    "train": {
+      "supervised_mask": 0.23772737667112068,
+      "supervised_aux": 0.3204518133165813,
+      "supervised_coarse": 0.35985450110223033,
+      "supervised_boundary": 0.12742468202763266,
+      "supervised_segmentation": 0.23772737667112068,
+      "supervised_auxiliary": 0.3204518133165813,
+      "total": 0.6033654695100124,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.9478633846082385,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.29198266658932,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 29,
+    "phase": "joint",
+    "lr": [
+      8.664412498420165e-06,
+      8.664412498420165e-05
+    ],
+    "train": {
+      "supervised_mask": 0.23458836828127946,
+      "supervised_aux": 0.31792971500665834,
+      "supervised_coarse": 0.35729243386499954,
+      "supervised_boundary": 0.12581737886856098,
+      "supervised_segmentation": 0.23458836828127946,
+      "supervised_auxiliary": 0.31792971500665834,
+      "total": 0.5973629186058989,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.904724376272447,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.15276419837028,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 30,
+    "phase": "joint",
+    "lr": [
+      8.552164031454552e-06,
+      8.552164031454551e-05
+    ],
+    "train": {
+      "supervised_mask": 0.23228971388670477,
+      "supervised_aux": 0.3162026521297965,
+      "supervised_coarse": 0.3557495563042046,
+      "supervised_boundary": 0.12462938618246872,
+      "supervised_segmentation": 0.23228971388670477,
+      "supervised_auxiliary": 0.3162026521297965,
+      "total": 0.5931916965706514,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.8724347172397198,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 187.98256055172533,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 31,
+    "phase": "joint",
+    "lr": [
+      8.436227468161313e-06,
+      8.436227468161312e-05
+    ],
+    "train": {
+      "supervised_mask": 0.2303466550194391,
+      "supervised_aux": 0.31394409085854447,
+      "supervised_coarse": 0.3535886149300207,
+      "supervised_boundary": 0.12405548085375588,
+      "supervised_segmentation": 0.2303466550194391,
+      "supervised_auxiliary": 0.31394409085854447,
+      "total": 0.5889241033261365,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 2.009858796620133,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.65018618199974,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 32,
+    "phase": "joint",
+    "lr": [
+      8.316732294904311e-06,
+      8.316732294904312e-05
+    ],
+    "train": {
+      "supervised_mask": 0.22757060206172489,
+      "supervised_aux": 0.31186016972112185,
+      "supervised_coarse": 0.35207042174764197,
+      "supervised_boundary": 0.12245916198975969,
+      "supervised_segmentation": 0.22757060206172489,
+      "supervised_auxiliary": 0.31186016972112185,
+      "total": 0.5840277314776241,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.8493475958852486,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.25937943719327,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 33,
+    "phase": "joint",
+    "lr": [
+      8.193811972561164e-06,
+      8.193811972561164e-05
+    ],
+    "train": {
+      "supervised_mask": 0.22495045706187144,
+      "supervised_aux": 0.3096986968918602,
+      "supervised_coarse": 0.3503125136146451,
+      "supervised_boundary": 0.12174295397973296,
+      "supervised_segmentation": 0.22495045706187144,
+      "supervised_auxiliary": 0.3096986968918602,
+      "total": 0.5793046532290997,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.895535089548618,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.4068518318236,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 34,
+    "phase": "joint",
+    "lr": [
+      8.067603787464437e-06,
+      8.067603787464438e-05
+    ],
+    "train": {
+      "supervised_mask": 0.22145333588123323,
+      "supervised_aux": 0.30689018129712287,
+      "supervised_coarse": 0.3476884506421514,
+      "supervised_boundary": 0.1208879824322049,
+      "supervised_segmentation": 0.22145333588123323,
+      "supervised_auxiliary": 0.30689018129712287,
+      "total": 0.5729202473517692,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.791243280278574,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.19764782488346,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 35,
+    "phase": "joint",
+    "lr": [
+      7.938248698070329e-06,
+      7.938248698070329e-05
+    ],
+    "train": {
+      "supervised_mask": 0.21851757255816223,
+      "supervised_aux": 0.3047549528355646,
+      "supervised_coarse": 0.34584673265419386,
+      "supervised_boundary": 0.11911448749280212,
+      "supervised_segmentation": 0.21851757255816223,
+      "supervised_auxiliary": 0.3047549528355646,
+      "total": 0.5676413141264773,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.8011237387609953,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.70005823113024,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 36,
+    "phase": "joint",
+    "lr": [
+      7.805891177526022e-06,
+      7.805891177526021e-05
+    ],
+    "train": {
+      "supervised_mask": 0.21723261643754374,
+      "supervised_aux": 0.30340801931843897,
+      "supervised_coarse": 0.34473635415629583,
+      "supervised_boundary": 0.11855639691400056,
+      "supervised_segmentation": 0.21723261643754374,
+      "supervised_auxiliary": 0.30340801931843897,
+      "total": 0.5650160812505401,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.8693454360017683,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.01259923446923,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 37,
+    "phase": "joint",
+    "lr": [
+      7.67067905231161e-06,
+      7.670679052311609e-05
+    ],
+    "train": {
+      "supervised_mask": 0.21495886282755597,
+      "supervised_aux": 0.3016746824330623,
+      "supervised_coarse": 0.3429699232082556,
+      "supervised_boundary": 0.11708811204327214,
+      "supervised_segmentation": 0.21495886282755597,
+      "supervised_auxiliary": 0.3016746824330623,
+      "total": 0.5606987871155881,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.859642770384798,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.97712001297623,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 38,
+    "phase": "joint",
+    "lr": [
+      7.53276333713675e-06,
+      7.532763337136748e-05
+    ],
+    "train": {
+      "supervised_mask": 0.21320346050923414,
+      "supervised_aux": 0.3005942301880015,
+      "supervised_coarse": 0.34234972327652546,
+      "supervised_boundary": 0.11687924552819516,
+      "supervised_segmentation": 0.21320346050923414,
+      "supervised_auxiliary": 0.3005942301880015,
+      "total": 0.5580512859443627,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.7945898008488474,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.66329487785697,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 39,
+    "phase": "joint",
+    "lr": [
+      7.392298066276484e-06,
+      7.392298066276483e-05
+    ],
+    "train": {
+      "supervised_mask": 0.21052197939393544,
+      "supervised_aux": 0.2982228413666829,
+      "supervised_coarse": 0.33970965869946057,
+      "supervised_boundary": 0.11591869161860778,
+      "supervised_segmentation": 0.21052197939393544,
+      "supervised_auxiliary": 0.2982228413666829,
+      "total": 0.5526719688779057,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.7831546824757416,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.7077484326437,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 40,
+    "phase": "joint",
+    "lr": [
+      7.249440121534592e-06,
+      7.249440121534591e-05
+    ],
+    "train": {
+      "supervised_mask": 0.20903114291405914,
+      "supervised_aux": 0.29672909125243085,
+      "supervised_coarse": 0.338644149692932,
+      "supervised_boundary": 0.11530327045976525,
+      "supervised_segmentation": 0.20903114291405914,
+      "supervised_auxiliary": 0.29672909125243085,
+      "total": 0.549778418729801,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.875858202311072,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.66788366250694,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 41,
+    "phase": "joint",
+    "lr": [
+      7.1043490570266005e-06,
+      7.1043490570266e-05
+    ],
+    "train": {
+      "supervised_mask": 0.20601253338379436,
+      "supervised_aux": 0.29455746722103343,
+      "supervised_coarse": 0.33668558786411096,
+      "supervised_boundary": 0.11389878625326817,
+      "supervised_segmentation": 0.20601253338379436,
+      "supervised_auxiliary": 0.29455746722103343,
+      "total": 0.5444138174599941,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.82298900278488,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.29445953574032,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 42,
+    "phase": "joint",
+    "lr": [
+      6.957186920978186e-06,
+      6.957186920978186e-05
+    ],
+    "train": {
+      "supervised_mask": 0.20444180342820611,
+      "supervised_aux": 0.2928587052786704,
+      "supervised_coarse": 0.33514684468212697,
+      "supervised_boundary": 0.11317699314048975,
+      "supervised_segmentation": 0.20444180342820611,
+      "supervised_auxiliary": 0.2928587052786704,
+      "total": 0.541079976358036,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.783216114445488,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.88249194808304,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 43,
+    "phase": "joint",
+    "lr": [
+      6.808118074737954e-06,
+      6.808118074737953e-05
+    ],
+    "train": {
+      "supervised_mask": 0.20382441251289726,
+      "supervised_aux": 0.2921314047704829,
+      "supervised_coarse": 0.3345576428835935,
+      "supervised_boundary": 0.11383846384463923,
+      "supervised_segmentation": 0.20382441251289726,
+      "supervised_auxiliary": 0.2921314047704829,
+      "total": 0.5399366280229965,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7602654040449917,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.1822673305869,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 44,
+    "phase": "joint",
+    "lr": [
+      6.657309009206763e-06,
+      6.657309009206762e-05
+    ],
+    "train": {
+      "supervised_mask": 0.20137234890815056,
+      "supervised_aux": 0.2904244640085957,
+      "supervised_coarse": 0.3328380507407802,
+      "supervised_boundary": 0.11274052582459874,
+      "supervised_segmentation": 0.20137234890815056,
+      "supervised_auxiliary": 0.2904244640085957,
+      "total": 0.5355517114153002,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.8258346266085559,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.90795227792114,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 45,
+    "phase": "joint",
+    "lr": [
+      6.5049281588886105e-06,
+      6.50492815888861e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1994390916263703,
+      "supervised_aux": 0.2885630025131868,
+      "supervised_coarse": 0.33122310145656664,
+      "supervised_boundary": 0.11119987344977879,
+      "supervised_segmentation": 0.1994390916263703,
+      "supervised_auxiliary": 0.2885630025131868,
+      "total": 0.5315721171327157,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.8056436939994887,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.0316096972674,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 46,
+    "phase": "joint",
+    "lr": [
+      6.35114571377076e-06,
+      6.35114571377076e-05
+    ],
+    "train": {
+      "supervised_mask": 0.19760997236365138,
+      "supervised_aux": 0.28720215983910136,
+      "supervised_coarse": 0.32997732082806014,
+      "supervised_boundary": 0.11022231025565969,
+      "supervised_segmentation": 0.19760997236365138,
+      "supervised_auxiliary": 0.28720215983910136,
+      "total": 0.5282441740578944,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7185156605546437,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.3949751947075,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 47,
+    "phase": "joint",
+    "lr": [
+      6.196133429243222e-06,
+      6.196133429243222e-05
+    ],
+    "train": {
+      "supervised_mask": 0.19550241774851732,
+      "supervised_aux": 0.28539382089482673,
+      "supervised_coarse": 0.32827294669529,
+      "supervised_boundary": 0.10960798254697629,
+      "supervised_segmentation": 0.19550241774851732,
+      "supervised_auxiliary": 0.28539382089482673,
+      "total": 0.5242573986549188,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7306691349142849,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.65359882172197,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 48,
+    "phase": "joint",
+    "lr": [
+      6.040064434269869e-06,
+      6.040064434269869e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1941516715258655,
+      "supervised_aux": 0.28488075886622516,
+      "supervised_coarse": 0.3282165407544315,
+      "supervised_boundary": 0.10896408400028058,
+      "supervised_segmentation": 0.1941516715258655,
+      "supervised_auxiliary": 0.28488075886622516,
+      "total": 0.5224931383487021,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7532293495565359,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.9474765509367,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 49,
+    "phase": "joint",
+    "lr": [
+      5.8831130380254505e-06,
+      5.8831130380254505e-05
+    ],
+    "train": {
+      "supervised_mask": 0.19322946096705917,
+      "supervised_aux": 0.2834923500766849,
+      "supervised_coarse": 0.32646322914279335,
+      "supervised_boundary": 0.1089386788925322,
+      "supervised_segmentation": 0.19322946096705917,
+      "supervised_auxiliary": 0.2834923500766849,
+      "total": 0.5199949871195425,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7630084684579679,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.3615743489936,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 50,
+    "phase": "joint",
+    "lr": [
+      5.725454535214468e-06,
+      5.7254545352144687e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1918442070336625,
+      "supervised_aux": 0.2825612272661511,
+      "supervised_coarse": 0.32603755864766565,
+      "supervised_boundary": 0.10843714367930252,
+      "supervised_segmentation": 0.1918442070336625,
+      "supervised_auxiliary": 0.2825612272661511,
+      "total": 0.5178310282749705,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 65536.0,
+      "grad_norm": 1.7349360576950676,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.70721767656505,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 51,
+    "phase": "joint",
+    "lr": [
+      5.567265010289329e-06,
+      5.567265010289329e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1910795182137206,
+      "supervised_aux": 0.28192249928960705,
+      "supervised_coarse": 0.32519067098008525,
+      "supervised_boundary": 0.10778510700358022,
+      "supervised_segmentation": 0.1910795182137206,
+      "supervised_auxiliary": 0.28192249928960705,
+      "total": 0.5161931255666337,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.723622198379229,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.34877689555287,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 52,
+    "phase": "joint",
+    "lr": [
+      5.4087211407864544e-06,
+      5.408721140786455e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1886678803380173,
+      "supervised_aux": 0.27975746552542885,
+      "supervised_coarse": 0.3233582054624463,
+      "supervised_boundary": 0.10682277427894055,
+      "supervised_segmentation": 0.1886678803380173,
+      "supervised_auxiliary": 0.27975746552542885,
+      "total": 0.5115902707128241,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7778533784469757,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.882837257348,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 53,
+    "phase": "joint",
+    "lr": [
+      5.2500000000000006e-06,
+      5.25e-05
+    ],
+    "train": {
+      "supervised_mask": 0.18795301915690452,
+      "supervised_aux": 0.2793614187453053,
+      "supervised_coarse": 0.32303287699671074,
+      "supervised_boundary": 0.10630099521857678,
+      "supervised_segmentation": 0.18795301915690452,
+      "supervised_auxiliary": 0.2793614187453053,
+      "total": 0.5104103669671729,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.753154170749211,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.20889116823673,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 54,
+    "phase": "joint",
+    "lr": [
+      5.0912788592135475e-06,
+      5.091278859213548e-05
+    ],
+    "train": {
+      "supervised_mask": 0.18666818724705442,
+      "supervised_aux": 0.27861862241631685,
+      "supervised_coarse": 0.32219278948141794,
+      "supervised_boundary": 0.10619005929715562,
+      "supervised_segmentation": 0.18666818724705442,
+      "supervised_auxiliary": 0.27861862241631685,
+      "total": 0.5083119044799616,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7536723984350073,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.60474322922528,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 55,
+    "phase": "joint",
+    "lr": [
+      4.9327349897106725e-06,
+      4.932734989710672e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1839459426774837,
+      "supervised_aux": 0.275784497361372,
+      "supervised_coarse": 0.31966149007329847,
+      "supervised_boundary": 0.10504401389620091,
+      "supervised_segmentation": 0.1839459426774837,
+      "supervised_auxiliary": 0.275784497361372,
+      "total": 0.5026777402009114,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 65536.0,
+      "grad_norm": 1.6401963156048613,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 187.73813922517002,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 56,
+    "phase": "joint",
+    "lr": [
+      4.774545464785533e-06,
+      4.7745454647855325e-05
+    ],
+    "train": {
+      "supervised_mask": 0.18335207525161235,
+      "supervised_aux": 0.2754851972997779,
+      "supervised_coarse": 0.3196585245356701,
+      "supervised_boundary": 0.10477390414712452,
+      "supervised_segmentation": 0.18335207525161235,
+      "supervised_auxiliary": 0.2754851972997779,
+      "total": 0.5018787171581004,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.7054220131701894,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.52792297676206,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 57,
+    "phase": "joint",
+    "lr": [
+      4.616886961974552e-06,
+      4.616886961974552e-05
+    ],
+    "train": {
+      "supervised_mask": 0.18230744560461234,
+      "supervised_aux": 0.2746018526282641,
+      "supervised_coarse": 0.3187296161262116,
+      "supervised_boundary": 0.10457966070954162,
+      "supervised_segmentation": 0.18230744560461234,
+      "supervised_auxiliary": 0.2746018526282641,
+      "total": 0.49988911181393236,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.6848981222303787,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.20715278480202,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 58,
+    "phase": "joint",
+    "lr": [
+      4.459935565730133e-06,
+      4.459935565730132e-05
+    ],
+    "train": {
+      "supervised_mask": 0.18117514434132245,
+      "supervised_aux": 0.27387307967879987,
+      "supervised_coarse": 0.3181472633144643,
+      "supervised_boundary": 0.10398830310395449,
+      "supervised_segmentation": 0.18117514434132245,
+      "supervised_auxiliary": 0.27387307967879987,
+      "total": 0.4979829764012063,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.6722027624007498,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.64209455158561,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 59,
+    "phase": "joint",
+    "lr": [
+      4.303866570756779e-06,
+      4.3038665707567796e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1802670603193859,
+      "supervised_aux": 0.2728495347027731,
+      "supervised_coarse": 0.3170190049575107,
+      "supervised_boundary": 0.10343745149450727,
+      "supervised_segmentation": 0.1802670603193859,
+      "supervised_auxiliary": 0.2728495347027731,
+      "total": 0.4958888207921887,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.7568168752486744,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.60006235726178,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 60,
+    "phase": "joint",
+    "lr": [
+      4.14885428622924e-06,
+      4.1488542862292404e-05
+    ],
+    "train": {
+      "supervised_mask": 0.17816272963686744,
+      "supervised_aux": 0.27141786565875065,
+      "supervised_coarse": 0.31614979679631716,
+      "supervised_boundary": 0.10278773456811904,
+      "supervised_segmentation": 0.17816272963686744,
+      "supervised_auxiliary": 0.27141786565875065,
+      "total": 0.49250410765704544,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.7185060355922963,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.58311737142503,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 61,
+    "phase": "joint",
+    "lr": [
+      3.9950718411113915e-06,
+      3.995071841111391e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1782985490737575,
+      "supervised_aux": 0.27138607493131467,
+      "supervised_coarse": 0.3157229063239428,
+      "supervised_boundary": 0.10282993044446011,
+      "supervised_segmentation": 0.1782985490737575,
+      "supervised_auxiliary": 0.27138607493131467,
+      "total": 0.4924190255379913,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.664570961494257,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.68232838902622,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 62,
+    "phase": "joint",
+    "lr": [
+      3.842690990793239e-06,
+      3.842690990793239e-05
+    ],
+    "train": {
+      "supervised_mask": 0.17704618772362718,
+      "supervised_aux": 0.27057142573418,
+      "supervised_coarse": 0.3152662340072122,
+      "supervised_boundary": 0.10245939074914054,
+      "supervised_segmentation": 0.17704618772362718,
+      "supervised_auxiliary": 0.27057142573418,
+      "total": 0.49045689454173097,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6482642012067361,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.12231963966042,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 63,
+    "phase": "joint",
+    "lr": [
+      3.6918819252620463e-06,
+      3.691881925262046e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1747360382929887,
+      "supervised_aux": 0.2686622117710586,
+      "supervised_coarse": 0.31344320340321796,
+      "supervised_boundary": 0.1013638288372814,
+      "supervised_segmentation": 0.1747360382929887,
+      "supervised_auxiliary": 0.2686622117710586,
+      "total": 0.48606151230264416,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.588585618462893,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.4284701803699,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 64,
+    "phase": "joint",
+    "lr": [
+      3.542813079021815e-06,
+      3.542813079021815e-05
+    ],
+    "train": {
+      "supervised_mask": 0.17450723929865525,
+      "supervised_aux": 0.26825582258181996,
+      "supervised_coarse": 0.31306440228282817,
+      "supervised_boundary": 0.10155888682987431,
+      "supervised_segmentation": 0.17450723929865525,
+      "supervised_auxiliary": 0.26825582258181996,
+      "total": 0.48547912948202376,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.650808622695432,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.48688919842243,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 65,
+    "phase": "joint",
+    "lr": [
+      3.3956509429733998e-06,
+      3.3956509429734e-05
+    ],
+    "train": {
+      "supervised_mask": 0.17425591929419207,
+      "supervised_aux": 0.2681396035274657,
+      "supervised_coarse": 0.3127055952159485,
+      "supervised_boundary": 0.1015319571120314,
+      "supervised_segmentation": 0.17425591929419207,
+      "supervised_auxiliary": 0.2681396035274657,
+      "total": 0.48498491090123014,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.6416890131364954,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.2267829934135,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 66,
+    "phase": "joint",
+    "lr": [
+      3.2505598784654097e-06,
+      3.25055987846541e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1719663708074258,
+      "supervised_aux": 0.26629603304485283,
+      "supervised_coarse": 0.3112067316133197,
+      "supervised_boundary": 0.10002834432490981,
+      "supervised_segmentation": 0.1719663708074258,
+      "supervised_auxiliary": 0.26629603304485283,
+      "total": 0.4807234231198188,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 65536.0,
+      "grad_norm": 1.5835668784557002,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.11027413606644,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 67,
+    "phase": "joint",
+    "lr": [
+      3.1077019337235153e-06,
+      3.1077019337235156e-05
+    ],
+    "train": {
+      "supervised_mask": 0.17267277594840172,
+      "supervised_aux": 0.2670588449086293,
+      "supervised_coarse": 0.31185006490438294,
+      "supervised_boundary": 0.10114520144934701,
+      "supervised_segmentation": 0.17267277594840172,
+      "supervised_auxiliary": 0.2670588449086293,
+      "total": 0.4823562708821627,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.6617316090398364,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.05143845360726,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 68,
+    "phase": "joint",
+    "lr": [
+      2.967236662863252e-06,
+      2.967236662863252e-05
+    ],
+    "train": {
+      "supervised_mask": 0.17074220515418762,
+      "supervised_aux": 0.2654087321888102,
+      "supervised_coarse": 0.31041085321714385,
+      "supervised_boundary": 0.10020377290720987,
+      "supervised_segmentation": 0.17074220515418762,
+      "supervised_auxiliary": 0.2654087321888102,
+      "total": 0.47869275359824154,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6249286637656273,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 189.09554590377957,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 69,
+    "phase": "joint",
+    "lr": [
+      2.829320947688392e-06,
+      2.829320947688392e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1699629359021045,
+      "supervised_aux": 0.26497550645087026,
+      "supervised_coarse": 0.3099940523062602,
+      "supervised_boundary": 0.09975867979597337,
+      "supervised_segmentation": 0.1699629359021045,
+      "supervised_auxiliary": 0.26497550645087026,
+      "total": 0.4773994517798471,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.582188098973567,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.92157679330558,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 70,
+    "phase": "joint",
+    "lr": [
+      2.6941088224739804e-06,
+      2.6941088224739802e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16961693293092275,
+      "supervised_aux": 0.2642069606792809,
+      "supervised_coarse": 0.30908773042777976,
+      "supervised_boundary": 0.09965206082209502,
+      "supervised_segmentation": 0.16961693293092275,
+      "supervised_auxiliary": 0.2642069606792809,
+      "total": 0.476194691776049,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6214077626124468,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.252063264139,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 71,
+    "phase": "joint",
+    "lr": [
+      2.5617513019296725e-06,
+      2.5617513019296724e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16843710434023695,
+      "supervised_aux": 0.26360425550748806,
+      "supervised_coarse": 0.3087949006569268,
+      "supervised_boundary": 0.0989257869817833,
+      "supervised_segmentation": 0.16843710434023695,
+      "supervised_auxiliary": 0.26360425550748806,
+      "total": 0.4744218400799402,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6094137257868701,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.81944557651877,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 72,
+    "phase": "joint",
+    "lr": [
+      2.432396212535563e-06,
+      2.4323962125355627e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16818029439390295,
+      "supervised_aux": 0.2631007976756238,
+      "supervised_coarse": 0.308154829303817,
+      "supervised_boundary": 0.09912778828108665,
+      "supervised_segmentation": 0.16818029439390295,
+      "supervised_auxiliary": 0.2631007976756238,
+      "total": 0.4736336667348843,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.589639956408208,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.53094500582665,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 73,
+    "phase": "joint",
+    "lr": [
+      2.3061880274388375e-06,
+      2.3061880274388377e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16671762817566937,
+      "supervised_aux": 0.2621563146019926,
+      "supervised_coarse": 0.3073348193770588,
+      "supervised_boundary": 0.09924198106521427,
+      "supervised_segmentation": 0.16671762817566937,
+      "supervised_auxiliary": 0.2621563146019926,
+      "total": 0.4713115907541596,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6191870963999204,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.28921617381275,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 74,
+    "phase": "joint",
+    "lr": [
+      2.1832677050956884e-06,
+      2.1832677050956884e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1669458613094717,
+      "supervised_aux": 0.2623338937464327,
+      "supervised_coarse": 0.30751431091587145,
+      "supervised_boundary": 0.09902486301737257,
+      "supervised_segmentation": 0.1669458613094717,
+      "supervised_auxiliary": 0.2623338937464327,
+      "total": 0.4716749369507969,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.653868258471536,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 187.93962036632,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 75,
+    "phase": "joint",
+    "lr": [
+      2.0637725318386897e-06,
+      2.0637725318386897e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1646682654867078,
+      "supervised_aux": 0.26041990601190246,
+      "supervised_coarse": 0.3060201309695102,
+      "supervised_boundary": 0.09766866570652122,
+      "supervised_segmentation": 0.1646682654867078,
+      "supervised_auxiliary": 0.26041990601190246,
+      "total": 0.4674220171305213,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.5496541026795265,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.90973841864616,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 76,
+    "phase": "joint",
+    "lr": [
+      1.947835968545449e-06,
+      1.9478359685454488e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16539927021701736,
+      "supervised_aux": 0.2609305848284523,
+      "supervised_coarse": 0.3062618498459901,
+      "supervised_boundary": 0.09801157012876897,
+      "supervised_segmentation": 0.16539927021701736,
+      "supervised_auxiliary": 0.2609305848284523,
+      "total": 0.46859780083788505,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.564246661002093,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.18349569663405,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 77,
+    "phase": "joint",
+    "lr": [
+      1.8355875015798363e-06,
+      1.8355875015798364e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16488013714551925,
+      "supervised_aux": 0.260795660833321,
+      "supervised_coarse": 0.30634567855608347,
+      "supervised_boundary": 0.09828092694872677,
+      "supervised_segmentation": 0.16488013714551925,
+      "supervised_auxiliary": 0.260795660833321,
+      "total": 0.46810699158375807,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.6999027050367677,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 188.2645102608949,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 78,
+    "phase": "joint",
+    "lr": [
+      1.7271524981722016e-06,
+      1.7271524981722016e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16434181372422982,
+      "supervised_aux": 0.2603647126124637,
+      "supervised_coarse": 0.3057735625765111,
+      "supervised_boundary": 0.09820479911447752,
+      "supervised_segmentation": 0.16434181372422982,
+      "supervised_auxiliary": 0.2603647126124637,
+      "total": 0.46705190946560093,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6128669586919604,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.54330479726195,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 79,
+    "phase": "joint",
+    "lr": [
+      1.6226520664001732e-06,
+      1.622652066400173e-05
+    ],
+    "train": {
+      "supervised_mask": 0.1643116365269859,
+      "supervised_aux": 0.2603252165683425,
+      "supervised_coarse": 0.30549753166661403,
+      "supervised_boundary": 0.0980303952599516,
+      "supervised_segmentation": 0.1643116365269859,
+      "supervised_auxiliary": 0.2603252165683425,
+      "total": 0.4668290906023271,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6659580064292001,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 199.02392473630607,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 80,
+    "phase": "joint",
+    "lr": [
+      1.5222029199263605e-06,
+      1.5222029199263605e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16368827231154584,
+      "supervised_aux": 0.25987447101881006,
+      "supervised_coarse": 0.3052425900603285,
+      "supervised_boundary": 0.09792437249481088,
+      "supervised_segmentation": 0.16368827231154584,
+      "supervised_auxiliary": 0.25987447101881006,
+      "total": 0.4658316780434977,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.570025413282334,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 196.4284252319485,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 81,
+    "phase": "joint",
+    "lr": [
+      1.4259172476440764e-06,
+      1.4259172476440763e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16226533127598244,
+      "supervised_aux": 0.25905925327598456,
+      "supervised_coarse": 0.30474126203225393,
+      "supervised_boundary": 0.09718144806009708,
+      "supervised_segmentation": 0.16226533127598244,
+      "supervised_auxiliary": 0.25905925327598456,
+      "total": 0.4636018774296978,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.5735208871340989,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 197.15618208050728,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 82,
+    "phase": "joint",
+    "lr": [
+      1.3339025883766399e-06,
+      1.3339025883766398e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16152142843987682,
+      "supervised_aux": 0.25826895930389365,
+      "supervised_coarse": 0.30394011688704536,
+      "supervised_boundary": 0.09706907636015721,
+      "supervised_segmentation": 0.16152142843987682,
+      "supervised_auxiliary": 0.25826895930389365,
+      "total": 0.46203978291832576,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.589449708886666,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 203.81851687375456,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 83,
+    "phase": "joint",
+    "lr": [
+      1.2462617107702143e-06,
+      1.2462617107702143e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16189618013282814,
+      "supervised_aux": 0.25854281411312596,
+      "supervised_coarse": 0.3040374088995528,
+      "supervised_boundary": 0.0969666420528204,
+      "supervised_segmentation": 0.16189618013282814,
+      "supervised_auxiliary": 0.25854281411312596,
+      "total": 0.462579620120549,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.548221764824178,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 206.92200981918722,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 84,
+    "phase": "joint",
+    "lr": [
+      1.1630924985143392e-06,
+      1.163092498514339e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16217250118751336,
+      "supervised_aux": 0.2584878422836266,
+      "supervised_coarse": 0.30409896217360355,
+      "supervised_boundary": 0.09835103557694076,
+      "supervised_segmentation": 0.16217250118751336,
+      "supervised_auxiliary": 0.2584878422836266,
+      "total": 0.46313611050643544,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.6409118124754123,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 208.1587637355551,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 85,
+    "phase": "joint",
+    "lr": [
+      1.0844878410183105e-06,
+      1.0844878410183104e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16149922888172735,
+      "supervised_aux": 0.25809999978778386,
+      "supervised_coarse": 0.3033059621801471,
+      "supervised_boundary": 0.09689883495321368,
+      "supervised_segmentation": 0.16149922888172735,
+      "supervised_auxiliary": 0.25809999978778386,
+      "total": 0.4615819775822139,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.5963371849012753,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 199.4576739380136,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 86,
+    "phase": "joint",
+    "lr": [
+      1.0105355296655647e-06,
+      1.0105355296655646e-05
+    ],
+    "train": {
+      "supervised_mask": 0.16028816607033852,
+      "supervised_aux": 0.2573987805902368,
+      "supervised_coarse": 0.3029304888578925,
+      "supervised_boundary": 0.09700701971455376,
+      "supervised_segmentation": 0.16028816607033852,
+      "supervised_auxiliary": 0.2573987805902368,
+      "total": 0.4598542047019052,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.5645468427403137,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 197.07204586826265,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 87,
+    "phase": "joint",
+    "lr": [
+      9.413181597618817e-07,
+      9.413181597618817e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15998762362074143,
+      "supervised_aux": 0.2571649888069323,
+      "supervised_coarse": 0.30299077237596606,
+      "supervised_boundary": 0.0963926467196186,
+      "supervised_segmentation": 0.15998762362074143,
+      "supervised_auxiliary": 0.2571649888069323,
+      "total": 0.4593440342657637,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.5646292808032272,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 196.90942762885243,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 88,
+    "phase": "joint",
+    "lr": [
+      8.769130382869628e-07,
+      8.769130382869628e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15978223606206404,
+      "supervised_aux": 0.25697378380463853,
+      "supervised_coarse": 0.3025330943341302,
+      "supervised_boundary": 0.09659864971100694,
+      "supervised_segmentation": 0.15978223606206404,
+      "supervised_auxiliary": 0.25697378380463853,
+      "total": 0.4588554048892295,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 8192.0,
+      "grad_norm": 1.5194997668266297,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 197.15663623530418,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 89,
+    "phase": "joint",
+    "lr": [
+      8.17392097552388e-07,
+      8.17392097552388e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15881852125472362,
+      "supervised_aux": 0.25619696248875984,
+      "supervised_coarse": 0.30220927203645803,
+      "supervised_boundary": 0.09626869430193806,
+      "supervised_segmentation": 0.15881852125472362,
+      "supervised_auxiliary": 0.25619696248875984,
+      "total": 0.45727537953027403,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.5669607166016455,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 195.2347320271656,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 90,
+    "phase": "joint",
+    "lr": [
+      7.628218148623864e-07,
+      7.628218148623864e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15942439914929984,
+      "supervised_aux": 0.25626417088626635,
+      "supervised_coarse": 0.3019756491231446,
+      "supervised_boundary": 0.09617690395305653,
+      "supervised_segmentation": 0.15942439914929984,
+      "supervised_auxiliary": 0.25626417088626635,
+      "total": 0.45777968870531216,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.5560734073714455,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 196.68820891343057,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 91,
+    "phase": "joint",
+    "lr": [
+      7.132631382671661e-07,
+      7.1326313826716605e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15914677176440117,
+      "supervised_aux": 0.2563279713144397,
+      "supervised_coarse": 0.30223998309362055,
+      "supervised_boundary": 0.09637728272245662,
+      "supervised_segmentation": 0.15914677176440117,
+      "supervised_auxiliary": 0.2563279713144397,
+      "total": 0.45770620609274004,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.5286752947486273,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.5403805654496,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 92,
+    "phase": "joint",
+    "lr": [
+      6.687714184917119e-07,
+      6.687714184917118e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15818661429209285,
+      "supervised_aux": 0.25567880709572594,
+      "supervised_coarse": 0.30151522826440263,
+      "supervised_boundary": 0.09632813130865002,
+      "supervised_segmentation": 0.15818661429209285,
+      "supervised_auxiliary": 0.25567880709572594,
+      "total": 0.456049259169267,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.5464778017289569,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.01994970068336,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 93,
+    "phase": "joint",
+    "lr": [
+      6.293963471160742e-07,
+      6.293963471160741e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15903027765821703,
+      "supervised_aux": 0.2559541344052494,
+      "supervised_coarse": 0.30197377969132794,
+      "supervised_boundary": 0.0965096442563699,
+      "supervised_segmentation": 0.15903027765821703,
+      "supervised_auxiliary": 0.2559541344052494,
+      "total": 0.4572961638174435,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.5481813238398863,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.58004359342158,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 94,
+    "phase": "joint",
+    "lr": [
+      5.951819010762131e-07,
+      5.95181901076213e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15871140551153975,
+      "supervised_aux": 0.25628099651029795,
+      "supervised_coarse": 0.3025141336835257,
+      "supervised_boundary": 0.09607359465248513,
+      "supervised_segmentation": 0.15871140551153975,
+      "supervised_auxiliary": 0.25628099651029795,
+      "total": 0.457323689980082,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.5864949926291363,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.35103004518896,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 95,
+    "phase": "joint",
+    "lr": [
+      5.661662935473644e-07,
+      5.661662935473644e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15749191818851055,
+      "supervised_aux": 0.25527567816252755,
+      "supervised_coarse": 0.30123484910714743,
+      "supervised_boundary": 0.09525061220225721,
+      "supervised_segmentation": 0.15749191818851055,
+      "supervised_auxiliary": 0.25527567816252755,
+      "total": 0.4547973055650692,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.5270046293145358,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 193.03393893875182,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 96,
+    "phase": "joint",
+    "lr": [
+      5.42381931264795e-07,
+      5.423819312647949e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15844871739644814,
+      "supervised_aux": 0.2559767686199434,
+      "supervised_coarse": 0.3018383074219864,
+      "supervised_boundary": 0.09603774872894334,
+      "supervised_segmentation": 0.15844871739644814,
+      "supervised_auxiliary": 0.2559767686199434,
+      "total": 0.456563804704364,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.589054286243892,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.79682264942676,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 97,
+    "phase": "joint",
+    "lr": [
+      5.238553783296054e-07,
+      5.238553783296054e-06
+    ],
+    "train": {
+      "supervised_mask": 0.157410957833918,
+      "supervised_aux": 0.25508051688718325,
+      "supervised_coarse": 0.30104440562795887,
+      "supervised_boundary": 0.09562791792472991,
+      "supervised_segmentation": 0.157410957833918,
+      "supervised_auxiliary": 0.25508051688718325,
+      "total": 0.4545990013840175,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 65536.0,
+      "grad_norm": 1.5098219564645596,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.38632175140083,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 98,
+    "phase": "joint",
+    "lr": [
+      5.106073265400226e-07,
+      5.106073265400226e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15848075424385544,
+      "supervised_aux": 0.25612906692641796,
+      "supervised_coarse": 0.3021436262543839,
+      "supervised_boundary": 0.09689826209946434,
+      "supervised_segmentation": 0.15848075424385544,
+      "supervised_auxiliary": 0.25612906692641796,
+      "total": 0.4569967534872565,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 32768.0,
+      "grad_norm": 1.517256164243297,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 192.36197455599904,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 99,
+    "phase": "joint",
+    "lr": [
+      5.026525722812907e-07,
+      5.026525722812907e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15806338407910697,
+      "supervised_aux": 0.2557997877349948,
+      "supervised_coarse": 0.3018830235936854,
+      "supervised_boundary": 0.09576494039432837,
+      "supervised_segmentation": 0.15806338407910697,
+      "supervised_auxiliary": 0.2557997877349948,
+      "total": 0.4560577785024548,
+      "steps": 505,
+      "optimizer_steps": 504,
+      "amp_skipped_steps": 1,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.5473185596721513,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 191.43756362237036,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  },
+  {
+    "epoch": 100,
+    "phase": "joint",
+    "lr": [
+      5.000000000000001e-07,
+      5e-06
+    ],
+    "train": {
+      "supervised_mask": 0.15789926531586315,
+      "supervised_aux": 0.25502380595938995,
+      "supervised_coarse": 0.3009752522010614,
+      "supervised_boundary": 0.09560828726037894,
+      "supervised_segmentation": 0.15789926531586315,
+      "supervised_auxiliary": 0.25502380595938995,
+      "total": 0.4550204520178313,
+      "steps": 505,
+      "optimizer_steps": 505,
+      "amp_skipped_steps": 0,
+      "amp_scale": 16384.0,
+      "grad_norm": 1.5118804524440577,
+      "primary_images": 4040,
+      "source_images": 0,
+      "cod_images": 4040,
+      "seconds": 190.90668594744056,
+      "peak_cuda_allocated_bytes": 1486548992
+    }
+  }
+]

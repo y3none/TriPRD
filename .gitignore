@@ -18,6 +18,21 @@ datasets/*
 *.pth
 *.ckpt
 *.onnx
+*.safetensors
+*.bin
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# External foundation-model checkout and local delivery bundles
+/dinov3/
+/deliverables/
 
 # Runtime outputs
 logs/*.log
@@ -27,6 +42,12 @@ results/*/model_output.txt
 results/*/comparison.json
 results/optimization/
 .pytest_cache/
+/results/local_checks/
+/results/completion_v6_seed-*/
+/results/completion_v6_dev*/
+/results/completion_controls*/
+**/predictions/
+*.log
 
 # IDE and OS files
 .vscode/

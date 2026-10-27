@@ -1,0 +1,14 @@
+# Install a CUDA-compatible PyTorch build before this file on the server.
+-r requirements-triprd.txt
+# Local integration is verified on PyTorch 2.8. The official DINO checkout
+# is loaded as a separate source dependency, not installed from E2Net.
+torch>=2.8
+torchvision>=0.23
+ftfy
+omegaconf
+regex
+scikit-learn
+submitit
+termcolor
+torchmetrics
+safetensors>=0.4.3

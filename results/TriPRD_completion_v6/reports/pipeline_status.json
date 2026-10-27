@@ -1,0 +1,31 @@
+{
+  "method": "triprd_completion_v6",
+  "status": "complete",
+  "phase": "all",
+  "jobs": {
+    "teacher": {
+      "status": "complete",
+      "pid": 3975720,
+      "log": "/data2/yyy/TriPRD_completion_v6/results/completion_v6_seed-20261012/teacher/run.log",
+      "exit_code": 0
+    },
+    "source": {
+      "status": "complete",
+      "pid": 4070192,
+      "log": "/data2/yyy/TriPRD_completion_v6/results/completion_v6_seed-20261012/source/run.log",
+      "exit_code": 0
+    },
+    "cod": {
+      "status": "complete",
+      "pid": 509141,
+      "log": "/data2/yyy/TriPRD_completion_v6/results/completion_v6_seed-20261012/cod/run.log",
+      "exit_code": 0
+    },
+    "test": {
+      "status": "complete",
+      "pid": 923263,
+      "log": "/data2/yyy/TriPRD_completion_v6/results/completion_v6_seed-20261012/test.log",
+      "exit_code": 0
+    }
+  }
+}

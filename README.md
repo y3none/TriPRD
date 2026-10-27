@@ -2,7 +2,89 @@
 
 TriPRD is a tri-modal teacher and RGB student framework for camouflaged object detection. The teacher uses RGB, thermal, and depth inputs during training; the student uses RGB only for deployment.
 
-**Current implementation (2026-10-16):** a separate relation-transfer pipeline
+**Current implementation (2026-10-27): [Completion v6](README_COMPLETION_V6.md).**
+The current route trains a real RGB/thermal/depth teacher on VDT, distills
+three-stage mask and boundary outputs into an RGB student under the same RGB
+cue, and transfers the complete student completion path to COD. Only the COD
+coarse locator is initialized afresh; after three locator-only epochs, the
+transferred completion path and the trainable RGB representation adapt jointly.
+Inference uses RGB only. The backbone is generic DINOv3 ViT-B/16, with its last
+four blocks and final norm trainable, plus an RGB detail branch. No E2Net method
+modules or COD weights are used.
+
+The first v6 run completed teacher/source/COD training and official evaluation
+on all four test sets. COD used 4,040 training images, 384-pixel inputs and the
+predeclared final epoch 100. The same checkpoint produced:
+
+| Dataset | Images | Sm ↑ | Fw ↑ | Emean ↑ | MAE ↓ |
+|---|---:|---:|---:|---:|---:|
+| COD10K | 2026 | 0.895018 | 0.831094 | 0.952530 | 0.016974 |
+| CAMO | 250 | 0.899703 | 0.871965 | 0.950531 | 0.032771 |
+| NC4K | 4121 | 0.913445 | 0.882477 | 0.958109 | 0.022695 |
+| CHAMELEON | 76 | 0.922565 | 0.882944 | 0.959777 | 0.018206 |
+
+See the [v6 result analysis](experiments/completion_v6_result_analysis_2026-10-27.md)
+and [original benchmark report](results/TriPRD_completion_v6/reports/cod/benchmark.md).
+Local checks establish consistency of reports, code and transfer provenance;
+the trained checkpoints and prediction PNGs are not present locally. This run
+does not establish the net contribution of T/D, superiority to DINOv2, or SOTA.
+Its Sm/Fw remain below the project's recorded E2Net reference on all four sets;
+that reference is not a matched rerun. Earlier internal-validation results use
+different training pools and selection rules and cannot be subtracted from
+these official-test scores.
+
+Start with [README_COMPLETION_V6.md](README_COMPLETION_V6.md) for the current
+training and evaluation commands, and [Paper Scope](paper_scope.md) for claim
+boundaries. `TriPRD` remains the project name; its historical expansion
+“Tri-modal Privileged Relation Distillation” does not describe v6's output KD.
+A replacement paper title has not been selected; see [Method Name](method_name.md).
+
+## Historical implementations
+
+The sections below retain earlier methods, commands and results for
+reproduction. Their stage-specific claims and pending work do not describe the
+current v6 route. [Task v4](README_TASK_V4.md) and [Staged v5](README_STAGED_V5.md)
+are also historical; their checkpoints are incompatible with v6.
+
+**Archived candidate (2026-10-19):** [correction v3](tools/TRIPRD_CORRECTION.md)
+implements an independent generic DINOv3 RGB student, one four-coalition teacher,
+reliable auxiliary-modality corrections and COD-training-gradient selection.
+Six matched controls, exact epoch resume, full-pool retraining and RGB-only
+evaluation are available. The recommended [staged optimization workflow](tools/TRIPRD_CORRECTION.md#分阶段优化入口2026-10-20)
+starts with `DINO_REPO=/path/to/dinov3 DINO_WEIGHTS=/path/to/generic_vitb16.pth bash tools/run_triprd_optimization.sh baseline`.
+`DINO_WEIGHTS` also accepts an already downloaded HF ViT-B/16 `model.safetensors`
+with its adjacent `config.json`; the loader strictly converts it in memory.
+With `DINO_REPO` and `DINO_WEIGHTS` exported, run
+`python tools/check_dinov3_weights.py --device cuda` before training.
+Set `GPUS=0,1,2,3` to place independent experiments on four GPUs; each experiment
+keeps its single-GPU batch size. `bash tools/run_triprd_optimization.sh all`
+runs the four phases in order and stops on failed checks. Logs are saved in each
+experiment's `run.log`; `RESUME=1` revalidates completed jobs before continuing.
+The workflow includes the source-only `probe`, matched A/B/C/D `screen`, and
+full-4040 `final` phases; each phase can also be invoked separately.
+The teacher relation loss now weights all four coalitions equally; student
+corrections start at zero and learn through the shared RGB adapters.
+This does not reuse E2Net. CPU integration tests are implementation checks;
+formal DINOv3 GPU accuracy, memory and throughput remain unverified.
+
+**Archived candidate (2026-10-17):** [structure v2](tools/TRIPRD_STRUCTURE.md) replaces
+unconstrained source attention with supervised thermal-image appearance, relative
+depth and annotation edges at two scales. It transfers a complete frozen RGB
+structure function and gives COD a separate trainable semantic graph and readout.
+Teacher modalities enter segmentation only through edges. Five matched controls
+separate source masks, direct privileged labels, RGB-teacher refinement and
+multimodal-teacher inputs. CPU integration and mechanism checks are available;
+its first single-seed GPU screen found no established multimodal net benefit
+([analysis](experiments/structure_v2_analysis_2026-10-19.md)). The [v1 diagnosis](experiments/relation_v1_diagnosis_2026-10-16.md)
+records the failed transfer screen and the real-data checks motivating this redesign.
+
+Evaluate the saved structure-v2 A–E checkpoints with
+`CUDA_VISIBLE_DEVICES=0 python -u tools/evaluate_structure_v2.py` on the training server.
+The [evaluation instructions](tools/TRIPRD_STRUCTURE.md#现有-checkpoint-的四测试集评测)
+describe full test coverage, CamoFormer metrics, adaptive-E table export, and the
+3,232-image training protocol of these checkpoints. Use `--dry-run` to inspect inputs first.
+
+**Previous relation implementation (2026-10-16):** a separate relation-transfer pipeline
 now adds an explicit local RGB-to-T/D relation teacher, an RGB student whose
 predicted relations participate in decoding, and relation-branch-only transfer
 with the source-stage backbone and BatchNorm statistics frozen. Its matched

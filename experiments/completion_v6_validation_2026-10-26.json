@@ -1,0 +1,107 @@
+{
+  "method": "triprd_completion_v6",
+  "date": "2026-10-26",
+  "tests": {
+    "passed": 116,
+    "skipped_cuda": 1,
+    "subtests_passed": 160,
+    "seconds": 33.51
+  },
+  "runtime": "PyTorch2.8 CPU; real tiny teacher/source/COD optimization, exact epoch resume, transfer and protocol tests",
+  "dinov3_architecture_check": {
+    "scope": "Official local DINOv3 random-weight architecture/gradient smoke check; no accuracy evidence",
+    "pretrained": false,
+    "device": "cpu",
+    "image_size": 384,
+    "base_channels": 128,
+    "torch_version": "2.8.0+cpu",
+    "roles": {
+      "student": {
+        "checks": {
+          "output_shape": true,
+          "finite_loss": true,
+          "finite_gradients": true,
+          "encoder_tail_gradients": true,
+          "early_encoder_frozen": true,
+          "refiner_gradients": true,
+          "real_rgb_detail_gradients": true
+        },
+        "loss": 3.1048343181610107,
+        "stage_shapes": [
+          [
+            1,
+            1,
+            24,
+            24
+          ],
+          [
+            1,
+            1,
+            48,
+            48
+          ],
+          [
+            1,
+            1,
+            96,
+            96
+          ]
+        ],
+        "parameters": 90936904,
+        "seconds": 5.575348999991547
+      },
+      "teacher": {
+        "checks": {
+          "output_shape": true,
+          "finite_loss": true,
+          "finite_gradients": true,
+          "encoder_tail_gradients": true,
+          "early_encoder_frozen": true,
+          "refiner_gradients": true,
+          "real_rgb_detail_gradients": true
+        },
+        "loss": 3.4204840660095215,
+        "stage_shapes": [
+          [
+            1,
+            1,
+            24,
+            24
+          ],
+          [
+            1,
+            1,
+            48,
+            48
+          ],
+          [
+            1,
+            1,
+            96,
+            96
+          ]
+        ],
+        "parameters": 95172551,
+        "seconds": 4.356980100041255
+      }
+    },
+    "status": "passed"
+  },
+  "package_cli": {
+    "run_triprd_completion.py": "passed",
+    "run_triprd_completion_pipeline.py": "passed",
+    "evaluate_triprd_completion.py": "passed"
+  },
+  "package_code_dependencies": 25,
+  "frozen_v4_v5_files": "verified byte-identical by packaging",
+  "bash_syntax": "passed bash -n",
+  "shell_line_endings": "LF verified",
+  "archive": "deliverables\\triprd_completion_v6_2026-10-26.zip",
+  "archive_bytes": 260368,
+  "archive_sha256": "32401f49a634e81cb4c1308e660f2d59e1d3a6043ab0e9a9b9d55e4760c5b5f7",
+  "limitations": [
+    "No CUDA hardware run; five-GPU transport test skipped",
+    "No real-dataset COD accuracy or SOTA evidence",
+    "DINOv3 check used random weights, no pretrained weight accuracy measurement"
+  ]
+}

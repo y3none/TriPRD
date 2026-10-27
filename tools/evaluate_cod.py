@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import sys
 from pathlib import Path
@@ -67,6 +68,9 @@ CSV_FIELDS = [
     "S_alpha",
     "F_beta_w",
     "E_phi",
+    "E_phi_mean",
+    "E_phi_adaptive",
+    "E_phi_max",
     "MAE",
     "Boundary_F",
     "params",
@@ -138,6 +142,20 @@ def _read_prediction(path: Path) -> np.ndarray | None:
     return cv2.imdecode(encoded, cv2.IMREAD_GRAYSCALE) if encoded.size else None
 
 
+def _read_ground_truth(index, asset) -> np.ndarray:
+    """Use the same OpenCV grayscale decoder as the upstream evaluator."""
+    if hasattr(index, "source"):
+        encoded = np.frombuffer(index.source.read_bytes(asset.location), dtype=np.uint8)
+        image = cv2.imdecode(encoded, cv2.IMREAD_GRAYSCALE) if encoded.size else None
+        if image is None:
+            raise ValueError(f"Unable to read ground truth: {asset.location}")
+        return image
+    # In-memory metric clients can supply an already decoded image.
+    buffer = io.BytesIO()
+    index.read_image(asset).save(buffer, format="PNG")
+    return cv2.imdecode(np.frombuffer(buffer.getvalue(), dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
+
+
 def evaluate_dataset(
     *,
     index,
@@ -170,7 +188,7 @@ def evaluate_dataset(
         prediction = _read_prediction(prediction_path)
         if prediction is None:
             raise ValueError(f"Unable to read prediction: {prediction_path}")
-        ground_truth = np.asarray(index.read_image(sample.mask).convert("L"), dtype=np.uint8)
+        ground_truth = _read_ground_truth(index, sample.mask)
         if prediction.shape != ground_truth.shape:
             # Delegate resizing to the project evaluation module, which
             # preserves CamoFormer's default linear interpolation.
@@ -202,16 +220,18 @@ def evaluate_dataset(
         "S_alpha": float(sm_result),
         "F_beta_w": float(wfm_result),
         "E_phi": float(em_result["curve"].mean()),
+        "E_phi_mean": float(em_result["curve"].mean()),
         "E_phi_adaptive": float(em_result["adp"]),
+        "E_phi_max": float(em_result["curve"].max()),
         "MAE": float(mae_result),
         "Boundary_F": None if boundary_f is None else float(boundary_f.get_results()["wfm"]),
         "Boundary_MAE": None if boundary_mae is None else float(boundary_mae.get_results()["mae"]),
         "FNR": float(fnr),
         "F_beta_adaptive": float(fm_result["fm"]["adp"]),
     }
-    # Aliases used by the prior-performance table.  Keep the explicit names
-    # above for the project registry while making copy/paste comparison safe.
-    result.update({"S_m": result["S_alpha"], "alpha_E": result["E_phi"],
+    # CamoFormer paper section 4.1 defines alpha_E as adaptive E.  Keep
+    # E_phi as mean E for compatibility with existing validation histories.
+    result.update({"S_m": result["S_alpha"], "alpha_E": result["E_phi_adaptive"],
                    "F_m_w": result["F_beta_w"], "M": result["MAE"]})
     return result
 
@@ -249,6 +269,9 @@ def _append_records(path: Path, results: Iterable[dict[str, Any]], args: argpars
                     "S_alpha": f"{result['S_alpha']:.6f}",
                     "F_beta_w": f"{result['F_beta_w']:.6f}",
                     "E_phi": f"{result['E_phi']:.6f}",
+                    "E_phi_mean": f"{result['E_phi_mean']:.6f}",
+                    "E_phi_adaptive": f"{result['E_phi_adaptive']:.6f}",
+                    "E_phi_max": f"{result['E_phi_max']:.6f}",
                     "MAE": f"{result['MAE']:.6f}",
                     "Boundary_F": "" if result["Boundary_F"] is None else f"{result['Boundary_F']:.6f}",
                     "params": args.params,

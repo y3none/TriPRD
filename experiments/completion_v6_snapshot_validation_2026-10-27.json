@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-27",
+  "scope": "Completion v6 source and report archive before matched A-D controls",
+  "checks": {
+    "teacher_source_cod_report_contract_hashes": true,
+    "independent_history_copies_and_complete_epoch_sequences": true,
+    "all_25_training_source_byte_hashes_match_reports": true,
+    "full4040_training_and_6473_test_sample_report_counts": true,
+    "documentation_metrics_match_benchmark": true
+  },
+  "tests": {
+    "files": [
+      "tests/test_completion_model.py",
+      "tests/test_completion_loss.py",
+      "tests/test_completion_runner.py",
+      "tests/test_completion_protocol.py",
+      "tests/test_completion_parallel.py",
+      "tests/test_completion_pipeline.py",
+      "tests/test_camoformer_evaluation.py",
+      "tests/test_dinov3_weights.py"
+    ],
+    "passed": 77,
+    "skipped": 1,
+    "subtests_passed": 92,
+    "environment_note": "Six pipeline tests initially failed on Windows sandbox system-temp permissions; rerun outside sandbox: six passed. Other 71 tests passed. CUDA hardware test skipped."
+  },
+  "git_policy": "Preserve source bytes for training SHA256 contracts; Bash entry points use LF. Exclude datasets, checkpoints, safetensors, external dinov3 checkout, delivery archives, prediction images, local checks and runtime logs.",
+  "limitations": [
+    "No checkpoint or prediction PNG files available for independent accuracy recomputation",
+    "No local CUDA or four-4090 training validation",
+    "One full-method seed; matched v6 multimodal net benefit not yet established"
+  ]
+}
